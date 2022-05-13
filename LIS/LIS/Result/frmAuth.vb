@@ -3,6 +3,8 @@
     Public Section As String
     Public Method As String
 
+    'something here
+
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Try
             'Got this Encrypting code from StockOverFlow.com
