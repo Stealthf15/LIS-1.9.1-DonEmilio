@@ -34,14 +34,14 @@ Partial Class frmAuth
         '
         'txtUsername
         '
-        Me.txtUsername.Location = New System.Drawing.Point(17, 33)
+        Me.txtUsername.Location = New System.Drawing.Point(341, 295)
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.Size = New System.Drawing.Size(249, 20)
         Me.txtUsername.TabIndex = 0
         '
         'txtPassword
         '
-        Me.txtPassword.Location = New System.Drawing.Point(17, 78)
+        Me.txtPassword.Location = New System.Drawing.Point(341, 340)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.Properties.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(249, 20)
@@ -49,7 +49,7 @@ Partial Class frmAuth
         '
         'LabelControl1
         '
-        Me.LabelControl1.Location = New System.Drawing.Point(17, 11)
+        Me.LabelControl1.Location = New System.Drawing.Point(341, 273)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(54, 13)
         Me.LabelControl1.TabIndex = 2
@@ -57,7 +57,7 @@ Partial Class frmAuth
         '
         'LabelControl2
         '
-        Me.LabelControl2.Location = New System.Drawing.Point(17, 59)
+        Me.LabelControl2.Location = New System.Drawing.Point(341, 321)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(52, 13)
         Me.LabelControl2.TabIndex = 3
@@ -66,7 +66,7 @@ Partial Class frmAuth
         'btnCancel
         '
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Location = New System.Drawing.Point(191, 107)
+        Me.btnCancel.Location = New System.Drawing.Point(515, 369)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 4
@@ -74,7 +74,7 @@ Partial Class frmAuth
         '
         'btnLogin
         '
-        Me.btnLogin.Location = New System.Drawing.Point(110, 107)
+        Me.btnLogin.Location = New System.Drawing.Point(434, 369)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(75, 23)
         Me.btnLogin.TabIndex = 5
@@ -86,7 +86,7 @@ Partial Class frmAuth
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancel
-        Me.ClientSize = New System.Drawing.Size(281, 142)
+        Me.ClientSize = New System.Drawing.Size(614, 411)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.LabelControl2)
