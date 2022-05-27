@@ -3659,7 +3659,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!DateReleased.Value, "DataSet1")</Value>
+                    <Value>=Format(CDate(First(Fields!DateReleased.Value, "DataSet1")), "MM/dd/yyyy hh:mm:ss tt")</Value>
                     <Style>
                       <FontFamily>microsoft sans serif</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -4612,7 +4612,6 @@
               </Style>
             </Textbox>
             <Line Name="Line4">
-              <Top>0in</Top>
               <Left>0.0368in</Left>
               <Height>0in</Height>
               <Width>7.90388in</Width>

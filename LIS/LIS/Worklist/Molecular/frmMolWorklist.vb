@@ -1254,8 +1254,13 @@ Public Class frmMolWorklist
 
         frmAntigenNew.txtMethodUsed.Text = GridView.GetFocusedRowCellValue(GridView.Columns("MethodUsed")).ToString
         frmAntigenNew.txtReagent.Text = GridView.GetFocusedRowCellValue(GridView.Columns("Reagent")).ToString
-        'frmAntigenNew.txtLotNumber.Text = GridView.GetFocusedRowCellValue(GridView.Columns("LotNumber")).ToString
-        'frmAntigenNew.txtExpiry.Text = GridView.GetFocusedRowCellValue(GridView.Columns("Expiry")).ToString
+
+        If GridView.GetFocusedRowCellValue(GridView.Columns("LotNumber")).ToString = "" Or GridView.GetFocusedRowCellValue(GridView.Columns("Expiry")).ToString = "" Then
+
+        Else
+            frmAntigenNew.txtLotNumber.Text = GridView.GetFocusedRowCellValue(GridView.Columns("LotNumber")).ToString
+            frmAntigenNew.txtExpiry.Text = GridView.GetFocusedRowCellValue(GridView.Columns("Expiry")).ToString
+        End If
 
         'For Age computation
         Dim Age As String = ""

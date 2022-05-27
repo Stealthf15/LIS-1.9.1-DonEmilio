@@ -1124,7 +1124,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!DateReleased.Value, "DataSet1")</Value>
+                    <Value>=Format(CDate(First(Fields!DateReleased.Value, "DataSet1")), "MM/dd/yyyy hh:mm:ss tt")</Value>
                     <Style>
                       <FontFamily>microsoft sans serif</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -1876,7 +1876,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet2</DataSetName>
                               <Height>0.19685in</Height>
-                              <Width>4.14808in</Width>
+                              <Width>4.14809in</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>

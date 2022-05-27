@@ -657,7 +657,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=SWITCH(Fields!TestGroup.Value = "Microscopic Findings", Fields!SI.Value)</Value>
+                                      <Value>=Fields!SI.Value</Value>
                                       <Style>
                                         <FontFamily>Microsoft Sans Serif</FontFamily>
                                         <FontSize>8pt</FontSize>
@@ -706,10 +706,10 @@
                 <DataSetName>DataSet2</DataSetName>
                 <Filters>
                   <Filter>
-                    <FilterExpression>=Fields!test_code.Value</FilterExpression>
+                    <FilterExpression>=Fields!TestCode.Value</FilterExpression>
                     <Operator>Equal</Operator>
                     <FilterValues>
-                      <FilterValue>PT_U</FilterValue>
+                      <FilterValue>PT_Test</FilterValue>
                     </FilterValues>
                   </Filter>
                 </Filters>
@@ -1339,7 +1339,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!DateReleased.Value, "DataSet1")</Value>
+                    <Value>=Format(CDate(First(Fields!DateReleased.Value, "DataSet1")), "MM/dd/yyyy hh:mm:ss tt")</Value>
                     <Style>
                       <FontFamily>microsoft sans serif</FontFamily>
                       <FontSize>8pt</FontSize>

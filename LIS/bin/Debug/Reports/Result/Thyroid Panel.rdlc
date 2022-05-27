@@ -1071,7 +1071,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=FORMAT(CDATE(First(Fields!DateReleased.Value, "DataSet1")),"MMM-dd-yyyy/hh:mm tt")</Value>
+                    <Value>=Format(CDate(First(Fields!DateReleased.Value, "DataSet1")), "MM/dd/yyyy hh:mm:ss tt")</Value>
                     <Style>
                       <FontFamily>microsoft sans serif</FontFamily>
                       <FontSize>8pt</FontSize>

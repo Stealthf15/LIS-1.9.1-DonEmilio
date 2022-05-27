@@ -46,7 +46,7 @@ Public Class RDLCPrinterPrintNew : Implements IDisposable
 					DATE_FORMAT(`order`.`date`, '%m/%d/%Y') AS DateReceived,
 					`order`.`time` AS TimeReceived,
 					DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %r') AS DateCheckedIn,
-					DATE_FORMAT(`order`.`dt_released`, '%m/%d/%Y %r') AS DateReleased,
+					`order`.`dt_released` AS DateReleased,
 					CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
 					CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
 					`order`.`physician` AS Physician,

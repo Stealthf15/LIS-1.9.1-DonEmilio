@@ -1318,7 +1318,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!DateReleased.Value, "DataSet1")</Value>
+                    <Value>=Format(CDate(First(Fields!DateReleased.Value, "DataSet1")), "MM/dd/yyyy hh:mm:ss tt")</Value>
                     <Style>
                       <FontFamily>microsoft sans serif</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -2069,7 +2069,6 @@
               <Value>=First(Fields!img.Value, "DataSet6")</Value>
               <MIMEType>image/jpeg</MIMEType>
               <Sizing>Fit</Sizing>
-              <Top>0in</Top>
               <Left>5.36393in</Left>
               <Height>0.85764in</Height>
               <Width>1.63542in</Width>
@@ -2080,7 +2079,6 @@
               </Style>
             </Image>
             <Line Name="Line4">
-              <Top>0in</Top>
               <Left>0.04041in</Left>
               <Height>0in</Height>
               <Width>7.90388in</Width>

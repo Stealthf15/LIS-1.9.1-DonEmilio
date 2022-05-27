@@ -387,7 +387,7 @@ Partial Class frmTatComplete
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
         Me.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Glow
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.IconOptions.Icon = CType(resources.GetObject("frmTatComplete.IconOptions.Icon"), System.Drawing.Icon)
         Me.Name = "frmTatComplete"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Worksheet"
