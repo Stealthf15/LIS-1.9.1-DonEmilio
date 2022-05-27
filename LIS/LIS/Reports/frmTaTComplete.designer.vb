@@ -28,6 +28,7 @@ Partial Class frmTatComplete
         Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.btnPrint = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.btnExport = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnRefresh = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnClose = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.BarAndDockingController = New DevExpress.XtraBars.BarAndDockingController(Me.components)
@@ -53,7 +54,6 @@ Partial Class frmTatComplete
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.cboMedtech = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.pnlHeader = New DevExpress.XtraEditors.PanelControl()
-        Me.btnExport = New DevExpress.XtraBars.BarLargeButtonItem()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,6 +111,15 @@ Partial Class frmTatComplete
         Me.btnPrint.ImageOptions.SvgImage = CType(resources.GetObject("btnPrint.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnPrint.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnPrint.Name = "btnPrint"
+        '
+        'btnExport
+        '
+        Me.btnExport.Caption = "Export to Excel"
+        Me.btnExport.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
+        Me.btnExport.Id = 3
+        Me.btnExport.ImageOptions.SvgImage = CType(resources.GetObject("btnExport.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnExport.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
+        Me.btnExport.Name = "btnExport"
         '
         'btnRefresh
         '
@@ -365,15 +374,6 @@ Partial Class frmTatComplete
         Me.pnlHeader.Name = "pnlHeader"
         Me.pnlHeader.Size = New System.Drawing.Size(1223, 32)
         Me.pnlHeader.TabIndex = 35
-        '
-        'btnExport
-        '
-        Me.btnExport.Caption = "Export to Excel"
-        Me.btnExport.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
-        Me.btnExport.Id = 3
-        Me.btnExport.ImageOptions.SvgImage = CType(resources.GetObject("BarLargeButtonItem1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnExport.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
-        Me.btnExport.Name = "btnExport"
         '
         'frmTatComplete
         '

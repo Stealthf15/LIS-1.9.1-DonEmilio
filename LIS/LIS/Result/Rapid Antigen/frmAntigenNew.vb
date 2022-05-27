@@ -379,6 +379,7 @@ Public Class frmAntigenNew
     'End Sub
 
     Private Sub LUELotNumber_TextChanged(sender As Object, e As EventArgs) Handles txtLotNumber.TextChanged
+
         txtExpiry.Text = txtLotNumber.GetColumnValue(txtLotNumber.Properties.Columns.Item(2))
     End Sub
 

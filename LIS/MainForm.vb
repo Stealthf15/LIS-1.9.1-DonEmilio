@@ -35,6 +35,7 @@ Public Class MainFOrm
             Exit Sub
         End Try
     End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Main()
         frmLogin.ShowDialog()
@@ -130,6 +131,18 @@ Public Class MainFOrm
 #End Region
 
 #Region "Accordion Menu Click Events"
+
+    Private Sub aceDashboard_Click(sender As Object, e As EventArgs) Handles aceDashboard.Click
+        For Each f As Form In Me.MdiChildren
+            f.Close()
+        Next
+        lblTitle.Text = "DASHBOARD"
+        frmDashboard.WindowState = FormWindowState.Maximized
+        frmDashboard.MdiParent = Me
+        frmDashboard.Show()
+    End Sub
+
+
     Private Sub accEmailPush_Click(sender As Object, e As EventArgs) Handles accEmailPush.Click
         For Each f As Form In Me.MdiChildren
             f.Close()
@@ -531,6 +544,7 @@ Public Class MainFOrm
         rs.Connection = conn
         rs.CommandType = CommandType.Text
         rs.CommandText = "SELECT `id`, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `pathologist` ORDER BY `name`"
+
         reader = rs.ExecuteReader
         While reader.Read
             PathologistID = reader(0).ToString
@@ -538,7 +552,6 @@ Public Class MainFOrm
         End While
         Disconnect()
     End Sub
-
 #End Region
 
 #Region "Get New and Pending Orders"
@@ -671,7 +684,6 @@ Public Class MainFOrm
         Disconnect()
 
     End Sub
-
 #End Region
 
 End Class

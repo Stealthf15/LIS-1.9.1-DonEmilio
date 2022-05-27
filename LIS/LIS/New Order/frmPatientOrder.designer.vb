@@ -94,7 +94,7 @@ Partial Class frmPatientOrder
         Me.pnlBackground.Location = New System.Drawing.Point(0, 0)
         Me.pnlBackground.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.pnlBackground.Name = "pnlBackground"
-        Me.pnlBackground.Size = New System.Drawing.Size(1682, 1070)
+        Me.pnlBackground.Size = New System.Drawing.Size(1698, 1070)
         Me.pnlBackground.TabIndex = 6
         '
         'XTabPatient
@@ -123,7 +123,7 @@ Partial Class frmPatientOrder
         Me.XTabPatient.Location = New System.Drawing.Point(11, 42)
         Me.XTabPatient.Name = "XTabPatient"
         Me.XTabPatient.SelectedTabPage = Me.XtraTabPage1
-        Me.XTabPatient.Size = New System.Drawing.Size(1659, 1017)
+        Me.XTabPatient.Size = New System.Drawing.Size(1675, 1017)
         Me.XTabPatient.TabIndex = 36
         Me.XTabPatient.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1})
         '
@@ -135,7 +135,7 @@ Partial Class frmPatientOrder
         Me.XtraTabPage1.ImageOptions.SvgImage = CType(resources.GetObject("XtraTabPage1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.XtraTabPage1.ImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.XtraTabPage1.Name = "XtraTabPage1"
-        Me.XtraTabPage1.Size = New System.Drawing.Size(1657, 985)
+        Me.XtraTabPage1.Size = New System.Drawing.Size(1673, 985)
         Me.XtraTabPage1.Text = "Patient Orders"
         '
         'Panel
@@ -152,7 +152,7 @@ Partial Class frmPatientOrder
         Me.Panel.Controls.Add(Me.LabelControl3)
         Me.Panel.Location = New System.Drawing.Point(4, 0)
         Me.Panel.Name = "Panel"
-        Me.Panel.Size = New System.Drawing.Size(1649, 33)
+        Me.Panel.Size = New System.Drawing.Size(1665, 33)
         Me.Panel.TabIndex = 144
         '
         'LabelControl7
@@ -160,7 +160,7 @@ Partial Class frmPatientOrder
         Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl7.Appearance.Options.UseFont = True
-        Me.LabelControl7.Location = New System.Drawing.Point(1012, 10)
+        Me.LabelControl7.Location = New System.Drawing.Point(1028, 10)
         Me.LabelControl7.Name = "LabelControl7"
         Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
         Me.LabelControl7.TabIndex = 158
@@ -169,7 +169,7 @@ Partial Class frmPatientOrder
         'rgSelect
         '
         Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rgSelect.Location = New System.Drawing.Point(1091, 3)
+        Me.rgSelect.Location = New System.Drawing.Point(1107, 3)
         Me.rgSelect.MenuManager = Me.BarManager
         Me.rgSelect.Name = "rgSelect"
         Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
@@ -275,7 +275,7 @@ Partial Class frmPatientOrder
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
         Me.barDockControlTop.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.barDockControlTop.Size = New System.Drawing.Size(1682, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1698, 36)
         '
         'barDockControlBottom
         '
@@ -284,7 +284,7 @@ Partial Class frmPatientOrder
         Me.barDockControlBottom.Location = New System.Drawing.Point(0, 1070)
         Me.barDockControlBottom.Manager = Me.BarManager
         Me.barDockControlBottom.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1682, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1698, 0)
         '
         'barDockControlLeft
         '
@@ -299,7 +299,7 @@ Partial Class frmPatientOrder
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1682, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1698, 36)
         Me.barDockControlRight.Manager = Me.BarManager
         Me.barDockControlRight.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 1034)
@@ -357,7 +357,7 @@ Partial Class frmPatientOrder
         Me.LabelControl4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl4.Appearance.Options.UseFont = True
-        Me.LabelControl4.Location = New System.Drawing.Point(1377, 10)
+        Me.LabelControl4.Location = New System.Drawing.Point(1393, 10)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(63, 13)
         Me.LabelControl4.TabIndex = 148
@@ -377,7 +377,7 @@ Partial Class frmPatientOrder
         'txtSearch
         '
         Me.txtSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSearch.Location = New System.Drawing.Point(1445, 7)
+        Me.txtSearch.Location = New System.Drawing.Point(1461, 7)
         Me.txtSearch.Name = "txtSearch"
         Me.txtSearch.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.txtSearch.Properties.Appearance.Options.UseForeColor = True
@@ -438,7 +438,7 @@ Partial Class frmPatientOrder
         Me.gList.Controls.Add(Me.txtTest)
         Me.gList.Location = New System.Drawing.Point(4, 39)
         Me.gList.Name = "gList"
-        Me.gList.Size = New System.Drawing.Size(1649, 943)
+        Me.gList.Size = New System.Drawing.Size(1665, 943)
         Me.gList.TabIndex = 145
         Me.gList.Text = "List"
         '
@@ -449,7 +449,7 @@ Partial Class frmPatientOrder
         Me.dtList.MainView = Me.GridView
         Me.dtList.MenuManager = Me.BarManager
         Me.dtList.Name = "dtList"
-        Me.dtList.Size = New System.Drawing.Size(1645, 914)
+        Me.dtList.Size = New System.Drawing.Size(1661, 914)
         Me.dtList.TabIndex = 145
         Me.dtList.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
         '
@@ -502,7 +502,7 @@ Partial Class frmPatientOrder
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.ClientSize = New System.Drawing.Size(1682, 1070)
+        Me.ClientSize = New System.Drawing.Size(1698, 1070)
         Me.ControlBox = False
         Me.Controls.Add(Me.pnlBackground)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

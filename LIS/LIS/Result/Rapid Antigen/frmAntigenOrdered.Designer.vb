@@ -109,6 +109,7 @@ Partial Class frmAntigenOrdered
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         CType(Me.cboCS.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl5.SuspendLayout()
@@ -194,7 +195,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl5.Controls.Add(Me.LabelControl29)
         Me.GroupControl5.Controls.Add(Me.LabelControl27)
         Me.GroupControl5.Enabled = False
-        Me.GroupControl5.Location = New System.Drawing.Point(12, 573)
+        Me.GroupControl5.Location = New System.Drawing.Point(12, 594)
         Me.GroupControl5.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl5.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl5.Name = "GroupControl5"
@@ -295,7 +296,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl3.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl3.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl3.Name = "GroupControl3"
-        Me.GroupControl3.Size = New System.Drawing.Size(948, 423)
+        Me.GroupControl3.Size = New System.Drawing.Size(948, 444)
         Me.GroupControl3.TabIndex = 190
         Me.GroupControl3.Text = "Rapid Antigen Test Result"
         '
@@ -306,7 +307,7 @@ Partial Class frmAntigenOrdered
         Me.dtResult.MainView = Me.GridView
         Me.dtResult.MenuManager = Me.BarManager
         Me.dtResult.Name = "dtResult"
-        Me.dtResult.Size = New System.Drawing.Size(944, 394)
+        Me.dtResult.Size = New System.Drawing.Size(944, 415)
         Me.dtResult.TabIndex = 63
         Me.dtResult.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
         '
@@ -431,15 +432,15 @@ Partial Class frmAntigenOrdered
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
-        Me.barDockControlTop.Size = New System.Drawing.Size(1285, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1293, 36)
         '
         'barDockControlBottom
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 686)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 714)
         Me.barDockControlBottom.Manager = Me.BarManager
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1285, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1293, 0)
         '
         'barDockControlLeft
         '
@@ -447,15 +448,15 @@ Partial Class frmAntigenOrdered
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 36)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 650)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 678)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1285, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1293, 36)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 650)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 678)
         '
         'BarLargeButtonItem3
         '
@@ -532,7 +533,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl2.Controls.Add(Me.cboPhysician)
         Me.GroupControl2.Controls.Add(Me.cboRequest)
         Me.GroupControl2.Enabled = False
-        Me.GroupControl2.Location = New System.Drawing.Point(12, 291)
+        Me.GroupControl2.Location = New System.Drawing.Point(12, 312)
         Me.GroupControl2.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl2.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl2.Name = "GroupControl2"
@@ -803,7 +804,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl6.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl6.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl6.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.GroupControl6.Controls.Add(Me.txtComment)
-        Me.GroupControl6.Location = New System.Drawing.Point(812, 573)
+        Me.GroupControl6.Location = New System.Drawing.Point(812, 594)
         Me.GroupControl6.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl6.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl6.Name = "GroupControl6"
@@ -825,7 +826,7 @@ Partial Class frmAntigenOrdered
         '
         'txtEmail
         '
-        Me.txtEmail.Location = New System.Drawing.Point(90, 243)
+        Me.txtEmail.Location = New System.Drawing.Point(90, 239)
         Me.txtEmail.Name = "txtEmail"
         Me.txtEmail.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.txtEmail.Properties.Appearance.Options.UseForeColor = True
@@ -912,7 +913,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl4.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl4.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl4.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.GroupControl4.Controls.Add(Me.txtRemarks)
-        Me.GroupControl4.Location = New System.Drawing.Point(330, 573)
+        Me.GroupControl4.Location = New System.Drawing.Point(330, 594)
         Me.GroupControl4.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl4.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl4.Name = "GroupControl4"
@@ -997,6 +998,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl1.CaptionImageOptions.AllowGlyphSkinning = True
         Me.GroupControl1.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl1.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl1.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
+        Me.GroupControl1.Controls.Add(Me.LabelControl3)
         Me.GroupControl1.Controls.Add(Me.txtEmail)
         Me.GroupControl1.Controls.Add(Me.LabelControl42)
         Me.GroupControl1.Controls.Add(Me.cboCS)
@@ -1021,7 +1023,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl1.Enabled = False
         Me.GroupControl1.Location = New System.Drawing.Point(12, 42)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(312, 243)
+        Me.GroupControl1.Size = New System.Drawing.Size(312, 264)
         Me.GroupControl1.TabIndex = 188
         Me.GroupControl1.Text = "Patient Details"
         '
@@ -1201,7 +1203,7 @@ Partial Class frmAntigenOrdered
         Me.GroupControl7.Controls.Add(Me.Label4)
         Me.GroupControl7.Controls.Add(Me.Label3)
         Me.GroupControl7.Controls.Add(Me.Label2)
-        Me.GroupControl7.Location = New System.Drawing.Point(330, 471)
+        Me.GroupControl7.Location = New System.Drawing.Point(330, 492)
         Me.GroupControl7.LookAndFeel.SkinName = "The Bezier"
         Me.GroupControl7.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl7.Name = "GroupControl7"
@@ -1285,11 +1287,23 @@ Partial Class frmAntigenOrdered
         Me.Label2.TabIndex = 64
         Me.Label2.Text = "Method Used:"
         '
+        'LabelControl3
+        '
+        Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.LabelControl3.Appearance.Options.UseForeColor = True
+        Me.LabelControl3.Location = New System.Drawing.Point(8, 242)
+        Me.LabelControl3.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.LabelControl3.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.LabelControl3.Name = "LabelControl3"
+        Me.LabelControl3.Size = New System.Drawing.Size(74, 13)
+        Me.LabelControl3.TabIndex = 170
+        Me.LabelControl3.Text = "Email Address:"
+        '
         'frmAntigenOrdered
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1285, 686)
+        Me.ClientSize = New System.Drawing.Size(1293, 714)
         Me.Controls.Add(Me.GroupControl7)
         Me.Controls.Add(Me.GroupControl5)
         Me.Controls.Add(Me.GroupControl3)
@@ -1443,4 +1457,5 @@ Partial Class frmAntigenOrdered
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents LabelControl3 As DevExpress.XtraEditors.LabelControl
 End Class

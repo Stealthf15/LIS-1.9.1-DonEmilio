@@ -116,6 +116,7 @@ Partial Class MainFOrm
         Me.lblHospitalName = New DevExpress.XtraEditors.LabelControl()
         Me.TimerNew = New System.Windows.Forms.Timer(Me.components)
         Me.TimerPending = New System.Windows.Forms.Timer(Me.components)
+        Me.aceDashboard = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SidePanel1.SuspendLayout()
         CType(Me.AccordionControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -143,7 +144,7 @@ Partial Class MainFOrm
         Me.SidePanel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.SidePanel1.Location = New System.Drawing.Point(0, 0)
         Me.SidePanel1.Name = "SidePanel1"
-        Me.SidePanel1.Size = New System.Drawing.Size(250, 625)
+        Me.SidePanel1.Size = New System.Drawing.Size(250, 722)
         Me.SidePanel1.TabIndex = 0
         Me.SidePanel1.Text = "SidePanel"
         '
@@ -184,12 +185,12 @@ Partial Class MainFOrm
         Me.AccordionControl.Appearance.Item.Normal.Options.UseFont = True
         Me.AccordionControl.Appearance.Item.Normal.Options.UseForeColor = True
         Me.AccordionControl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AccordionControl.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlSeparator6, Me.acciHOMIS, Me.btnPatient, Me.accPhlebotomy, Me.AccordionControlSeparator1, Me.btnPatientOrder, Me.AccordionControlSeparator2, Me.aceSection, Me.AccordionControlSeparator3, Me.btnDelta, Me.AccordionControlSeparator5, Me.aceReports, Me.AccordionControlSeparator7, Me.btnRealtime, Me.AccordionControlSeparator9, Me.accEmailPush})
+        Me.AccordionControl.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlSeparator6, Me.acciHOMIS, Me.btnPatient, Me.accPhlebotomy, Me.AccordionControlSeparator1, Me.btnPatientOrder, Me.AccordionControlSeparator2, Me.aceSection, Me.AccordionControlSeparator3, Me.btnDelta, Me.AccordionControlSeparator5, Me.aceReports, Me.AccordionControlSeparator7, Me.btnRealtime, Me.AccordionControlSeparator9, Me.accEmailPush, Me.aceDashboard})
         Me.AccordionControl.ExpandElementMode = DevExpress.XtraBars.Navigation.ExpandElementMode.[Single]
         Me.AccordionControl.Location = New System.Drawing.Point(0, 62)
         Me.AccordionControl.Name = "AccordionControl"
         Me.AccordionControl.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.AutoCollapse
-        Me.AccordionControl.Size = New System.Drawing.Size(250, 530)
+        Me.AccordionControl.Size = New System.Drawing.Size(250, 627)
         Me.AccordionControl.TabIndex = 2
         Me.AccordionControl.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu
         '
@@ -237,7 +238,6 @@ Partial Class MainFOrm
         'aceSection
         '
         Me.aceSection.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.aceHema, Me.aceChem, Me.aceSerology, Me.aceImmuno, Me.aceMicrobiology, Me.aceUrin, Me.aceFecal, Me.aceHistopath, Me.aceMolecular})
-        Me.aceSection.Expanded = True
         Me.aceSection.ImageOptions.SvgImage = CType(resources.GetObject("aceSection.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.aceSection.Name = "aceSection"
         Me.aceSection.Text = "Result Management"
@@ -381,7 +381,7 @@ Partial Class MainFOrm
         Me.btnLogout.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.btnLogout.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter
         Me.btnLogout.ImageOptions.SvgImage = CType(resources.GetObject("btnLogout.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnLogout.Location = New System.Drawing.Point(0, 592)
+        Me.btnLogout.Location = New System.Drawing.Point(0, 689)
         Me.btnLogout.Name = "btnLogout"
         Me.btnLogout.Size = New System.Drawing.Size(250, 33)
         Me.btnLogout.TabIndex = 13
@@ -640,7 +640,7 @@ Partial Class MainFOrm
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 650)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 747)
         Me.barDockControlBottom.Manager = Me.BarManager
         Me.barDockControlBottom.Size = New System.Drawing.Size(1188, 0)
         '
@@ -650,7 +650,7 @@ Partial Class MainFOrm
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 650)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 747)
         '
         'barDockControlRight
         '
@@ -658,7 +658,7 @@ Partial Class MainFOrm
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.barDockControlRight.Location = New System.Drawing.Point(1188, 0)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 650)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 747)
         '
         'btnSpecimen
         '
@@ -1001,7 +1001,7 @@ Partial Class MainFOrm
         Me.PanelControl3.Controls.Add(Me.lblDateTime)
         Me.PanelControl3.Controls.Add(Me.lblHospitalName)
         Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl3.Location = New System.Drawing.Point(0, 625)
+        Me.PanelControl3.Location = New System.Drawing.Point(0, 722)
         Me.PanelControl3.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
         Me.PanelControl3.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControl3.Name = "PanelControl3"
@@ -1043,13 +1043,20 @@ Partial Class MainFOrm
         '
         Me.TimerPending.Interval = 1000
         '
+        'aceDashboard
+        '
+        Me.aceDashboard.Expanded = True
+        Me.aceDashboard.ImageOptions.SvgImage = CType(resources.GetObject("aceDashboard.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.aceDashboard.Name = "aceDashboard"
+        Me.aceDashboard.Text = "Dashboard"
+        '
         'MainFOrm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayoutStore = System.Windows.Forms.ImageLayout.Stretch
         Me.BackgroundImageStore = CType(resources.GetObject("$this.BackgroundImageStore"), System.Drawing.Image)
-        Me.ClientSize = New System.Drawing.Size(1188, 650)
+        Me.ClientSize = New System.Drawing.Size(1188, 747)
         Me.Controls.Add(Me.PanelControl1)
         Me.Controls.Add(Me.SidePanel1)
         Me.Controls.Add(Me.PanelControl3)
@@ -1177,4 +1184,5 @@ Partial Class MainFOrm
     Friend WithEvents TimerNew As Timer
     Friend WithEvents TimerPending As Timer
     Friend WithEvents lblPending As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents aceDashboard As DevExpress.XtraBars.Navigation.AccordionControlElement
 End Class

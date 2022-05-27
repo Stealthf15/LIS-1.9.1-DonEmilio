@@ -86,7 +86,9 @@ Partial Class frmChemOrdered
         Me.LabelControl38 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl41 = New DevExpress.XtraEditors.LabelControl()
         Me.gcPatient = New DevExpress.XtraEditors.GroupControl()
+        Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl42 = New DevExpress.XtraEditors.LabelControl()
+        Me.txtEmail = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl43 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl44 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl45 = New DevExpress.XtraEditors.LabelControl()
@@ -134,6 +136,7 @@ Partial Class frmChemOrdered
         CType(Me.tmTimeReceived.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gcPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gcPatient.SuspendLayout()
+        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtAddress.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gcRemarks, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gcRemarks.SuspendLayout()
@@ -371,15 +374,15 @@ Partial Class frmChemOrdered
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
-        Me.barDockControlTop.Size = New System.Drawing.Size(1297, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1295, 36)
         '
         'barDockControlBottom
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 690)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 712)
         Me.barDockControlBottom.Manager = Me.BarManager
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1297, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1295, 0)
         '
         'barDockControlLeft
         '
@@ -387,15 +390,15 @@ Partial Class frmChemOrdered
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 36)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 654)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 676)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1297, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1295, 36)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 654)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 676)
         '
         'BarLargeButtonItem3
         '
@@ -602,7 +605,7 @@ Partial Class frmChemOrdered
         Me.gcTest.LookAndFeel.SkinName = "The Bezier"
         Me.gcTest.LookAndFeel.UseDefaultLookAndFeel = False
         Me.gcTest.Name = "gcTest"
-        Me.gcTest.Size = New System.Drawing.Size(946, 520)
+        Me.gcTest.Size = New System.Drawing.Size(946, 542)
         Me.gcTest.TabIndex = 175
         Me.gcTest.Text = "Test Result"
         '
@@ -660,7 +663,7 @@ Partial Class frmChemOrdered
         Me.dtResult.MainView = Me.GridView
         Me.dtResult.MenuManager = Me.BarManager
         Me.dtResult.Name = "dtResult"
-        Me.dtResult.Size = New System.Drawing.Size(942, 491)
+        Me.dtResult.Size = New System.Drawing.Size(942, 513)
         Me.dtResult.TabIndex = 58
         Me.dtResult.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
         '
@@ -764,7 +767,7 @@ Partial Class frmChemOrdered
         Me.gcAdditional.Controls.Add(Me.cboPhysician)
         Me.gcAdditional.Controls.Add(Me.cboRequest)
         Me.gcAdditional.Enabled = False
-        Me.gcAdditional.Location = New System.Drawing.Point(15, 291)
+        Me.gcAdditional.Location = New System.Drawing.Point(15, 313)
         Me.gcAdditional.LookAndFeel.SkinName = "The Bezier"
         Me.gcAdditional.LookAndFeel.UseDefaultLookAndFeel = False
         Me.gcAdditional.Name = "gcAdditional"
@@ -967,7 +970,9 @@ Partial Class frmChemOrdered
         Me.gcPatient.CaptionImageOptions.AllowGlyphSkinning = True
         Me.gcPatient.CaptionImageOptions.SvgImage = CType(resources.GetObject("gcPatient.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.gcPatient.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
+        Me.gcPatient.Controls.Add(Me.LabelControl3)
         Me.gcPatient.Controls.Add(Me.LabelControl42)
+        Me.gcPatient.Controls.Add(Me.txtEmail)
         Me.gcPatient.Controls.Add(Me.cboCS)
         Me.gcPatient.Controls.Add(Me.LabelControl43)
         Me.gcPatient.Controls.Add(Me.btnSearch)
@@ -990,9 +995,21 @@ Partial Class frmChemOrdered
         Me.gcPatient.Enabled = False
         Me.gcPatient.Location = New System.Drawing.Point(15, 43)
         Me.gcPatient.Name = "gcPatient"
-        Me.gcPatient.Size = New System.Drawing.Size(312, 242)
+        Me.gcPatient.Size = New System.Drawing.Size(312, 264)
         Me.gcPatient.TabIndex = 173
         Me.gcPatient.Text = "Patient Details"
+        '
+        'LabelControl3
+        '
+        Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.LabelControl3.Appearance.Options.UseForeColor = True
+        Me.LabelControl3.Location = New System.Drawing.Point(9, 242)
+        Me.LabelControl3.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.LabelControl3.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.LabelControl3.Name = "LabelControl3"
+        Me.LabelControl3.Size = New System.Drawing.Size(74, 13)
+        Me.LabelControl3.TabIndex = 172
+        Me.LabelControl3.Text = "Email Address:"
         '
         'LabelControl42
         '
@@ -1007,6 +1024,22 @@ Partial Class frmChemOrdered
         Me.LabelControl42.Size = New System.Drawing.Size(59, 13)
         Me.LabelControl42.TabIndex = 161
         Me.LabelControl42.Text = "Civil Status:"
+        '
+        'txtEmail
+        '
+        Me.txtEmail.Location = New System.Drawing.Point(94, 239)
+        Me.txtEmail.Name = "txtEmail"
+        Me.txtEmail.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.txtEmail.Properties.Appearance.Options.UseForeColor = True
+        Me.txtEmail.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBackColor = True
+        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBorderColor = True
+        Me.txtEmail.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.txtEmail.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.txtEmail.Size = New System.Drawing.Size(213, 20)
+        Me.txtEmail.TabIndex = 171
         '
         'LabelControl43
         '
@@ -1151,7 +1184,7 @@ Partial Class frmChemOrdered
         Me.gcRemarks.CaptionImageOptions.SvgImage = CType(resources.GetObject("gcRemarks.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.gcRemarks.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.gcRemarks.Controls.Add(Me.txtRemarks)
-        Me.gcRemarks.Location = New System.Drawing.Point(333, 569)
+        Me.gcRemarks.Location = New System.Drawing.Point(333, 591)
         Me.gcRemarks.LookAndFeel.SkinName = "The Bezier"
         Me.gcRemarks.LookAndFeel.UseDefaultLookAndFeel = False
         Me.gcRemarks.Name = "gcRemarks"
@@ -1178,7 +1211,7 @@ Partial Class frmChemOrdered
         Me.gcSignature.Controls.Add(Me.LabelControl29)
         Me.gcSignature.Controls.Add(Me.LabelControl27)
         Me.gcSignature.Enabled = False
-        Me.gcSignature.Location = New System.Drawing.Point(15, 568)
+        Me.gcSignature.Location = New System.Drawing.Point(15, 590)
         Me.gcSignature.LookAndFeel.SkinName = "The Bezier"
         Me.gcSignature.LookAndFeel.UseDefaultLookAndFeel = False
         Me.gcSignature.Name = "gcSignature"
@@ -1199,7 +1232,7 @@ Partial Class frmChemOrdered
         Me.gcComment.CaptionImageOptions.SvgImage = CType(resources.GetObject("gcComment.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.gcComment.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.gcComment.Controls.Add(Me.txtComment)
-        Me.gcComment.Location = New System.Drawing.Point(786, 570)
+        Me.gcComment.Location = New System.Drawing.Point(786, 592)
         Me.gcComment.LookAndFeel.SkinName = "The Bezier"
         Me.gcComment.LookAndFeel.UseDefaultLookAndFeel = False
         Me.gcComment.Name = "gcComment"
@@ -1215,7 +1248,7 @@ Partial Class frmChemOrdered
         Me.Appearance.Options.UseForeColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1297, 690)
+        Me.ClientSize = New System.Drawing.Size(1295, 712)
         Me.ControlBox = False
         Me.Controls.Add(Me.gcComment)
         Me.Controls.Add(Me.gcSignature)
@@ -1271,6 +1304,7 @@ Partial Class frmChemOrdered
         CType(Me.gcPatient, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gcPatient.ResumeLayout(False)
         Me.gcPatient.PerformLayout()
+        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtAddress.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gcRemarks, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gcRemarks.ResumeLayout(False)
@@ -1358,4 +1392,6 @@ Partial Class frmChemOrdered
     Friend WithEvents tmTimeReleased As DateTimePicker
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents btnResend As DevExpress.XtraBars.BarLargeButtonItem
+    Friend WithEvents LabelControl3 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents txtEmail As DevExpress.XtraEditors.TextEdit
 End Class

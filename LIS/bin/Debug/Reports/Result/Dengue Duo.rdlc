@@ -639,7 +639,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SWITCH(Fields!TestCode.Value = "NS1_antigen", Fields!TestName.Value)</Value>
+                                  <Value>=SWITCH(Fields!TestCode.Value = "NS1_Antigen", Fields!TestName.Value)</Value>
                                   <Style>
                                     <FontFamily>microsoft sans serif</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -678,7 +678,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SWITCH(Fields!TestCode.Value = "NS1_antigen", Fields!SI.Value)</Value>
+                                  <Value>=SWITCH(Fields!TestCode.Value = "NS1_Antigen", Fields!SI.Value)</Value>
                                   <Style>
                                     <FontFamily>microsoft sans serif</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -891,7 +891,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <Visibility>
-                        <Hidden>=IIF(Fields!TestCode.Value = "NS1_antigen", False, True)</Hidden>
+                        <Hidden>=IIF(Fields!TestCode.Value = "NS1_Antigen", False, True)</Hidden>
                       </Visibility>
                     </TablixMember>
                     <TablixMember>

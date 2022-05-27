@@ -32,6 +32,7 @@ Partial Class frmEmailPush
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.btnSendResult = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.btnClose = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
@@ -49,7 +50,6 @@ Partial Class frmEmailPush
         Me.txtTest = New DevExpress.XtraEditors.TextEdit()
         Me.picCode = New System.Windows.Forms.PictureBox()
         Me.bcCode = New DevExpress.XtraEditors.BarCodeControl()
-        Me.btnClose = New DevExpress.XtraBars.BarLargeButtonItem()
         CType(Me.XTabPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XTabPatient.SuspendLayout()
         Me.XtraTabPage1.SuspendLayout()
@@ -165,6 +165,16 @@ Partial Class frmEmailPush
         Me.btnSendResult.ImageOptions.SvgImage = CType(resources.GetObject("btnSendResult.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnSendResult.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnSendResult.Name = "btnSendResult"
+        '
+        'btnClose
+        '
+        Me.btnClose.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right
+        Me.btnClose.Caption = "&Close"
+        Me.btnClose.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
+        Me.btnClose.Id = 1
+        Me.btnClose.ImageOptions.SvgImage = CType(resources.GetObject("btnClose.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnClose.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
+        Me.btnClose.Name = "btnClose"
         '
         'barDockControlTop
         '
@@ -362,16 +372,6 @@ Partial Class frmEmailPush
         Me.bcCode.Size = New System.Drawing.Size(343, 92)
         Me.bcCode.Symbology = Code128Generator1
         Me.bcCode.TabIndex = 141
-        '
-        'btnClose
-        '
-        Me.btnClose.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right
-        Me.btnClose.Caption = "&Close"
-        Me.btnClose.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
-        Me.btnClose.Id = 1
-        Me.btnClose.ImageOptions.SvgImage = CType(resources.GetObject("BarLargeButtonItem1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnClose.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
-        Me.btnClose.Name = "btnClose"
         '
         'frmEmailPush
         '
