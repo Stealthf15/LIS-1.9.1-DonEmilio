@@ -1450,6 +1450,7 @@
     <EmbeddedResource Include="MainFOrm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Reports Form\RPTCensusChart.resx">
       <DependentUpon>RPTCensusChart.vb</DependentUpon>
     </EmbeddedResource>
