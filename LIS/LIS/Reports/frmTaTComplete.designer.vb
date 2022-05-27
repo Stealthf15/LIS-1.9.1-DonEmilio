@@ -28,6 +28,7 @@ Partial Class frmTatComplete
         Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.btnPrint = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.btnExport = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnRefresh = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnClose = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.BarAndDockingController = New DevExpress.XtraBars.BarAndDockingController(Me.components)
@@ -53,21 +54,17 @@ Partial Class frmTatComplete
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.cboMedtech = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.pnlHeader = New DevExpress.XtraEditors.PanelControl()
-        Me.btnExport = New DevExpress.XtraBars.BarLargeButtonItem()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XtraTabControl1.SuspendLayout()
-        Me.XtraTabPage1.SuspendLayout()
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XtraTabPage3.SuspendLayout()
         CType(Me.dtTaTQuant, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridTaTQuant, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLimit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboMedtech.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlHeader.SuspendLayout()
         Me.SuspendLayout()
         '
         'ImageList
@@ -112,6 +109,15 @@ Partial Class frmTatComplete
         Me.btnPrint.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnPrint.Name = "btnPrint"
         '
+        'btnExport
+        '
+        Me.btnExport.Caption = "Export to Excel"
+        Me.btnExport.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
+        Me.btnExport.Id = 3
+        Me.btnExport.ImageOptions.SvgImage = CType(resources.GetObject("btnExport.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnExport.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
+        Me.btnExport.Name = "btnExport"
+        '
         'btnRefresh
         '
         Me.btnRefresh.Caption = "&Refresh"
@@ -149,7 +155,7 @@ Partial Class frmTatComplete
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
-        Me.barDockControlTop.Size = New System.Drawing.Size(1244, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1244, 0)
         '
         'barDockControlBottom
         '
@@ -163,17 +169,17 @@ Partial Class frmTatComplete
         '
         Me.barDockControlLeft.CausesValidation = False
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
-        Me.barDockControlLeft.Location = New System.Drawing.Point(0, 36)
+        Me.barDockControlLeft.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 611)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 647)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1244, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1244, 0)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 611)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 647)
         '
         'XtraTabControl1
         '
@@ -191,6 +197,7 @@ Partial Class frmTatComplete
         '
         Me.XtraTabPage1.Controls.Add(Me.dtResult)
         Me.XtraTabPage1.Controls.Add(Me.lblDiffTime)
+        Me.XtraTabPage1.Enabled = True
         Me.XtraTabPage1.ImageOptions.Image = CType(resources.GetObject("XtraTabPage1.ImageOptions.Image"), System.Drawing.Image)
         Me.XtraTabPage1.Name = "XtraTabPage1"
         Me.XtraTabPage1.Size = New System.Drawing.Size(1222, 527)
@@ -228,6 +235,7 @@ Partial Class frmTatComplete
         '
         Me.XtraTabPage3.Controls.Add(Me.dtTaTQuant)
         Me.XtraTabPage3.Controls.Add(Me.lblTotalCount)
+        Me.XtraTabPage3.Enabled = True
         Me.XtraTabPage3.Name = "XtraTabPage3"
         Me.XtraTabPage3.Size = New System.Drawing.Size(1222, 527)
         Me.XtraTabPage3.Text = "TaT Quantitative"
@@ -284,6 +292,9 @@ Partial Class frmTatComplete
         '
         Me.cboLimit.Location = New System.Drawing.Point(350, 6)
         Me.cboLimit.Name = "cboLimit"
+        '
+        '
+        '
         Me.cboLimit.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.cboLimit.Properties.Appearance.Options.UseForeColor = True
         Me.cboLimit.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
@@ -337,6 +348,9 @@ Partial Class frmTatComplete
         '
         Me.cboMedtech.Location = New System.Drawing.Point(603, 6)
         Me.cboMedtech.Name = "cboMedtech"
+        '
+        '
+        '
         Me.cboMedtech.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.cboMedtech.Properties.Appearance.Options.UseForeColor = True
         Me.cboMedtech.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
@@ -366,15 +380,6 @@ Partial Class frmTatComplete
         Me.pnlHeader.Size = New System.Drawing.Size(1223, 32)
         Me.pnlHeader.TabIndex = 35
         '
-        'btnExport
-        '
-        Me.btnExport.Caption = "Export to Excel"
-        Me.btnExport.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
-        Me.btnExport.Id = 3
-        Me.btnExport.ImageOptions.SvgImage = CType(resources.GetObject("BarLargeButtonItem1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnExport.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
-        Me.btnExport.Name = "btnExport"
-        '
         'frmTatComplete
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -396,51 +401,45 @@ Partial Class frmTatComplete
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XtraTabControl1.ResumeLayout(False)
-        Me.XtraTabPage1.ResumeLayout(False)
-        Me.XtraTabPage1.PerformLayout()
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XtraTabPage3.ResumeLayout(False)
-        Me.XtraTabPage3.PerformLayout()
         CType(Me.dtTaTQuant, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridTaTQuant, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLimit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboMedtech.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.pnlHeader.ResumeLayout(False)
-        Me.pnlHeader.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents BarManager As DevExpress.XtraBars.BarManager
-    Friend WithEvents Bar2 As DevExpress.XtraBars.Bar
-    Friend WithEvents btnPrint As DevExpress.XtraBars.BarLargeButtonItem
-    Friend WithEvents btnRefresh As DevExpress.XtraBars.BarLargeButtonItem
-    Friend WithEvents btnClose As DevExpress.XtraBars.BarLargeButtonItem
-    Friend WithEvents BarAndDockingController As DevExpress.XtraBars.BarAndDockingController
-    Friend WithEvents barDockControlTop As DevExpress.XtraBars.BarDockControl
-    Friend WithEvents barDockControlBottom As DevExpress.XtraBars.BarDockControl
-    Friend WithEvents barDockControlLeft As DevExpress.XtraBars.BarDockControl
-    Friend WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
     Friend WithEvents ImageList As System.Windows.Forms.ImageList
-    Friend WithEvents XtraTabControl1 As DevExpress.XtraTab.XtraTabControl
-    Friend WithEvents XtraTabPage1 As DevExpress.XtraTab.XtraTabPage
-    Friend WithEvents btnSearch As DevExpress.XtraEditors.SimpleButton
-    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents cboLimit As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents dtFrom As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtTo As System.Windows.Forms.DateTimePicker
-    Friend WithEvents LabelControl4 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents cboMedtech As DevExpress.XtraEditors.ComboBoxEdit
-    Friend WithEvents dtResult As DevExpress.XtraGrid.GridControl
-    Friend WithEvents GridView As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents XtraTabPage3 As DevExpress.XtraTab.XtraTabPage
-    Friend WithEvents dtTaTQuant As DevExpress.XtraGrid.GridControl
-    Friend WithEvents GridTaTQuant As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents pnlHeader As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents lblDiffTime As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents lblTotalCount As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents btnExport As DevExpress.XtraBars.BarLargeButtonItem
+    Private WithEvents BarManager As DevExpress.XtraBars.BarManager
+    Private WithEvents Bar2 As DevExpress.XtraBars.Bar
+    Private WithEvents btnPrint As DevExpress.XtraBars.BarLargeButtonItem
+    Private WithEvents btnRefresh As DevExpress.XtraBars.BarLargeButtonItem
+    Private WithEvents btnClose As DevExpress.XtraBars.BarLargeButtonItem
+    Private WithEvents BarAndDockingController As DevExpress.XtraBars.BarAndDockingController
+    Private WithEvents barDockControlTop As DevExpress.XtraBars.BarDockControl
+    Private WithEvents barDockControlBottom As DevExpress.XtraBars.BarDockControl
+    Private WithEvents barDockControlLeft As DevExpress.XtraBars.BarDockControl
+    Private WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
+    Private WithEvents XtraTabControl1 As DevExpress.XtraTab.XtraTabControl
+    Private WithEvents XtraTabPage1 As DevExpress.XtraTab.XtraTabPage
+    Private WithEvents btnSearch As DevExpress.XtraEditors.SimpleButton
+    Private WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
+    Private WithEvents cboLimit As DevExpress.XtraEditors.ComboBoxEdit
+    Private WithEvents LabelControl4 As DevExpress.XtraEditors.LabelControl
+    Private WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
+    Private WithEvents cboMedtech As DevExpress.XtraEditors.ComboBoxEdit
+    Private WithEvents dtResult As DevExpress.XtraGrid.GridControl
+    Private WithEvents GridView As DevExpress.XtraGrid.Views.Grid.GridView
+    Private WithEvents XtraTabPage3 As DevExpress.XtraTab.XtraTabPage
+    Private WithEvents dtTaTQuant As DevExpress.XtraGrid.GridControl
+    Private WithEvents GridTaTQuant As DevExpress.XtraGrid.Views.Grid.GridView
+    Private WithEvents pnlHeader As DevExpress.XtraEditors.PanelControl
+    Private WithEvents lblDiffTime As DevExpress.XtraEditors.LabelControl
+    Private WithEvents lblTotalCount As DevExpress.XtraEditors.LabelControl
+    Private WithEvents btnExport As DevExpress.XtraBars.BarLargeButtonItem
 End Class
