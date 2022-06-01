@@ -290,13 +290,55 @@ Public Class frmTatComplete
 
     Private Sub btnExport_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnExport.ItemClick
         Try
-            If Not Directory.Exists(FolderPath) Then
-                Directory.CreateDirectory(FolderPath)
+            If XtraControlTab.SelectedTabPageIndex = 0 Then
+                If Not Directory.Exists(FolderPath) Then
+                    Directory.CreateDirectory(FolderPath)
+                End If
+                GridView.ExportToXls(FolderPath & "\Tat_" & cboLimit.Text & "_" & Now.ToString("yyyyMMdd") & ".xls")
+                Process.Start(FolderPath & "\Tat_" & cboLimit.Text & "_" & Now.ToString("yyyyMMdd") & ".xls")
+            ElseIf XtraControlTab.SelectedTabPageIndex = 1 Then
+                If Not Directory.Exists(FolderPath) Then
+                    Directory.CreateDirectory(FolderPath)
+                End If
+                GridTaTQuant.ExportToXls(FolderPath & "\TatQuantity_" & cboLimit.Text & "_" & Now.ToString("yyyyMMdd") & ".xls")
+                Process.Start(FolderPath & "\TatQuantity_" & cboLimit.Text & "_" & Now.ToString("yyyyMMdd") & ".xls")
             End If
-            GridView.ExportToXls(FolderPath & "\Tat_" & cboLimit.Text & "_" & Now.ToString("yyyyMMdd") & ".xls")
+
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Exporting", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End Try
+    End Sub
+
+    Private Sub GridView_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridView.RowCellStyle
+        'Try
+        Dim view As GridView = TryCast(sender, GridView)
+        If Not view.GetRowCellValue(e.RowHandle, "Status") = "" Then
+
+            If view.GetRowCellValue(e.RowHandle, "Status").ToString = "Delayed" Then
+                e.Appearance.BackColor = Color.Crimson
+                e.Appearance.BackColor2 = Color.Crimson
+                e.Appearance.ForeColor = Color.White
+            End If
+        End If
+        'Catch ex As Exception
+
+        'End Try
+    End Sub
+
+    Private Sub GridTaTQuant_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridTaTQuant.RowCellStyle
+        'Try
+        Dim view As GridView = TryCast(sender, GridView)
+        If Not view.GetRowCellValue(e.RowHandle, "Status") = "" Then
+
+            If view.GetRowCellValue(e.RowHandle, "Status").ToString = "Delayed" Then
+                e.Appearance.BackColor = Color.Crimson
+                e.Appearance.BackColor2 = Color.Crimson
+                e.Appearance.ForeColor = Color.White
+            End If
+        End If
+        'Catch ex As Exception
+
+        'End Try
     End Sub
 End Class

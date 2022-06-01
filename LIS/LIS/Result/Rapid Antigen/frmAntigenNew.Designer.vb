@@ -1234,21 +1234,17 @@ Partial Class frmAntigenNew
         '
         'txtReagent
         '
-        Me.txtReagent.Enabled = False
         Me.txtReagent.Location = New System.Drawing.Point(104, 65)
         Me.txtReagent.Name = "txtReagent"
         Me.txtReagent.Size = New System.Drawing.Size(321, 22)
         Me.txtReagent.TabIndex = 69
-        Me.txtReagent.Text = "2019 nCoV Antigen Test Dilution Buffer"
         '
         'txtMethodUsed
         '
-        Me.txtMethodUsed.Enabled = False
         Me.txtMethodUsed.Location = New System.Drawing.Point(104, 35)
         Me.txtMethodUsed.Name = "txtMethodUsed"
         Me.txtMethodUsed.Size = New System.Drawing.Size(321, 22)
         Me.txtMethodUsed.TabIndex = 68
-        Me.txtMethodUsed.Text = "Colloidal Gold Immunochromatography"
         '
         'Label5
         '

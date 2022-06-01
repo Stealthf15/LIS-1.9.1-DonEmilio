@@ -36,7 +36,7 @@ Partial Class frmTatComplete
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.XtraTabControl1 = New DevExpress.XtraTab.XtraTabControl()
+        Me.XtraControlTab = New DevExpress.XtraTab.XtraTabControl()
         Me.XtraTabPage1 = New DevExpress.XtraTab.XtraTabPage()
         Me.dtResult = New DevExpress.XtraGrid.GridControl()
         Me.GridView = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -56,8 +56,8 @@ Partial Class frmTatComplete
         Me.pnlHeader = New DevExpress.XtraEditors.PanelControl()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XtraTabControl1.SuspendLayout()
+        CType(Me.XtraControlTab, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XtraControlTab.SuspendLayout()
         Me.XtraTabPage1.SuspendLayout()
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -184,17 +184,17 @@ Partial Class frmTatComplete
         Me.barDockControlRight.Manager = Me.BarManager
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 611)
         '
-        'XtraTabControl1
+        'XtraControlTab
         '
-        Me.XtraTabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.XtraControlTab.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XtraTabControl1.Location = New System.Drawing.Point(8, 77)
-        Me.XtraTabControl1.Name = "XtraTabControl1"
-        Me.XtraTabControl1.SelectedTabPage = Me.XtraTabPage1
-        Me.XtraTabControl1.Size = New System.Drawing.Size(1224, 559)
-        Me.XtraTabControl1.TabIndex = 15
-        Me.XtraTabControl1.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1, Me.XtraTabPage3})
+        Me.XtraControlTab.Location = New System.Drawing.Point(8, 77)
+        Me.XtraControlTab.Name = "XtraControlTab"
+        Me.XtraControlTab.SelectedTabPage = Me.XtraTabPage1
+        Me.XtraControlTab.Size = New System.Drawing.Size(1224, 559)
+        Me.XtraControlTab.TabIndex = 15
+        Me.XtraControlTab.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1, Me.XtraTabPage3})
         '
         'XtraTabPage1
         '
@@ -381,7 +381,7 @@ Partial Class frmTatComplete
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1244, 647)
         Me.Controls.Add(Me.pnlHeader)
-        Me.Controls.Add(Me.XtraTabControl1)
+        Me.Controls.Add(Me.XtraControlTab)
         Me.Controls.Add(Me.barDockControlLeft)
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
@@ -393,8 +393,8 @@ Partial Class frmTatComplete
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.XtraTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XtraTabControl1.ResumeLayout(False)
+        CType(Me.XtraControlTab, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XtraControlTab.ResumeLayout(False)
         Me.XtraTabPage1.ResumeLayout(False)
         Me.XtraTabPage1.PerformLayout()
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).EndInit()
@@ -423,7 +423,7 @@ Partial Class frmTatComplete
     Friend WithEvents barDockControlLeft As DevExpress.XtraBars.BarDockControl
     Friend WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
     Friend WithEvents ImageList As System.Windows.Forms.ImageList
-    Friend WithEvents XtraTabControl1 As DevExpress.XtraTab.XtraTabControl
+    Friend WithEvents XtraControlTab As DevExpress.XtraTab.XtraTabControl
     Friend WithEvents XtraTabPage1 As DevExpress.XtraTab.XtraTabPage
     Friend WithEvents btnSearch As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
