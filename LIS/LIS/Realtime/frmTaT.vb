@@ -720,7 +720,13 @@ Public Class frmTaT
     'End Sub
 
     Private Sub frmTaT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        tmSlide.Start()
+        'tmSlide.Start()
+        LoadTaTTracker()
+        LoadStats()
+        LoadTaTFrequency()
+        LoadTaT()
+        LoadTaTRatio()
+
     End Sub
 
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick

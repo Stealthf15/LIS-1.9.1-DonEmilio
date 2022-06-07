@@ -345,10 +345,42 @@
           <DataField>HbA1C</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="pH">
+          <DataField>pH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pCO2">
+          <DataField>pCO2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pO2">
+          <DataField>pO2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SO2">
+          <DataField>SO2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BEb">
+          <DataField>BEb</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCO2">
+          <DataField>HCO3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HCO3">
+          <DataField>HCO3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SBC">
+          <DataField>SBC</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>db_sbsi_lis_universalDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\SBSI\Software\LIS Optimized\LIS\db_sbsi_lis_universalDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\SBSI-IT\Desktop\LIS Optimized 1.8.1 DonEmilio - Revised\LIS\db_sbsi_lis_universalDataSet.xsd</rd:SchemaPath>
         <rd:TableName>worksheet_chemistry</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -1428,7 +1460,63 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value>=IIf(Fields!Hb1AC.Value LIKE "", "", "Hb1AC = " &amp; Fields!Hb1AC.Value)</Value>
+                                  <Value>=IIf(Fields!Hb1AC.Value LIKE "", "", "Hb1AC = " &amp; Fields!Hb1AC.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!pH.Value LIKE "", "", "pH = " &amp; Fields!pH.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!pCO2.Value LIKE "", "", "pCO2 = " &amp; Fields!pCO2.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!pO2.Value LIKE "", "", "pO2 = " &amp; Fields!pO2.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!SO2.Value LIKE "", "", "SO2% = " &amp; Fields!SO2.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!BEb.Value LIKE "", "", "BE-b = " &amp; Fields!BEb.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!TCO2.Value LIKE "", "", "TCO2 = " &amp; Fields!TCO2.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!HCO3.Value LIKE "", "", "HCO3 = " &amp; Fields!HCO3.Value &amp; " , ")</Value>
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=IIf(Fields!SBC.Value LIKE "", "", "SBC = " &amp; Fields!SBC.Value &amp; " , ")</Value>
                                   <Style>
                                     <FontFamily>Tahoma</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1510,7 +1598,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Total Test: </Value>
+                    <Value>Total Patient: </Value>
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Bold</FontWeight>

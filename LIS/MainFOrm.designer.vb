@@ -56,6 +56,7 @@ Partial Class MainFOrm
         Me.btnRealtime = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.AccordionControlSeparator9 = New DevExpress.XtraBars.Navigation.AccordionControlSeparator()
         Me.accEmailPush = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.aceDashboard = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.btnLogout = New DevExpress.XtraEditors.SimpleButton()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -116,7 +117,6 @@ Partial Class MainFOrm
         Me.lblHospitalName = New DevExpress.XtraEditors.LabelControl()
         Me.TimerNew = New System.Windows.Forms.Timer(Me.components)
         Me.TimerPending = New System.Windows.Forms.Timer(Me.components)
-        Me.aceDashboard = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.SidePanel1.SuspendLayout()
         CType(Me.AccordionControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -375,6 +375,13 @@ Partial Class MainFOrm
         Me.accEmailPush.Name = "accEmailPush"
         Me.accEmailPush.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item
         Me.accEmailPush.Text = "Email Push Result"
+        '
+        'aceDashboard
+        '
+        Me.aceDashboard.Expanded = True
+        Me.aceDashboard.ImageOptions.SvgImage = CType(resources.GetObject("aceDashboard.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.aceDashboard.Name = "aceDashboard"
+        Me.aceDashboard.Text = "Dashboard"
         '
         'btnLogout
         '
@@ -1042,13 +1049,6 @@ Partial Class MainFOrm
         'TimerPending
         '
         Me.TimerPending.Interval = 1000
-        '
-        'aceDashboard
-        '
-        Me.aceDashboard.Expanded = True
-        Me.aceDashboard.ImageOptions.SvgImage = CType(resources.GetObject("aceDashboard.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.aceDashboard.Name = "aceDashboard"
-        Me.aceDashboard.Text = "Dashboard"
         '
         'MainFOrm
         '

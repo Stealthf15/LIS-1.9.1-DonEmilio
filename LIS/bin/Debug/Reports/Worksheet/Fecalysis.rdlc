@@ -1120,7 +1120,7 @@
             <Top>0.04352in</Top>
             <Left>0.00947in</Left>
             <Height>0.6437in</Height>
-            <Width>12.62271in</Width>
+            <Width>12.62272in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1134,7 +1134,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Total Test: </Value>
+                    <Value>Total Patient: </Value>
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -1173,7 +1173,7 @@
         <Height>1.10416in</Height>
         <Style />
       </Body>
-      <Width>12.63218in</Width>
+      <Width>12.63219in</Width>
       <Page>
         <PageHeader>
           <Height>1.33031in</Height>

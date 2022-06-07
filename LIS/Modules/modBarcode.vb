@@ -12,11 +12,11 @@ Module modBarcode
     Private WithEvents PrintDocument As New PrintDocument
     Private PrintPreviewDialog As New PrintPreviewDialog
 
-    Public Specimen As String, BCsID As String, BCpID As String, BCpName As String, BCBDate As String, BCGender As String, BCTest As String, BCRequest As String, BCAge As String
+    Public Specimen As String, BCsID As String, BCpID As String, BCpName As String, BCBDate As String, BCGender As String, BCTest As String, BCRequest As String, BCAge As String, BCPriority As String
 
     Public BCSection, BCSubSection As String
 
-    Public Sub PrintBarcode(bc_Specimen As String, bc_sID As String, bc_pID As String, bc_pName As String, bc_BDate As String, bc_Gender As String, bc_Section As String, bc_SubSection As String, num_copies As Integer)
+    Public Sub PrintBarcode(bc_Specimen As String, bc_sID As String, bc_pID As String, bc_pName As String, bc_BDate As String, bc_Gender As String, bc_Section As String, bc_SubSection As String, num_copies As Integer, bc_priority As String)
         If My.Settings.PrintBarcode Then
             Specimen = bc_Specimen
             BCsID = bc_sID
@@ -24,6 +24,7 @@ Module modBarcode
             BCpName = bc_pName
             BCBDate = bc_BDate
             BCGender = bc_Gender
+            BCPriority = bc_priority
             BCSection = bc_Section
             BCSubSection = bc_SubSection
 
@@ -85,6 +86,7 @@ Module modBarcode
         e.Graphics.DrawString(BCsID, myFont, myBrush, 40, 70)
         e.Graphics.DrawString(BCRequest, myFont, myBrush, 10, 80)
         e.Graphics.DrawString(Now, myFont, myBrush, 10, 90)
+        e.Graphics.DrawString(BCPriority, myFont, myBrush, 145, 90)
 
         ''R2TMC Barcode Format
         'e.Graphics.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBilinear

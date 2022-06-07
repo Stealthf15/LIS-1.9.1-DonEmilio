@@ -89,6 +89,7 @@ Partial Class frmAntigenOrdered
         Me.LabelControl50 = New DevExpress.XtraEditors.LabelControl()
         Me.txtAddress = New DevExpress.XtraEditors.TextEdit()
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
+        Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         Me.txtSampleID = New DevExpress.XtraEditors.TextEdit()
         Me.txtContact = New DevExpress.XtraEditors.TextEdit()
         Me.txtClass = New DevExpress.XtraEditors.ComboBoxEdit()
@@ -109,7 +110,6 @@ Partial Class frmAntigenOrdered
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         CType(Me.cboCS.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl5.SuspendLayout()
@@ -1027,6 +1027,18 @@ Partial Class frmAntigenOrdered
         Me.GroupControl1.TabIndex = 188
         Me.GroupControl1.Text = "Patient Details"
         '
+        'LabelControl3
+        '
+        Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.LabelControl3.Appearance.Options.UseForeColor = True
+        Me.LabelControl3.Location = New System.Drawing.Point(8, 242)
+        Me.LabelControl3.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.LabelControl3.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.LabelControl3.Name = "LabelControl3"
+        Me.LabelControl3.Size = New System.Drawing.Size(74, 13)
+        Me.LabelControl3.TabIndex = 170
+        Me.LabelControl3.Text = "Email Address:"
+        '
         'txtSampleID
         '
         Me.txtSampleID.Location = New System.Drawing.Point(90, 32)
@@ -1236,7 +1248,6 @@ Partial Class frmAntigenOrdered
         Me.txtReagent.Name = "txtReagent"
         Me.txtReagent.Size = New System.Drawing.Size(321, 22)
         Me.txtReagent.TabIndex = 69
-        Me.txtReagent.Text = "2019 nCoV Antigen Test Dilution Buffer"
         '
         'txtMethodUsed
         '
@@ -1245,7 +1256,6 @@ Partial Class frmAntigenOrdered
         Me.txtMethodUsed.Name = "txtMethodUsed"
         Me.txtMethodUsed.Size = New System.Drawing.Size(321, 22)
         Me.txtMethodUsed.TabIndex = 68
-        Me.txtMethodUsed.Text = "Colloidal Gold Immunochromatography"
         '
         'Label5
         '
@@ -1286,18 +1296,6 @@ Partial Class frmAntigenOrdered
         Me.Label2.Size = New System.Drawing.Size(80, 13)
         Me.Label2.TabIndex = 64
         Me.Label2.Text = "Method Used:"
-        '
-        'LabelControl3
-        '
-        Me.LabelControl3.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
-        Me.LabelControl3.Appearance.Options.UseForeColor = True
-        Me.LabelControl3.Location = New System.Drawing.Point(8, 242)
-        Me.LabelControl3.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.LabelControl3.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.LabelControl3.Name = "LabelControl3"
-        Me.LabelControl3.Size = New System.Drawing.Size(74, 13)
-        Me.LabelControl3.TabIndex = 170
-        Me.LabelControl3.Text = "Email Address:"
         '
         'frmAntigenOrdered
         '

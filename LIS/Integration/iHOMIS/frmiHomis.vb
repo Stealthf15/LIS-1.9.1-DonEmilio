@@ -200,7 +200,9 @@ Public Class frmiHOMIS
                                      GridView.GetFocusedRowCellValue("DateofBirth"),
                                      GridView.GetFocusedRowCellValue(GridView.Columns("Sex")),
                                      GridView.GetFocusedRowCellValue(GridView.Columns("Section")),
-                                     HISCode, 1)
+                                     HISCode,
+                                     1,
+                                     GridView.GetFocusedRowCellValue(GridView.Columns("Priority")))
 
             Catch ex As Exception
                 Disconnect()

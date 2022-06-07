@@ -841,14 +841,15 @@ Public Class frmSeroWorklist
     End Sub
 
     Private Sub btnBarcode_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnBarcode.ItemClick
-        PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("Sex")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("Section")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")), 1)
+        PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
         'Activity Logs
         ActivityLogs(GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")),
                      GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")),

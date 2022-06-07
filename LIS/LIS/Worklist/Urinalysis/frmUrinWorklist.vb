@@ -64,7 +64,8 @@ Public Class frmUrinWorklist
                                     additional_info.cs_no AS ChargeSlip,
                                     patient_remarks.remarks AS Remarks,
                                     patient_remarks.diagnosis AS Diagnosis,
-                                    email_details.email_address as EmailAddress
+                                    email_details.email_address as EmailAddress,
+                                    `tmpworklist`.priority AS Priority
                                 FROM `tmpWorklist` 
                                     Left JOIN `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                                     Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -165,6 +166,9 @@ Public Class frmUrinWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Public Sub LoadRecordsCompleted()
@@ -203,7 +207,8 @@ Public Class frmUrinWorklist
                                 additional_info.cs_no AS ChargeSlip,
                                 patient_remarks.remarks As Remarks,
                                 patient_remarks.diagnosis AS Diagnosis,
-                                email_details.email_address as EmailAddress
+                                email_details.email_address as EmailAddress,
+                                `order`.priority AS Priority
                             FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -310,6 +315,9 @@ Public Class frmUrinWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
@@ -351,7 +359,8 @@ Public Class frmUrinWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -451,7 +460,8 @@ Public Class frmUrinWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -551,7 +561,8 @@ Public Class frmUrinWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -663,7 +674,8 @@ Public Class frmUrinWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -761,7 +773,8 @@ Public Class frmUrinWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -858,7 +871,8 @@ Public Class frmUrinWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -1130,14 +1144,15 @@ Public Class frmUrinWorklist
     End Sub
 
     Private Sub btnBarcode_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnBarcode.ItemClick
-        PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("Sex")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("Section")),
-                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")), 1)
+        PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
         'Activity Logs
         ActivityLogs(GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")),
                      GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")),
@@ -1275,7 +1290,7 @@ Public Class frmUrinWorklist
         frmUrinOrdered.txtChargeSlip.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("ChargeSlip")).ToString
         frmUrinOrdered.txtRemarks.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Remarks")).ToString
         frmUrinOrdered.txtComment.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Diagnosis")).ToString
-        frmUrinOrdered.txtEmail.Text = GridView.GetFocusedRowCellValue(GridView.Columns("EmailAddress")).ToString
+        frmUrinOrdered.txtEmail.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("EmailAddress")).ToString
 
         'For Age computation
         Dim Age As String = ""

@@ -68,7 +68,8 @@ Public Class frmMolWorklist
                                     rat_assay_info.method_used as MethodUsed,
                                     rat_assay_info.reagent as Reagent,
                                     rat_assay_info.lot_number as LotNumber,
-                                    rat_assay_info.expiry as Expiry
+                                    rat_assay_info.expiry as Expiry,
+                                    `tmpworklist`.priority AS Priority
                                 FROM `tmpWorklist`
                                     Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                                     Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -173,6 +174,9 @@ Public Class frmMolWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Public Sub LoadRecordsCompleted()
@@ -215,7 +219,8 @@ Public Class frmMolWorklist
                                     rat_assay_info.method_used as MethodUsed,
                                     rat_assay_info.reagent as Reagent,
                                     rat_assay_info.lot_number as LotNumber,
-                                    rat_assay_info.expiry as Expiry
+                                    rat_assay_info.expiry as Expiry,
+                                    `order`.priority AS Priority
                                 FROM `order` 
 							        Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = order.testtype And specimen_tracking.sub_section = order.sub_section
                                     Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -322,6 +327,9 @@ Public Class frmMolWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
@@ -367,7 +375,8 @@ Public Class frmMolWorklist
                         rat_assay_info.method_used as MethodUsed,
                         rat_assay_info.reagent as Reagent,
                         rat_assay_info.lot_number as LotNumber,
-                        rat_assay_info.expiry as Expiry
+                        rat_assay_info.expiry as Expiry,
+                        `tmpworklist`.priority AS Priority
                     FROM `tmpWorklist` 
                         Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -466,7 +475,8 @@ Public Class frmMolWorklist
                             rat_assay_info.method_used as MethodUsed,
                             rat_assay_info.reagent as Reagent,
                             rat_assay_info.lot_number as LotNumber,
-                            rat_assay_info.expiry as Expiry
+                            rat_assay_info.expiry as Expiry,
+                            `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
                             Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                             Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -565,7 +575,8 @@ Public Class frmMolWorklist
                             rat_assay_info.method_used as MethodUsed,
                             rat_assay_info.reagent as Reagent,
                             rat_assay_info.lot_number as LotNumber,
-                            rat_assay_info.expiry as Expiry
+                            rat_assay_info.expiry as Expiry,
+                            `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
                             Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                             Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -676,7 +687,8 @@ Public Class frmMolWorklist
                                         rat_assay_info.method_used as MethodUsed,
                                         rat_assay_info.reagent as Reagent,
                                         rat_assay_info.lot_number as LotNumber,
-                                        rat_assay_info.expiry as Expiry
+                                        rat_assay_info.expiry as Expiry,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -779,7 +791,8 @@ Public Class frmMolWorklist
                                         rat_assay_info.method_used as MethodUsed,
                                         rat_assay_info.reagent as Reagent,
                                         rat_assay_info.lot_number as LotNumber,
-                                        rat_assay_info.expiry as Expiry
+                                        rat_assay_info.expiry as Expiry,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -882,7 +895,8 @@ Public Class frmMolWorklist
                                         rat_assay_info.method_used as MethodUsed,
                                         rat_assay_info.reagent as Reagent,
                                         rat_assay_info.lot_number as LotNumber,
-                                        rat_assay_info.expiry as Expiry
+                                        rat_assay_info.expiry as Expiry,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -1171,14 +1185,15 @@ Public Class frmMolWorklist
         Dim selectedRows() As Integer = GridView.GetSelectedRows()
         For Each rowHandle As Integer In selectedRows
             If rowHandle >= 0 Then
-                PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")), 1)
+                PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
                 'Activity Logs
                 ActivityLogs(GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
                              GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),

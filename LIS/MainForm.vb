@@ -137,9 +137,9 @@ Public Class MainFOrm
             f.Close()
         Next
         lblTitle.Text = "DASHBOARD"
-        frmDashboard.WindowState = FormWindowState.Maximized
-        frmDashboard.MdiParent = Me
-        frmDashboard.Show()
+        frmTatMonitor.WindowState = FormWindowState.Maximized
+        'frmTatMonitor.MdiParent = Me
+        frmTatMonitor.Show()
     End Sub
 
 

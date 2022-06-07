@@ -217,7 +217,7 @@ Partial Class frmTaT
         Series4.Legend = "Legend1"
         Series4.Name = "Series1"
         Me.ChartRatio.Series.Add(Series4)
-        Me.ChartRatio.Size = New System.Drawing.Size(1433, 508)
+        Me.ChartRatio.Size = New System.Drawing.Size(1437, 507)
         Me.ChartRatio.TabIndex = 15
         Me.ChartRatio.Text = "Chart1"
         '
@@ -238,7 +238,7 @@ Partial Class frmTaT
         Series3.Legend = "Legend1"
         Series3.Name = "Series1"
         Me.ChartTaT.Series.Add(Series3)
-        Me.ChartTaT.Size = New System.Drawing.Size(1433, 508)
+        Me.ChartTaT.Size = New System.Drawing.Size(1437, 507)
         Me.ChartTaT.TabIndex = 16
         Me.ChartTaT.Text = "Chart2"
         '
@@ -255,7 +255,7 @@ Partial Class frmTaT
         Series2.Legend = "Legend1"
         Series2.Name = "Series1"
         Me.ChartTaTFrequency.Series.Add(Series2)
-        Me.ChartTaTFrequency.Size = New System.Drawing.Size(1433, 508)
+        Me.ChartTaTFrequency.Size = New System.Drawing.Size(1437, 507)
         Me.ChartTaTFrequency.TabIndex = 16
         Me.ChartTaTFrequency.Text = "Chart1"
         '
@@ -493,28 +493,28 @@ Partial Class frmTaT
         Me.XtraTabPage2.Controls.Add(Me.GroupControl1)
         Me.XtraTabPage2.Controls.Add(Me.GroupControl2)
         Me.XtraTabPage2.Name = "XtraTabPage2"
-        Me.XtraTabPage2.Size = New System.Drawing.Size(1433, 508)
+        Me.XtraTabPage2.Size = New System.Drawing.Size(1437, 507)
         Me.XtraTabPage2.Text = "TaT Frequency + Ratio"
         '
         'XtraTabPage3
         '
         Me.XtraTabPage3.Controls.Add(Me.ChartTaTFrequency)
         Me.XtraTabPage3.Name = "XtraTabPage3"
-        Me.XtraTabPage3.Size = New System.Drawing.Size(1433, 508)
+        Me.XtraTabPage3.Size = New System.Drawing.Size(1437, 507)
         Me.XtraTabPage3.Text = "TaT Frequency"
         '
         'XtraTabPage4
         '
         Me.XtraTabPage4.Controls.Add(Me.ChartTaT)
         Me.XtraTabPage4.Name = "XtraTabPage4"
-        Me.XtraTabPage4.Size = New System.Drawing.Size(1433, 508)
+        Me.XtraTabPage4.Size = New System.Drawing.Size(1437, 507)
         Me.XtraTabPage4.Text = "In && Out Patient Ratio"
         '
         'XtraTabPage5
         '
         Me.XtraTabPage5.Controls.Add(Me.ChartRatio)
         Me.XtraTabPage5.Name = "XtraTabPage5"
-        Me.XtraTabPage5.Size = New System.Drawing.Size(1433, 508)
+        Me.XtraTabPage5.Size = New System.Drawing.Size(1437, 507)
         Me.XtraTabPage5.Text = "TaT Bar Graph"
         '
         'lblTime

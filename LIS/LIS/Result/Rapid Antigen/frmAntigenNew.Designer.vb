@@ -103,8 +103,6 @@ Partial Class frmAntigenNew
         Me.txtLotNumber = New DevExpress.XtraEditors.LookUpEdit()
         Me.SimpleButton1 = New DevExpress.XtraEditors.SimpleButton()
         Me.txtExpiry = New System.Windows.Forms.DateTimePicker()
-        Me.txtReagent = New System.Windows.Forms.TextBox()
-        Me.txtMethodUsed = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -112,6 +110,8 @@ Partial Class frmAntigenNew
         Me.RatlotnoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Db_sbsi_lis_universalDataSet = New LIS.db_sbsi_lis_universalDataSet()
         Me.Rat_lot_noTableAdapter = New LIS.db_sbsi_lis_universalDataSetTableAdapters.rat_lot_noTableAdapter()
+        Me.txtMethodUsed = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.txtReagent = New DevExpress.XtraEditors.ComboBoxEdit()
         CType(Me.cboCS.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl5.SuspendLayout()
@@ -157,6 +157,8 @@ Partial Class frmAntigenNew
         CType(Me.txtLotNumber.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RatlotnoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Db_sbsi_lis_universalDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtMethodUsed.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtReagent.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cboCS
@@ -1185,11 +1187,11 @@ Partial Class frmAntigenNew
         Me.GroupControl7.CaptionImageOptions.AllowGlyphSkinning = True
         Me.GroupControl7.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl7.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl7.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
+        Me.GroupControl7.Controls.Add(Me.txtReagent)
+        Me.GroupControl7.Controls.Add(Me.txtMethodUsed)
         Me.GroupControl7.Controls.Add(Me.txtLotNumber)
         Me.GroupControl7.Controls.Add(Me.SimpleButton1)
         Me.GroupControl7.Controls.Add(Me.txtExpiry)
-        Me.GroupControl7.Controls.Add(Me.txtReagent)
-        Me.GroupControl7.Controls.Add(Me.txtMethodUsed)
         Me.GroupControl7.Controls.Add(Me.Label5)
         Me.GroupControl7.Controls.Add(Me.Label4)
         Me.GroupControl7.Controls.Add(Me.Label3)
@@ -1231,20 +1233,6 @@ Partial Class frmAntigenNew
         Me.txtExpiry.Name = "txtExpiry"
         Me.txtExpiry.Size = New System.Drawing.Size(352, 22)
         Me.txtExpiry.TabIndex = 71
-        '
-        'txtReagent
-        '
-        Me.txtReagent.Location = New System.Drawing.Point(104, 65)
-        Me.txtReagent.Name = "txtReagent"
-        Me.txtReagent.Size = New System.Drawing.Size(321, 22)
-        Me.txtReagent.TabIndex = 69
-        '
-        'txtMethodUsed
-        '
-        Me.txtMethodUsed.Location = New System.Drawing.Point(104, 35)
-        Me.txtMethodUsed.Name = "txtMethodUsed"
-        Me.txtMethodUsed.Size = New System.Drawing.Size(321, 22)
-        Me.txtMethodUsed.TabIndex = 68
         '
         'Label5
         '
@@ -1299,6 +1287,30 @@ Partial Class frmAntigenNew
         'Rat_lot_noTableAdapter
         '
         Me.Rat_lot_noTableAdapter.ClearBeforeFill = True
+        '
+        'txtMethodUsed
+        '
+        Me.txtMethodUsed.Location = New System.Drawing.Point(104, 41)
+        Me.txtMethodUsed.Name = "txtMethodUsed"
+        Me.txtMethodUsed.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.txtMethodUsed.Properties.Appearance.Options.UseForeColor = True
+        Me.txtMethodUsed.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.txtMethodUsed.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.txtMethodUsed.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.txtMethodUsed.Size = New System.Drawing.Size(321, 20)
+        Me.txtMethodUsed.TabIndex = 75
+        '
+        'txtReagent
+        '
+        Me.txtReagent.Location = New System.Drawing.Point(104, 71)
+        Me.txtReagent.Name = "txtReagent"
+        Me.txtReagent.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.txtReagent.Properties.Appearance.Options.UseForeColor = True
+        Me.txtReagent.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.txtReagent.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.txtReagent.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.txtReagent.Size = New System.Drawing.Size(321, 20)
+        Me.txtReagent.TabIndex = 76
         '
         'frmAntigenNew
         '
@@ -1368,6 +1380,8 @@ Partial Class frmAntigenNew
         CType(Me.txtLotNumber.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RatlotnoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Db_sbsi_lis_universalDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtMethodUsed.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtReagent.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1451,8 +1465,6 @@ Partial Class frmAntigenNew
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents txtReagent As TextBox
-    Friend WithEvents txtMethodUsed As TextBox
     Friend WithEvents dtResult As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents txtExpiry As DateTimePicker
@@ -1461,4 +1473,6 @@ Partial Class frmAntigenNew
     Friend WithEvents Db_sbsi_lis_universalDataSet As db_sbsi_lis_universalDataSet
     Friend WithEvents RatlotnoBindingSource As BindingSource
     Friend WithEvents Rat_lot_noTableAdapter As db_sbsi_lis_universalDataSetTableAdapters.rat_lot_noTableAdapter
+    Friend WithEvents txtMethodUsed As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents txtReagent As DevExpress.XtraEditors.ComboBoxEdit
 End Class

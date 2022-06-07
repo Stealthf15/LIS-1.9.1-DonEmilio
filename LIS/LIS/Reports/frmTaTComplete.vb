@@ -321,9 +321,6 @@ Public Class frmTatComplete
                 e.Appearance.ForeColor = Color.White
             End If
         End If
-        'Catch ex As Exception
-
-        'End Try
     End Sub
 
     Private Sub GridTaTQuant_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridTaTQuant.RowCellStyle
@@ -337,8 +334,5 @@ Public Class frmTatComplete
                 e.Appearance.ForeColor = Color.White
             End If
         End If
-        'Catch ex As Exception
-
-        'End Try
     End Sub
 End Class

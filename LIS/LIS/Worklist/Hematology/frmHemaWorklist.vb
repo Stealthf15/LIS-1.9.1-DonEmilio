@@ -72,7 +72,8 @@ Public Class frmHemaWorklist
                                     additional_info.cs_no AS ChargeSlip,
                                     patient_remarks.remarks AS Remarks,
                                     patient_remarks.diagnosis AS Diagnosis,
-                                    email_details.email_address as EmailAddress
+                                    email_details.email_address AS EmailAddress,
+                                    `tmpworklist`.`priority` AS Priority
                                 FROM `tmpWorklist`
                                     Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id`
                                     Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -203,6 +204,10 @@ Public Class frmHemaWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Public Sub LoadRecordsCompleted()
@@ -241,7 +246,8 @@ Public Class frmHemaWorklist
                                     additional_info.cs_no AS ChargeSlip,
                                     patient_remarks.remarks As Remarks,
                                     patient_remarks.diagnosis AS Diagnosis,
-                                    email_details.email_address as EmailAddress
+                                    email_details.email_address AS EmailAddress,
+                                    `order`.priority AS Priority
                                 FROM `order` 
 							        Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                     Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -344,6 +350,10 @@ Public Class frmHemaWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
@@ -385,7 +395,8 @@ Public Class frmHemaWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks As Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                     FROM `tmpWorklist` 
                         Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id`
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -479,7 +490,8 @@ Public Class frmHemaWorklist
                             additional_info.cs_no AS ChargeSlip,
                             patient_remarks.remarks As Remarks,
                             patient_remarks.diagnosis AS Diagnosis,
-                            email_details.email_address as EmailAddress
+                            email_details.email_address as EmailAddress,
+                            `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
                             Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id`
                             Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -572,7 +584,8 @@ Public Class frmHemaWorklist
                             additional_info.cs_no AS ChargeSlip,
                             patient_remarks.remarks As Remarks,
                             patient_remarks.diagnosis AS Diagnosis,
-                            email_details.email_address as EmailAddress
+                            email_details.email_address as EmailAddress,
+                            `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
                             Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id`
                             Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -677,7 +690,8 @@ Public Class frmHemaWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -775,7 +789,8 @@ Public Class frmHemaWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -872,7 +887,8 @@ Public Class frmHemaWorklist
                                         additional_info.cs_no AS ChargeSlip,
                                         patient_remarks.remarks As Remarks,
                                         patient_remarks.diagnosis AS Diagnosis,
-                                        email_details.email_address as EmailAddress
+                                        email_details.email_address as EmailAddress,
+                                        `order`.priority AS Priority
                                     FROM `order` 
 							            Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `order`.`main_id`
                                         Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -1126,7 +1142,8 @@ Public Class frmHemaWorklist
                     GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
                     GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
                     GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
-                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1)
+                    GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                    GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
         'Activity Logs
         ActivityLogs(GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
                      GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
@@ -1259,6 +1276,7 @@ Public Class frmHemaWorklist
         Else
             frmHemaOrdered.cboMedTech.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("PerformedBy")).ToString
         End If
+
         If GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("ReleasedBy")).ToString = "" Then
             frmHemaOrdered.cboVerify.Text = CurrUser
         Else
@@ -1273,7 +1291,7 @@ Public Class frmHemaWorklist
         frmHemaOrdered.txtChargeSlip.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("ChargeSlip")).ToString
         frmHemaOrdered.txtRemarks.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Remarks")).ToString
         frmHemaOrdered.txtComment.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Diagnosis")).ToString
-        frmHemaOrdered.txtEmail.Text = GridView.GetFocusedRowCellValue(GridView.Columns("EmailAddress")).ToString
+        frmHemaOrdered.txtEmail.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("EmailAddress")).ToString
 
         'For Age computation
         Dim Age As String = ""

@@ -1,9 +1,8 @@
-E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\LIS.exe.config
-E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.vbprojResolveAssemblyReference.cache
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmAccount.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmAccountA.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmAccountE.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmAccountEdit.resources
+E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmTatMonitor.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmDashboard.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmEmailPush.resources
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.frmFrontDesk.resources
@@ -157,7 +156,7 @@ E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\L
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.exe.licenses
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\RdlCompile.cache
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\RdlCompile.compiled
-E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.xml
+E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\LIS.exe.config
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\LIS.exe
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\LIS.pdb
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\LIS.xml
@@ -370,5 +369,7 @@ E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\de\De
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\es\DevExpress.XtraNavBar.v19.1.resources.dll
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\ja\DevExpress.XtraNavBar.v19.1.resources.dll
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\bin\Debug\ru\DevExpress.XtraNavBar.v19.1.resources.dll
+E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.vbprojResolveAssemblyReference.cache
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.exe
+E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.xml
 E:\SBSI\Software\LIS Optimized\LIS Optimized 1.9.1 DonEmilio\LIS\obj\x64\Debug\LIS.pdb

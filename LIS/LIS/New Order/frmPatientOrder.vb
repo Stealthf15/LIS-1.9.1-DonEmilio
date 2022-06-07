@@ -50,6 +50,7 @@ Public Class frmPatientOrder
                         `tmpWorklist`.`testtype` AS Section,
                         `tmpWorklist`.`sub_section` AS SubSection,
                         DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %r') AS DateCheckedIn, 
+                        `tmpworklist`.`priority` AS Priority, 
                         `tmpWorklist`.`main_id` AS RefID
                         FROM `tmpWorklist` 
                         LEFT JOIN `specimen_tracking` ON
@@ -74,6 +75,7 @@ Public Class frmPatientOrder
             dtList.DataSource = myTable
 
             GridView.Columns("RefID").Visible = False
+            GridView.Columns("Priority").Visible = False
             GridView.Columns("Section").Visible = False
             GridView.Columns("SubSection").Visible = False
 
@@ -100,6 +102,10 @@ Public Class frmPatientOrder
                 e.Appearance.BackColor2 = Color.CornflowerBlue
                 e.Appearance.ForeColor = Color.White
             End If
+        End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
         End If
     End Sub
 

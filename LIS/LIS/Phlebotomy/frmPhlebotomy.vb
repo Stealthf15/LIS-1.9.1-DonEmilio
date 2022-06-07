@@ -142,14 +142,15 @@ Public Class frmPhlebotomy
                     Try
                         frmNoCopiesBC.ShowDialog()
 
-                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")), NoCopies)
+                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
 
                         GoTo A
                     Catch ex As Exception
@@ -173,7 +174,8 @@ A:
                 rs.Parameters.AddWithValue("@time_checked_in", Now)
 
                 UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
-                    & "`status` = @status" _
+                    & "`status` = @status," _
+                    & "`priority` = 'ROUTINE'" _
                     & " WHERE main_id = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
                     )
 
@@ -215,6 +217,90 @@ A:
 
     End Sub
 
+    Private Sub btnStat_ItemClick(sender As Object, e As ItemClickEventArgs) Handles btnStat.ItemClick
+        Dim selectedRows() As Integer = GridView.GetSelectedRows()
+        For Each rowHandle As Integer In selectedRows
+            If rowHandle >= 0 Then
+                Dim Result As DialogResult = MessageBox.Show("You're about to Check-In Patient " & GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")) & " as STAT mode." & vbCrLf & vbCrLf & "Do you want to continue to print Barcode Sticker " & GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")) & "?", "System Message", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+                If (Result = DialogResult.Yes) Then
+                    Try
+                        frmNoCopiesBC.ShowDialog()
+
+                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
+
+                        GoTo A
+                    Catch ex As Exception
+                        MessageBox.Show("Error in connection on printer. " + ex.Message, "Barcode Printing Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    End Try
+                ElseIf (Result = DialogResult.No) Then
+                    GoTo A
+                ElseIf (Result = DialogResult.Cancel) Then
+                    Exit Sub
+                End If
+
+A:
+
+                rs.Parameters.Clear()
+                rs.Parameters.AddWithValue("@mainID", GridView.GetRowCellValue(rowHandle, GridView.Columns("RefID")))
+                rs.Parameters.AddWithValue("@SampleID", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")))
+                rs.Parameters.AddWithValue("@status", "Checked-In")
+                rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
+                rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
+                rs.Parameters.AddWithValue("@time_checked_in", Now)
+
+                UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
+                    & "`status` = @status," _
+                    & "`priority` = 'STAT'" _
+                    & " WHERE main_id = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
+                    )
+
+                UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
+                    & "`sample_id` = @SampleID," _
+                    & "`accession_no` = @mainID" _
+                    & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                    )
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `specimen_tracking` WHERE `sample_id` = @SampleID"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
+                        & "`extracted` = @time_checked_in" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `specimen_tracking` (`sample_id`, `extracted`, `section`, `sub_section`) VALUES " _
+                        & "(" _
+                        & "@SampleID," _
+                        & "@time_checked_in," _
+                        & "@Section," _
+                        & "@SubSection" _
+                        & ")"
+                        )
+                End If
+                Disconnect()
+                'Log activity
+                SpecimenActivity("z_logs_specimen", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")), CurrUser, "Checked-In Specimen", "", GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")), GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")), GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
+            End If
+        Next rowHandle
+        LoadRecords()
+    End Sub
+
     Private Sub btnRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRefresh.ItemClick
         LoadRecords()
     End Sub
@@ -234,14 +320,16 @@ A:
                     Try
                         frmNoCopiesBC.ShowDialog()
 
-                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")),
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")), NoCopies)
+                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
+
                     Catch ex As Exception
                         MessageBox.Show("Error in connection on printer. " + ex.Message, "Barcode Printing Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
@@ -552,14 +640,15 @@ A:
         Dim selectedRows() As Integer = GridView.GetSelectedRows()
         For Each rowHandle As Integer In selectedRows
             If rowHandle >= 0 Then
-                PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")),
-                             GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")), NoCopies)
+                PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString.ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
             End If
         Next
     End Sub

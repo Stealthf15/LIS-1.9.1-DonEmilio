@@ -126,6 +126,9 @@ Public Class frmMicroWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Public Sub LoadRecordsCompleted()
@@ -228,6 +231,9 @@ Public Class frmMicroWorklist
                 e.Appearance.BackColor2 = Color.Gray
                 e.Appearance.ForeColor = Color.White
             End If
+        End If
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
         End If
     End Sub
 
@@ -873,14 +879,15 @@ Public Class frmMicroWorklist
         Dim selectedRows() As Integer = GridView.GetSelectedRows()
         For Each rowHandle As Integer In selectedRows
             If rowHandle >= 0 Then
-                PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")),
-                            GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")), 1)
+                PrintBarcode(GridView.GetFocusedRowCellValue(GridView.Columns("Request")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("PatientName")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
                 'Activity Logs
                 ActivityLogs(GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")),
                              GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")),

@@ -64,7 +64,8 @@ Public Class frmChemWorklist
                                     additional_info.cs_no AS ChargeSlip,
                                     patient_remarks.remarks AS Remarks,
                                     patient_remarks.diagnosis AS Diagnosis,
-                                    email_details.email_address as EmailAddress
+                                    email_details.email_address AS EmailAddress,
+                                    `tmpworklist`.priority AS Priority
                                 FROM `tmpWorklist` 
                                     Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                                     Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -168,6 +169,10 @@ Public Class frmChemWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Public Sub LoadRecordsCompleted()
@@ -206,7 +211,8 @@ Public Class frmChemWorklist
                                 additional_info.cs_no AS ChargeSlip,
                                 patient_remarks.remarks As Remarks,
                                 patient_remarks.diagnosis AS Diagnosis,
-                                email_details.email_address as EmailAddress
+                                email_details.email_address AS EmailAddress,
+                                `order`.priority AS Priority
                             FROM `order` 
 							    Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = order.testtype And specimen_tracking.sub_section = order.sub_section
                                 Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
@@ -313,6 +319,10 @@ Public Class frmChemWorklist
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.Crimson
+        End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
@@ -354,7 +364,8 @@ Public Class frmChemWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -454,7 +465,8 @@ Public Class frmChemWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -554,7 +566,8 @@ Public Class frmChemWorklist
                         additional_info.cs_no AS ChargeSlip,
                         patient_remarks.remarks AS Remarks,
                         patient_remarks.diagnosis AS Diagnosis,
-                        email_details.email_address as EmailAddress
+                        email_details.email_address as EmailAddress,
+                        `tmpworklist`.priority AS Priority
                         FROM `tmpWorklist` 
 		                Left Join `specimen_tracking` ON`specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
                         Left Join `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
@@ -666,7 +679,8 @@ Public Class frmChemWorklist
                             additional_info.cs_no AS ChargeSlip,
                             patient_remarks.remarks As Remarks,
                             patient_remarks.diagnosis AS Diagnosis,
-                            email_details.email_address as EmailAddress
+                            email_details.email_address as EmailAddress,
+                            `order`.priority AS Priority
                         FROM `order` 
 							Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                             Left Join `patient_info` ON `patient_info`.`patient_id` = `order`.`patient_id`
@@ -774,7 +788,8 @@ Public Class frmChemWorklist
                             additional_info.cs_no AS ChargeSlip,
                             patient_remarks.remarks As Remarks,
                             patient_remarks.diagnosis AS Diagnosis,
-                            email_details.email_address as EmailAddress
+                            email_details.email_address as EmailAddress,
+                            `order`.priority AS Priority
                         FROM `order` 
 							Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                             Left Join `patient_info` ON `patient_info`.`patient_id` = `order`.`patient_id`
@@ -882,7 +897,8 @@ Public Class frmChemWorklist
                             additional_info.cs_no AS ChargeSlip,
                             patient_remarks.remarks As Remarks,
                             patient_remarks.diagnosis AS Diagnosis,
-                            email_details.email_address as EmailAddress
+                            email_details.email_address as EmailAddress,
+                            `order`.priority AS Priority
                         FROM `order` 
 							Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = `order`.testtype And specimen_tracking.sub_section = `order`.sub_section
                             Left Join `patient_info` ON `patient_info`.`patient_id` = `order`.`patient_id`
@@ -1207,7 +1223,8 @@ Public Class frmChemWorklist
                              GridView.GetFocusedRowCellValue(GridView.Columns("DateOfBirth")).ToString,
                              GridView.GetFocusedRowCellValue(GridView.Columns("Sex")).ToString,
                              GridView.GetFocusedRowCellValue(GridView.Columns("Section")).ToString,
-                             GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1)
+                             GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")).ToString, 1,
+                             GridView.GetFocusedRowCellValue(GridView.Columns("Priority")).ToString)
         'Activity Logs
         ActivityLogs(GridView.GetFocusedRowCellValue(GridView.Columns("SampleID")).ToString,
                      GridView.GetFocusedRowCellValue(GridView.Columns("PatientID")).ToString,
@@ -1345,7 +1362,7 @@ Public Class frmChemWorklist
         frmChemOrdered.txtChargeSlip.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("ChargeSlip")).ToString
         frmChemOrdered.txtRemarks.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Remarks")).ToString
         frmChemOrdered.txtComment.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("Diagnosis")).ToString
-        frmChemOrdered.txtEmail.Text = GridView.GetFocusedRowCellValue(GridView.Columns("EmailAddress")).ToString
+        frmChemOrdered.txtEmail.Text = GridCompleted.GetFocusedRowCellValue(GridCompleted.Columns("EmailAddress")).ToString
 
         'For Age computation
         Dim Age As String = ""

@@ -634,8 +634,8 @@ Public Class frmAntigenOrdered
                     & "`type` = @type," _
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
-                    & "`medtech` = @medtech," _
-                    & "`verified_by` = @verify," _
+                    & "`medtech` = @medtechid," _
+                    & "`verified_by` = @verifyid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _

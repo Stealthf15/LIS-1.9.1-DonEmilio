@@ -728,7 +728,7 @@ Public Class frmPatientOrderAE
                                      dtBDate.Text,
                                      cboSex.Text,
                                      lv.Items(x).SubItems(1).Text,
-                                     lv.Items(x).SubItems(2).Text, 1)
+                                     lv.Items(x).SubItems(2).Text, 1, "")
                 Catch ex As Exception
                     MessageBox.Show("Error in connection on printer. " + ex.Message, "Barcode Printing Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try

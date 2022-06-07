@@ -294,13 +294,11 @@ Public Class frmAntigenNew
         AutoLoadDoctor()
         AutoLoadRoom()
         AutoLoadVerificator()
-
+        AutoLoadMethodUsed()
+        AutoLoadReagent()
     End Sub
 
     Private Sub frmAntigenNew_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        txtMethodUsed.Text = "Colloidal Gold Immunochromatography"
-        txtReagent.Text = "2019 nCoV Antigen Test Dilution Buffer"
-
         LoadTest()
         ReloadAssay()
     End Sub
@@ -358,6 +356,34 @@ Public Class frmAntigenNew
         reader = rs.ExecuteReader
         While reader.Read
             cboVerify.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+    End Sub
+
+    Public Sub AutoLoadMethodUsed()
+        '#######################################---Load Method Used---####################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT DISTINCT method_used AS `MethodUsed` FROM `rat_lot_no` ORDER BY `method_used`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            txtMethodUsed.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+    End Sub
+
+    Public Sub AutoLoadReagent()
+        '########################################---Load Reagent---#######################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT DISTINCT reagent AS `Reagent` FROM `rat_lot_no` ORDER BY `reagent`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            txtReagent.Properties.Items.Add(reader(0))
         End While
         Disconnect()
         '######################################----END-----###############################################################
