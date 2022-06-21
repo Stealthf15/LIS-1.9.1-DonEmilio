@@ -37,6 +37,10 @@ Public Class frmChemNew
 
     Dim editorForDisplay, editorForEditing As RepositoryItem
 
+    Dim Chol, Trig, HDL, LDL, VLDL, CHD As Double
+    Dim TP, ALB, GLOB, AGRatio As Double
+    Dim BiliT, BiliD, BiliI As Double
+
     Private Sub txtResult_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
         If InStr("1234567890.", e.KeyChar) = 0 And Not Chr(AscW(e.KeyChar)) = vbBack Then
             e.KeyChar = ChrW(0)
@@ -199,7 +203,6 @@ Public Class frmChemNew
             Next
 
             LoadRangeAndValues()
-            AutoComputation()
 
         Finally
             If conn.State = ConnectionState.Open Then
@@ -209,66 +212,68 @@ Public Class frmChemNew
     End Sub
 
     Private Sub AutoComputation()
-        Dim Chol, Trig, HDL, LDL, VLDL, CHD As Double
-        Dim TP, ALB, GLOB, AGRatio As Double
-        Dim BiliT, BiliD, BiliI As Double
+        'Try
+        For x = 0 To GridView.RowCount - 1 Step 1
 
-        For x As Integer = 0 To GridView.RowCount - 1 Step 1
-            'For Lipid Profile
-            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_Chol" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    Chol = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Trigly" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    Trig = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_HDL" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    HDL = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_LDL" Then
-                LDL = (Chol - HDL) - (Trig / 5)
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), LDL.ToString)
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_VLDL" Then
-                VLDL = (Trig / 5)
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), VLDL.ToString)
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "CHD" Then
-                CHD = (HDL / Chol) * 100
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), CHD.ToString)
-            End If
+                'For Bilirubin
+                If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_T" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            BiliT = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_D" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            BiliD = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_I" Then
+                        BiliI = BiliT - BiliD
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), BiliI.ToString)
+                    End If
 
-            'For TPAG
-            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "TP" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    TP = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "ALB" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    ALB = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Glob" Then
-                GLOB = TP - ALB
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), GLOB.ToString)
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "AGRatio" Then
-                AGRatio = (ALB / GLOB)
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), AGRatio.ToString)
-            End If
+                    'For Lipid Profile
+                    If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_Chol" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            Chol = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Trigly" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            Trig = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_HDL" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            HDL = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_LDL" Then
+                        LDL = (Chol - HDL) - (Trig / 5)
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), LDL.ToString)
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_VLDL" Then
+                        VLDL = (Trig / 5)
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), VLDL.ToString)
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "CHD" Then
+                        CHD = (HDL / Chol) * 100
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), CHD.ToString)
+                    End If
 
-            'For Bilirubin
-            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_T" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    BiliT = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_D" Then
-                If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
-                    BiliD = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
-                End If
-            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_I" Then
-                BiliI = BiliT - BiliD
-                GridView.SetRowCellValue(x, GridView.Columns("SI"), BiliI.ToString)
-            End If
-        Next
+                    'For TPAG
+                    If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "TP" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            TP = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "ALB" Then
+                        If Not GridView.GetRowCellValue(x, GridView.Columns("SI")).ToString = "" Then
+                            ALB = CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI")))
+                        End If
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Glob" Then
+                        GLOB = TP - ALB
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), GLOB.ToString)
+                    ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "AGRatio" Then
+                        AGRatio = (ALB / GLOB)
+                        GridView.SetRowCellValue(x, GridView.Columns("SI"), AGRatio.ToString)
+                    End If
+
+            Next
+        'Catch
+
+        'End Try
     End Sub
 
     'Private Sub GridView_CustomRowCellEditForEditing(sender As Object, e As CustomRowCellEditEventArgs) Handles GridView.CustomRowCellEditForEditing
@@ -309,25 +314,28 @@ Public Class frmChemNew
     Public Sub LoadRangeAndValues()
         Try
             For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
-
                 '#################################################----REFERENCE RANGE & FLAGS----################################################################################
                 If Not GridView.GetRowCellValue(x, GridView.Columns("SI")) = "" Then
                     If IsNumeric(GridView.GetRowCellValue(x, GridView.Columns("SI"))) Then
                         If GridView.GetRowCellValue(x, GridView.Columns("LowValue")).ToString() <> "" And GridView.GetRowCellValue(x, GridView.Columns("HighValue")).ToString() <> "" Then
                             If CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI"))) < CDbl(GridView.GetRowCellValue(x, GridView.Columns("LowValue"))) Then
                                 FLAG = "L"
+                                GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                             ElseIf CDbl(GridView.GetRowCellValue(x, GridView.Columns("SI"))) > CDbl(GridView.GetRowCellValue(x, GridView.Columns("HighValue"))) Then
                                 FLAG = "H"
+                                GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                             Else
                                 FLAG = ""
+                                GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                             End If
                         Else
                             FLAG = ""
+                            GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                         End If
                     Else
                         FLAG = ""
+                        GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                     End If
-                    GridView.SetRowCellValue(x, GridView.Columns("Flag"), FLAG)
                 End If
                 '#################################################----REFERENCE RANGE & FLAGS----################################################################################
 
@@ -341,7 +349,7 @@ Public Class frmChemNew
                 Else
                     GridView.SetRowCellValue(x, GridView.Columns("Conventional"), GridView.GetRowCellValue(x, GridView.Columns("SI")))
                 End If
-                '#################################################----CONVERTION FACTOR----################################################################################
+                '#################################################----CONVERSION FACTOR----################################################################################
             Next
         Catch ex As Exception
             Disconnect()
@@ -351,15 +359,13 @@ Public Class frmChemNew
 
     Private Sub frmResultsNew_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.cboPathologist.Text = Pathologist
+
     End Sub
 
     Private Sub frmChemNew_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         AutoLoadDoctor()
         AutoLoadRoom()
         AutoLoadVerificator()
-    End Sub
-
-    Private Sub frmChemNew_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         LoadTest()
     End Sub
 
@@ -367,8 +373,112 @@ Public Class frmChemNew
         Try
             If e.Column.FieldName = "SI" Then
                 LoadRangeAndValues()
+
+                'For Bilirubin
+                If GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "Bili_T" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        BiliT = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        BiliI = BiliT - BiliD
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_I" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), BiliI.ToString)
+                            End If
+                        Next
+                    End If
+                ElseIf GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "Bili_D" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        BiliD = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        BiliI = BiliT - BiliD
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Bili_I" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), BiliI.ToString)
+                            End If
+                        Next
+                    End If
+                End If
+
+                'For Lipid Profile
+                If GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "C_Chol" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        Chol = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        LDL = (Chol - HDL) - (Trig / 5)
+                        VLDL = (Trig / 5)
+                        CHD = (HDL / Chol) * 100
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_LDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), LDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_VLDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), VLDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "CHD" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), CHD.ToString)
+                            End If
+                        Next
+                    End If
+                ElseIf GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "Trigly" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        Trig = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        LDL = (Chol - HDL) - (Trig / 5)
+                        VLDL = (Trig / 5)
+                        CHD = (HDL / Chol) * 100
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_LDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), LDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_VLDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), VLDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "CHD" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), CHD.ToString)
+                            End If
+                        Next
+                    End If
+                ElseIf GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "C_HDL" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        HDL = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        LDL = (Chol - HDL) - (Trig / 5)
+                        VLDL = (Trig / 5)
+                        CHD = (HDL / Chol) * 100
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_LDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), LDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "C_VLDL" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), VLDL.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "CHD" Then
+                                GridView.SetRowCellValue(x, GridView.Columns("SI"), CHD.ToString)
+                            End If
+                        Next
+                    End If
+                End If
+
+                'For TPAG
+                If GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "TP" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        TP = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        GLOB = TP - ALB
+                        AGRatio = (ALB / GLOB)
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Glob" Then
+                                GridView.SetRowCellValue(e.RowHandle, GridView.Columns("SI"), GLOB.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "AGRatio" Then
+                                GridView.SetRowCellValue(e.RowHandle, GridView.Columns("SI"), AGRatio.ToString)
+                            End If
+                        Next
+                    End If
+                ElseIf GridView.GetRowCellValue(e.RowHandle, GridView.Columns("TestCode")).ToString = "ALB" Then
+                    If Not GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")).ToString = "" Then
+                        ALB = CDbl(GridView.GetRowCellValue(e.RowHandle, GridView.Columns("SI")))
+                        GLOB = TP - ALB
+                        AGRatio = (ALB / GLOB)
+                        For x As Integer = 0 To Me.GridView.RowCount - 1 Step 1
+                            If GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "Glob" Then
+                                GridView.SetRowCellValue(e.RowHandle, GridView.Columns("SI"), GLOB.ToString)
+                            ElseIf GridView.GetRowCellValue(x, GridView.Columns("TestCode")).ToString = "AGRatio" Then
+                                GridView.SetRowCellValue(e.RowHandle, GridView.Columns("SI"), AGRatio.ToString)
+                            End If
+                        Next
+                    End If
+                End If
             End If
         Catch
+            Disconnect()
         End Try
     End Sub
 
@@ -788,8 +898,8 @@ Public Class frmChemNew
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
-                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority`) " _
+                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
             rs.ExecuteNonQuery()
             Disconnect()
 
@@ -1074,8 +1184,8 @@ Public Class frmChemNew
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
-                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority`) " _
+                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
             rs.ExecuteNonQuery()
             Disconnect()
 
@@ -1445,8 +1555,8 @@ Public Class frmChemNew
             rs.Dispose()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
-                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @mainID AND testtype = @Section AND sub_section = @SubSection"
+            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority`) " _
+                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`, `priority` FROM `tmpWorklist` WHERE `main_id` = @mainID AND testtype = @Section AND sub_section = @SubSection"
             rs.ExecuteNonQuery()
             Disconnect()
 
@@ -1612,7 +1722,6 @@ Public Class frmChemNew
             Exit Sub
         End Try
     End Sub
-
     'End iHOMIS
 #End Region
 

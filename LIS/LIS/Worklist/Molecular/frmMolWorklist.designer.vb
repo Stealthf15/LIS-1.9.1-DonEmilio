@@ -24,7 +24,7 @@ Partial Class frmMolWorklist
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMolWorklist))
-        Dim Code128Generator1 As DevExpress.XtraPrinting.BarCode.Code128Generator = New DevExpress.XtraPrinting.BarCode.Code128Generator()
+        Dim Code128Generator2 As DevExpress.XtraPrinting.BarCode.Code128Generator = New DevExpress.XtraPrinting.BarCode.Code128Generator()
         Me.pnlBackground = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
         Me.lblCountQueue = New DevExpress.XtraEditors.LabelControl()
@@ -88,6 +88,8 @@ Partial Class frmMolWorklist
         Me.tmAutoValidate = New System.Windows.Forms.Timer(Me.components)
         Me.PrintDocument = New System.Drawing.Printing.PrintDocument()
         Me.PrintPreviewDialog = New System.Windows.Forms.PrintPreviewDialog()
+        Me.cboFilter = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.cboFilter1 = New DevExpress.XtraEditors.ComboBoxEdit()
         CType(Me.pnlBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlBackground.SuspendLayout()
         CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,6 +122,8 @@ Partial Class frmMolWorklist
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHeader.SuspendLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlBackground
@@ -454,6 +458,7 @@ Partial Class frmMolWorklist
         '
         Me.PanelControl2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl2.Controls.Add(Me.cboFilter)
         Me.PanelControl2.Controls.Add(Me.LabelControl7)
         Me.PanelControl2.Controls.Add(Me.rgSelect)
         Me.PanelControl2.Controls.Add(Me.LabelControl4)
@@ -536,7 +541,7 @@ Partial Class frmMolWorklist
         Me.cboLocation.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation.Size = New System.Drawing.Size(206, 20)
+        Me.cboLocation.Size = New System.Drawing.Size(130, 20)
         Me.cboLocation.TabIndex = 70
         '
         'bcCode
@@ -553,7 +558,7 @@ Partial Class frmMolWorklist
         Me.bcCode.Padding = New System.Windows.Forms.Padding(8, 2, 8, 0)
         Me.bcCode.ShowText = False
         Me.bcCode.Size = New System.Drawing.Size(343, 92)
-        Me.bcCode.Symbology = Code128Generator1
+        Me.bcCode.Symbology = Code128Generator2
         Me.bcCode.TabIndex = 143
         '
         'picCode
@@ -658,6 +663,7 @@ Partial Class frmMolWorklist
         '
         Me.PanelControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl1.Controls.Add(Me.cboFilter1)
         Me.PanelControl1.Controls.Add(Me.LabelControl9)
         Me.PanelControl1.Controls.Add(Me.rgSelect1)
         Me.PanelControl1.Controls.Add(Me.LabelControl5)
@@ -740,7 +746,7 @@ Partial Class frmMolWorklist
         Me.cboLocation1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation1.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation1.Size = New System.Drawing.Size(310, 20)
+        Me.cboLocation1.Size = New System.Drawing.Size(133, 20)
         Me.cboLocation1.TabIndex = 72
         '
         'pnlHeader
@@ -760,7 +766,7 @@ Partial Class frmMolWorklist
         '
         Me.btnSearch.ImageOptions.SvgImage = CType(resources.GetObject("btnSearch.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnSearch.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
-        Me.btnSearch.Location = New System.Drawing.Point(317, 3)
+        Me.btnSearch.Location = New System.Drawing.Point(278, 4)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(68, 23)
         Me.btnSearch.TabIndex = 12
@@ -772,7 +778,7 @@ Partial Class frmMolWorklist
         Me.dtFrom1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtFrom1.Location = New System.Drawing.Point(75, 4)
         Me.dtFrom1.Name = "dtFrom1"
-        Me.dtFrom1.Size = New System.Drawing.Size(114, 22)
+        Me.dtFrom1.Size = New System.Drawing.Size(97, 22)
         Me.dtFrom1.TabIndex = 9
         '
         'dtTo1
@@ -780,9 +786,9 @@ Partial Class frmMolWorklist
         Me.dtTo1.CalendarFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtTo1.CalendarForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.dtTo1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtTo1.Location = New System.Drawing.Point(195, 4)
+        Me.dtTo1.Location = New System.Drawing.Point(178, 4)
         Me.dtTo1.Name = "dtTo1"
-        Me.dtTo1.Size = New System.Drawing.Size(115, 22)
+        Me.dtTo1.Size = New System.Drawing.Size(94, 22)
         Me.dtTo1.TabIndex = 8
         '
         'LabelControl3
@@ -821,6 +827,38 @@ Partial Class frmMolWorklist
         Me.PrintPreviewDialog.Icon = CType(resources.GetObject("PrintPreviewDialog.Icon"), System.Drawing.Icon)
         Me.PrintPreviewDialog.Name = "PrintPreviewDialog"
         Me.PrintPreviewDialog.Visible = False
+        '
+        'cboFilter
+        '
+        Me.cboFilter.EditValue = "All"
+        Me.cboFilter.Location = New System.Drawing.Point(202, 6)
+        Me.cboFilter.Name = "cboFilter"
+        Me.cboFilter.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter.Size = New System.Drawing.Size(120, 20)
+        Me.cboFilter.TabIndex = 162
+        '
+        'cboFilter1
+        '
+        Me.cboFilter1.EditValue = "All"
+        Me.cboFilter1.Location = New System.Drawing.Point(214, 5)
+        Me.cboFilter1.Name = "cboFilter1"
+        Me.cboFilter1.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter1.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter1.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter1.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter1.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter1.Size = New System.Drawing.Size(132, 20)
+        Me.cboFilter1.TabIndex = 162
         '
         'frmMolWorklist
         '
@@ -872,6 +910,8 @@ Partial Class frmMolWorklist
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlHeader.ResumeLayout(False)
         Me.pnlHeader.PerformLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -938,4 +978,6 @@ Partial Class frmMolWorklist
     Friend WithEvents rgSelect As DevExpress.XtraEditors.RadioGroup
     Friend WithEvents LabelControl9 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents rgSelect1 As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents cboFilter As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents cboFilter1 As DevExpress.XtraEditors.ComboBoxEdit
 End Class

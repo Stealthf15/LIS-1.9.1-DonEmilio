@@ -26,9 +26,13 @@ Partial Class frmDeltaCheck
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDeltaCheck))
         Me.ImageList = New System.Windows.Forms.ImageList(Me.components)
         Me.pnlHeader = New DevExpress.XtraEditors.PanelControl()
+        Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
+        Me.txtSearch = New DevExpress.XtraEditors.SearchControl()
         Me.btnSearch = New DevExpress.XtraEditors.SimpleButton()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.cboLimit = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
         Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.btnRefresh = New DevExpress.XtraBars.BarLargeButtonItem()
@@ -41,21 +45,17 @@ Partial Class frmDeltaCheck
         Me.GroupControl3 = New DevExpress.XtraEditors.GroupControl()
         Me.dtResult = New DevExpress.XtraGrid.GridControl()
         Me.GridView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
-        Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
-        Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
-        Me.txtSearch = New DevExpress.XtraEditors.SearchControl()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHeader.SuspendLayout()
+        CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLimit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl3.SuspendLayout()
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ImageList
@@ -81,6 +81,41 @@ Partial Class frmDeltaCheck
         Me.pnlHeader.Name = "pnlHeader"
         Me.pnlHeader.Size = New System.Drawing.Size(1226, 32)
         Me.pnlHeader.TabIndex = 10
+        '
+        'LabelControl7
+        '
+        Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl7.Appearance.Options.UseFont = True
+        Me.LabelControl7.Location = New System.Drawing.Point(265, 11)
+        Me.LabelControl7.Name = "LabelControl7"
+        Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
+        Me.LabelControl7.TabIndex = 158
+        Me.LabelControl7.Text = "Search option:"
+        '
+        'LabelControl4
+        '
+        Me.LabelControl4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl4.Appearance.Options.UseFont = True
+        Me.LabelControl4.Location = New System.Drawing.Point(567, 10)
+        Me.LabelControl4.Name = "LabelControl4"
+        Me.LabelControl4.Size = New System.Drawing.Size(63, 13)
+        Me.LabelControl4.TabIndex = 156
+        Me.LabelControl4.Text = "Search here:"
+        '
+        'txtSearch
+        '
+        Me.txtSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtSearch.Location = New System.Drawing.Point(634, 6)
+        Me.txtSearch.Name = "txtSearch"
+        Me.txtSearch.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.txtSearch.Properties.Appearance.Options.UseForeColor = True
+        Me.txtSearch.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Repository.ClearButton(), New DevExpress.XtraEditors.Repository.SearchButton()})
+        Me.txtSearch.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.txtSearch.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.txtSearch.Size = New System.Drawing.Size(199, 20)
+        Me.txtSearch.TabIndex = 155
         '
         'btnSearch
         '
@@ -118,6 +153,19 @@ Partial Class frmDeltaCheck
         Me.cboLimit.Properties.UseReadOnlyAppearance = False
         Me.cboLimit.Size = New System.Drawing.Size(196, 20)
         Me.cboLimit.TabIndex = 9
+        '
+        'rgSelect
+        '
+        Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rgSelect.Location = New System.Drawing.Point(348, 5)
+        Me.rgSelect.MenuManager = Me.BarManager
+        Me.rgSelect.Name = "rgSelect"
+        Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.rgSelect.Properties.Appearance.Options.UseBackColor = True
+        Me.rgSelect.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.rgSelect.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No."), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name")})
+        Me.rgSelect.Size = New System.Drawing.Size(221, 23)
+        Me.rgSelect.TabIndex = 157
         '
         'BarManager
         '
@@ -264,54 +312,6 @@ Partial Class frmDeltaCheck
         Me.GridView.OptionsView.ShowGroupPanel = False
         Me.GridView.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.[False]
         '
-        'LabelControl7
-        '
-        Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl7.Appearance.Options.UseFont = True
-        Me.LabelControl7.Location = New System.Drawing.Point(265, 11)
-        Me.LabelControl7.Name = "LabelControl7"
-        Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
-        Me.LabelControl7.TabIndex = 158
-        Me.LabelControl7.Text = "Search option:"
-        '
-        'rgSelect
-        '
-        Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rgSelect.Location = New System.Drawing.Point(348, 5)
-        Me.rgSelect.MenuManager = Me.BarManager
-        Me.rgSelect.Name = "rgSelect"
-        Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.rgSelect.Properties.Appearance.Options.UseBackColor = True
-        Me.rgSelect.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.rgSelect.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No."), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name")})
-        Me.rgSelect.Size = New System.Drawing.Size(221, 23)
-        Me.rgSelect.TabIndex = 157
-        '
-        'LabelControl4
-        '
-        Me.LabelControl4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl4.Appearance.Options.UseFont = True
-        Me.LabelControl4.Location = New System.Drawing.Point(567, 10)
-        Me.LabelControl4.Name = "LabelControl4"
-        Me.LabelControl4.Size = New System.Drawing.Size(63, 13)
-        Me.LabelControl4.TabIndex = 156
-        Me.LabelControl4.Text = "Search here:"
-        '
-        'txtSearch
-        '
-        Me.txtSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSearch.Location = New System.Drawing.Point(634, 6)
-        Me.txtSearch.Name = "txtSearch"
-        Me.txtSearch.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
-        Me.txtSearch.Properties.Appearance.Options.UseForeColor = True
-        Me.txtSearch.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Repository.ClearButton(), New DevExpress.XtraEditors.Repository.SearchButton()})
-        Me.txtSearch.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.txtSearch.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.txtSearch.Size = New System.Drawing.Size(199, 20)
-        Me.txtSearch.TabIndex = 155
-        '
         'frmDeltaCheck
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -331,15 +331,15 @@ Partial Class frmDeltaCheck
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlHeader.ResumeLayout(False)
         Me.pnlHeader.PerformLayout()
+        CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLimit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GroupControl3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl3.ResumeLayout(False)
         CType(Me.dtResult, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

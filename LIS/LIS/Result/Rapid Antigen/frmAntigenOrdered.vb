@@ -54,7 +54,7 @@ Public Class frmAntigenOrdered
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` = '" & Me.cboMedTech.Text & "'"
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech`) AS T1 WHERE T1.`name` = '" & Me.cboMedTech.Text & "'"
         reader = rs.ExecuteReader
         reader.Read()
         If reader.HasRows Then
@@ -80,7 +80,7 @@ Public Class frmAntigenOrdered
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` = '" & Me.cboVerify.Text & "'"
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech_verificator`) AS T1 WHERE T1.`name` = '" & Me.cboVerify.Text & "'"
         reader = rs.ExecuteReader
         reader.Read()
         If reader.HasRows Then
@@ -350,10 +350,22 @@ Public Class frmAntigenOrdered
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` WHERE `verificator` = 1 ORDER BY `name`"
+        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech_verificator` ORDER BY `name`"
         reader = rs.ExecuteReader
         While reader.Read
             cboVerify.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+
+        '###########################---Load Med Tech---##################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` ORDER BY `fname`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            cboMedTech.Properties.Items.Add(reader(0))
         End While
         Disconnect()
         '######################################----END-----###############################################################
@@ -363,16 +375,7 @@ Public Class frmAntigenOrdered
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` WHERE `verificator` = 0 ORDER BY `name`"
-            reader = rs.ExecuteReader
-            While reader.Read
-                cboMedTech.Properties.Items.Add(reader(0))
-            End While
-            Disconnect()
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboMedTech.Text & "'"
+            rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech`) AS T1 WHERE T1.`name` = '" & Me.cboMedTech.Text & "'"
             reader = rs.ExecuteReader
             reader.Read()
             If reader.HasRows Then
@@ -383,23 +386,14 @@ Public Class frmAntigenOrdered
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` WHERE `id` = '" & CurrEmail & "' ORDER BY `name`"
-            reader = rs.ExecuteReader
-            While reader.Read
-                cboMedTech.Properties.Items.Add(reader(0))
-            End While
-            Disconnect()
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboMedTech.Text & "'"
+            rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech`) AS T1 WHERE T1.`name` = '" & Me.cboMedTech.Text & "'"
             reader = rs.ExecuteReader
             reader.Read()
             If reader.HasRows Then
                 MedTechID = reader(0).ToString
             End If
             Disconnect()
-            cboMedTech.SelectedIndex = 0
+            'cboMedTech.SelectedIndex = 0
         End If
         '######################################----END-----###############################################################
     End Sub
@@ -409,8 +403,51 @@ Public Class frmAntigenOrdered
         'Load Combobox Data
         AutoLoadDoctor()
         AutoLoadRoom()
-
+        AutoLoadMethodUsed()
+        AutoLoadReagent()
         LoadTest()
+    End Sub
+
+    Public Sub AutoLoadMethodUsed()
+        '#######################################---Load Method Used---####################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT DISTINCT method_used AS `MethodUsed` FROM `rat_lot_no` ORDER BY `method_used`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            txtMethodUsed.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+    End Sub
+
+    Public Sub AutoLoadReagent()
+        '########################################---Load Reagent---#######################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT DISTINCT reagent AS `Reagent` FROM `rat_lot_no` ORDER BY `reagent`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            txtReagent.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+    End Sub
+
+    Public Sub AutoLoadLotNumber()
+        '#######################################---Load Method Used---####################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT DISTINCT lot_number AS `LotNumber` FROM `rat_lot_no` ORDER BY `lot_number`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            txtMethodUsed.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
     End Sub
 
     'Private Sub GridView_CellValueChanged(sender As Object, e As CellValueChangedEventArgs) Handles GridView.CellValueChanged
@@ -512,6 +549,10 @@ Public Class frmAntigenOrdered
         btnAddTest.Enabled = True
         txtRemarks.Enabled = True
         txtComment.Enabled = True
+        txtMethodUsed.Enabled = True
+        txtReagent.Enabled = True
+        txtLotNumber.Enabled = True
+        txtExpiry.Enabled = True
 
         btnValidate.Enabled = False
         btnPrint.Enabled = True
@@ -635,7 +676,7 @@ Public Class frmAntigenOrdered
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
                     & "`medtech` = @medtechid," _
-                    & "`verified_by` = @verifyid," _
+                    & "`verified_by` = @medtechid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
@@ -839,6 +880,10 @@ Public Class frmAntigenOrdered
 
             txtRemarks.Enabled = False
             txtComment.Enabled = False
+            txtMethodUsed.Enabled = False
+            txtReagent.Enabled = False
+            txtLotNumber.Enabled = False
+            txtExpiry.Enabled = False
 
             btnPrint.Enabled = False
             btnValidate.Enabled = True

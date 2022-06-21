@@ -56,6 +56,9 @@ Partial Class frmMicroWorklist
         Me.BarButtonItem6 = New DevExpress.XtraBars.BarButtonItem()
         Me.btnNewOrder = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
+        Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.txtSearch = New DevExpress.XtraEditors.SearchControl()
         Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
@@ -70,6 +73,9 @@ Partial Class frmMicroWorklist
         Me.dtCompleted = New DevExpress.XtraGrid.GridControl()
         Me.GridCompleted = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter1 = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
+        Me.rgSelect1 = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
         Me.SearchControl1 = New DevExpress.XtraEditors.SearchControl()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -84,10 +90,6 @@ Partial Class frmMicroWorklist
         Me.tmAutoValidate = New System.Windows.Forms.Timer(Me.components)
         Me.PrintDocument = New System.Drawing.Printing.PrintDocument()
         Me.PrintPreviewDialog = New System.Windows.Forms.PrintPreviewDialog()
-        Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
-        Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
-        Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
-        Me.rgSelect1 = New DevExpress.XtraEditors.RadioGroup()
         CType(Me.pnlBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlBackground.SuspendLayout()
         CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,6 +106,8 @@ Partial Class frmMicroWorklist
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picCode, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -114,12 +118,12 @@ Partial Class frmMicroWorklist
         CType(Me.GridCompleted, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchControl1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHeader.SuspendLayout()
-        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlBackground
@@ -251,6 +255,7 @@ Partial Class frmMicroWorklist
         Me.GridView.OptionsCustomization.AllowGroup = False
         Me.GridView.OptionsCustomization.AllowQuickHideColumns = False
         Me.GridView.OptionsSelection.CheckBoxSelectorColumnWidth = 30
+        Me.GridView.OptionsView.ColumnAutoWidth = False
         Me.GridView.OptionsView.ShowGroupPanel = False
         Me.GridView.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.[False]
         '
@@ -453,6 +458,7 @@ Partial Class frmMicroWorklist
         '
         Me.PanelControl2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl2.Controls.Add(Me.cboFilter)
         Me.PanelControl2.Controls.Add(Me.LabelControl7)
         Me.PanelControl2.Controls.Add(Me.rgSelect)
         Me.PanelControl2.Controls.Add(Me.LabelControl4)
@@ -463,6 +469,46 @@ Partial Class frmMicroWorklist
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(1240, 32)
         Me.PanelControl2.TabIndex = 144
+        '
+        'cboFilter
+        '
+        Me.cboFilter.EditValue = "All"
+        Me.cboFilter.Location = New System.Drawing.Point(193, 6)
+        Me.cboFilter.Name = "cboFilter"
+        Me.cboFilter.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter.Size = New System.Drawing.Size(120, 20)
+        Me.cboFilter.TabIndex = 161
+        '
+        'LabelControl7
+        '
+        Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl7.Appearance.Options.UseFont = True
+        Me.LabelControl7.Location = New System.Drawing.Point(606, 10)
+        Me.LabelControl7.Name = "LabelControl7"
+        Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
+        Me.LabelControl7.TabIndex = 156
+        Me.LabelControl7.Text = "Search option:"
+        '
+        'rgSelect
+        '
+        Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rgSelect.Location = New System.Drawing.Point(685, 5)
+        Me.rgSelect.MenuManager = Me.BarManager
+        Me.rgSelect.Name = "rgSelect"
+        Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.rgSelect.Properties.Appearance.Options.UseBackColor = True
+        Me.rgSelect.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.rgSelect.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Sample ID"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No."), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name")})
+        Me.rgSelect.Size = New System.Drawing.Size(280, 22)
+        Me.rgSelect.TabIndex = 155
         '
         'LabelControl4
         '
@@ -511,7 +557,7 @@ Partial Class frmMicroWorklist
         Me.cboLocation.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation.Size = New System.Drawing.Size(206, 20)
+        Me.cboLocation.Size = New System.Drawing.Size(121, 20)
         Me.cboLocation.TabIndex = 70
         '
         'bcCode
@@ -626,6 +672,7 @@ Partial Class frmMicroWorklist
         Me.GridCompleted.OptionsCustomization.AllowGroup = False
         Me.GridCompleted.OptionsCustomization.AllowQuickHideColumns = False
         Me.GridCompleted.OptionsSelection.CheckBoxSelectorColumnWidth = 30
+        Me.GridCompleted.OptionsView.ColumnAutoWidth = False
         Me.GridCompleted.OptionsView.ShowGroupPanel = False
         Me.GridCompleted.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.[False]
         '
@@ -633,6 +680,7 @@ Partial Class frmMicroWorklist
         '
         Me.PanelControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl1.Controls.Add(Me.cboFilter1)
         Me.PanelControl1.Controls.Add(Me.LabelControl8)
         Me.PanelControl1.Controls.Add(Me.rgSelect1)
         Me.PanelControl1.Controls.Add(Me.LabelControl5)
@@ -643,6 +691,46 @@ Partial Class frmMicroWorklist
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(1236, 30)
         Me.PanelControl1.TabIndex = 15
+        '
+        'cboFilter1
+        '
+        Me.cboFilter1.EditValue = "All"
+        Me.cboFilter1.Location = New System.Drawing.Point(216, 5)
+        Me.cboFilter1.Name = "cboFilter1"
+        Me.cboFilter1.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter1.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter1.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter1.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter1.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter1.Size = New System.Drawing.Size(132, 20)
+        Me.cboFilter1.TabIndex = 161
+        '
+        'LabelControl8
+        '
+        Me.LabelControl8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelControl8.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl8.Appearance.Options.UseFont = True
+        Me.LabelControl8.Location = New System.Drawing.Point(602, 8)
+        Me.LabelControl8.Name = "LabelControl8"
+        Me.LabelControl8.Size = New System.Drawing.Size(75, 13)
+        Me.LabelControl8.TabIndex = 158
+        Me.LabelControl8.Text = "Search option:"
+        '
+        'rgSelect1
+        '
+        Me.rgSelect1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rgSelect1.Location = New System.Drawing.Point(680, 2)
+        Me.rgSelect1.MenuManager = Me.BarManager
+        Me.rgSelect1.Name = "rgSelect1"
+        Me.rgSelect1.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.rgSelect1.Properties.Appearance.Options.UseBackColor = True
+        Me.rgSelect1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.rgSelect1.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Sample ID", True, 0), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No.", True, 1), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name", True, 2)})
+        Me.rgSelect1.Size = New System.Drawing.Size(280, 25)
+        Me.rgSelect1.TabIndex = 157
         '
         'LabelControl5
         '
@@ -691,7 +779,7 @@ Partial Class frmMicroWorklist
         Me.cboLocation1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation1.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation1.Size = New System.Drawing.Size(310, 20)
+        Me.cboLocation1.Size = New System.Drawing.Size(139, 20)
         Me.cboLocation1.TabIndex = 72
         '
         'pnlHeader
@@ -711,7 +799,7 @@ Partial Class frmMicroWorklist
         '
         Me.btnSearch.ImageOptions.SvgImage = CType(resources.GetObject("btnSearch.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnSearch.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
-        Me.btnSearch.Location = New System.Drawing.Point(316, 3)
+        Me.btnSearch.Location = New System.Drawing.Point(280, 3)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(68, 23)
         Me.btnSearch.TabIndex = 12
@@ -723,7 +811,7 @@ Partial Class frmMicroWorklist
         Me.dtFrom1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtFrom1.Location = New System.Drawing.Point(74, 4)
         Me.dtFrom1.Name = "dtFrom1"
-        Me.dtFrom1.Size = New System.Drawing.Size(114, 22)
+        Me.dtFrom1.Size = New System.Drawing.Size(98, 22)
         Me.dtFrom1.TabIndex = 9
         '
         'dtTo1
@@ -731,9 +819,9 @@ Partial Class frmMicroWorklist
         Me.dtTo1.CalendarFont = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtTo1.CalendarForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.dtTo1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtTo1.Location = New System.Drawing.Point(194, 4)
+        Me.dtTo1.Location = New System.Drawing.Point(178, 4)
         Me.dtTo1.Name = "dtTo1"
-        Me.dtTo1.Size = New System.Drawing.Size(115, 22)
+        Me.dtTo1.Size = New System.Drawing.Size(96, 22)
         Me.dtTo1.TabIndex = 8
         '
         'LabelControl3
@@ -773,54 +861,6 @@ Partial Class frmMicroWorklist
         Me.PrintPreviewDialog.Name = "PrintPreviewDialog"
         Me.PrintPreviewDialog.Visible = False
         '
-        'LabelControl7
-        '
-        Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl7.Appearance.Options.UseFont = True
-        Me.LabelControl7.Location = New System.Drawing.Point(606, 10)
-        Me.LabelControl7.Name = "LabelControl7"
-        Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
-        Me.LabelControl7.TabIndex = 156
-        Me.LabelControl7.Text = "Search option:"
-        '
-        'rgSelect
-        '
-        Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rgSelect.Location = New System.Drawing.Point(685, 5)
-        Me.rgSelect.MenuManager = Me.BarManager
-        Me.rgSelect.Name = "rgSelect"
-        Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.rgSelect.Properties.Appearance.Options.UseBackColor = True
-        Me.rgSelect.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.rgSelect.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Sample ID"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No."), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name")})
-        Me.rgSelect.Size = New System.Drawing.Size(280, 22)
-        Me.rgSelect.TabIndex = 155
-        '
-        'LabelControl8
-        '
-        Me.LabelControl8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LabelControl8.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl8.Appearance.Options.UseFont = True
-        Me.LabelControl8.Location = New System.Drawing.Point(602, 8)
-        Me.LabelControl8.Name = "LabelControl8"
-        Me.LabelControl8.Size = New System.Drawing.Size(75, 13)
-        Me.LabelControl8.TabIndex = 158
-        Me.LabelControl8.Text = "Search option:"
-        '
-        'rgSelect1
-        '
-        Me.rgSelect1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rgSelect1.Location = New System.Drawing.Point(680, 2)
-        Me.rgSelect1.MenuManager = Me.BarManager
-        Me.rgSelect1.Name = "rgSelect1"
-        Me.rgSelect1.Properties.Appearance.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.rgSelect1.Properties.Appearance.Options.UseBackColor = True
-        Me.rgSelect1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.rgSelect1.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Sample ID", True, 0), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Hospital No.", True, 1), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Patient Name", True, 2)})
-        Me.rgSelect1.Size = New System.Drawing.Size(280, 25)
-        Me.rgSelect1.TabIndex = 157
-        '
         'frmMicroWorklist
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -852,6 +892,8 @@ Partial Class frmMicroWorklist
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picCode, System.ComponentModel.ISupportInitialize).EndInit()
@@ -863,13 +905,13 @@ Partial Class frmMicroWorklist
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
         Me.PanelControl1.PerformLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchControl1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlHeader.ResumeLayout(False)
         Me.pnlHeader.PerformLayout()
-        CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -936,4 +978,6 @@ Partial Class frmMicroWorklist
     Friend WithEvents rgSelect As DevExpress.XtraEditors.RadioGroup
     Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents rgSelect1 As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents cboFilter As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents cboFilter1 As DevExpress.XtraEditors.ComboBoxEdit
 End Class

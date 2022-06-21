@@ -34,52 +34,101 @@ Public Class frmChemWorklist
             GridView.Columns.Clear()
             GridView.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
             GridView.Appearance.HeaderPanel.FontStyleDelta = FontStyle.Bold
-
-            Dim SQL As String = "SELECT
-                                    `tmpWorklist`.`id` AS SequenceNo,
-                                    `tmpWorklist`.`status` AS Status,
-                                    `tmpWorklist`.`sample_id` AS SampleID,
-                                    `tmpWorklist`.`patient_id` AS PatientID,
-                                    `tmpWorklist`.`patient_name` AS PatientName, 
-                                    `tmpWorklist`.`test` AS Request,
-                                    DATE_FORMAT(`tmpWorklist`.`date`, '%m/%d/%Y') AS DateReceived,
-                                    `tmpWorklist`.`time` AS TimeReceived,
-                                    DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
-                                    CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
-                                    CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
-                                    `tmpWorklist`.`physician` AS Physician,
-                                    `tmpWorklist`.`bdate` AS DateOfBirth,
-                                    `tmpWorklist`.`sex` AS Sex,
-                                    `tmpWorklist`.`age` AS Age,
-                                    `tmpWorklist`.`dept` AS RoomWard,
-                                    `tmpWorklist`.`testtype` AS Section,
-                                    `tmpWorklist`.`sub_section` AS SubSection,
-                                    `tmpWorklist`.`main_id` AS RefID,
-                                    `tmpWorklist`.`patient_type` AS PatientType,
-                                    patient_info.address AS Address,
-                                    patient_info.contact_no AS ContactNo,
-                                    patient_info.civil_status AS CivilStatus,
-                                    additional_info.accession_no AS AccessionNo,
-                                    additional_info.or_no AS ORNo,
-                                    additional_info.cs_no AS ChargeSlip,
-                                    patient_remarks.remarks AS Remarks,
-                                    patient_remarks.diagnosis AS Diagnosis,
-                                    email_details.email_address AS EmailAddress,
-                                    `tmpworklist`.priority AS Priority
-                                FROM `tmpWorklist` 
-                                    Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
-                                    Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
-                                    Left JOIN `additional_info` ON `additional_info`.`sample_id` = `tmpWorklist`.`main_id` And additional_info.section = tmpworklist.testtype And additional_info.sub_section = tmpworklist.sub_section
-                                    Left JOIN `patient_remarks` ON `patient_remarks`.`sample_id` = `tmpWorklist`.`main_id` And patient_remarks.section = tmpworklist.testtype And patient_remarks.sub_section = tmpworklist.sub_section
-                                    Left JOIN `email_details` ON `email_details`.`sample_id` = `tmpWorklist`.`main_id` And email_details.section = tmpworklist.testtype And email_details.sub_section = tmpworklist.sub_section
-                                    LEFT JOIN `medtech` T1 ON `T1`.`id` = `tmpWorklist`.`medtech`
-                                    LEFT JOIN `medtech_verificator` T2 ON `T2`.`id` = `tmpWorklist`.`verified_by`
-                                WHERE(`tmpWorklist`.`status` = 'Result Received' OR `tmpWorklist`.`status` = 'Validated' OR `tmpWorklist`.`status` = 'Processing') 
-                                    And (`tmpWorklist`.`testtype` = `specimen_tracking`.`section`)
-                                    And (`tmpWorklist`.`sub_section` = `specimen_tracking`.`sub_section`)
-                                    And (`tmpWorklist`.`testtype` = 'Chemistry')
-                                    And (`tmpWorklist`.`location` = @Location)
-                                    ORDER BY `tmpWorklist`.`main_id` DESC"
+            Dim SQL As String
+            If cboFilter.Text = "All" Then
+                SQL = "SELECT
+                        `tmpWorklist`.`id` AS SequenceNo,
+                        `tmpWorklist`.`status` AS Status,
+                        `tmpWorklist`.`sample_id` AS SampleID,
+                        `tmpWorklist`.`patient_id` AS PatientID,
+                        `tmpWorklist`.`patient_name` AS PatientName, 
+                        `tmpWorklist`.`test` AS Request,
+                        DATE_FORMAT(`tmpWorklist`.`date`, '%m/%d/%Y') AS DateReceived,
+                        `tmpWorklist`.`time` AS TimeReceived,
+                        DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
+                        CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
+                        CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
+                        `tmpWorklist`.`physician` AS Physician,
+                        `tmpWorklist`.`bdate` AS DateOfBirth,
+                        `tmpWorklist`.`sex` AS Sex,
+                        `tmpWorklist`.`age` AS Age,
+                        `tmpWorklist`.`dept` AS RoomWard,
+                        `tmpWorklist`.`testtype` AS Section,
+                        `tmpWorklist`.`sub_section` AS SubSection,
+                        `tmpWorklist`.`main_id` AS RefID,
+                        `tmpWorklist`.`patient_type` AS PatientType,
+                        patient_info.address AS Address,
+                        patient_info.contact_no AS ContactNo,
+                        patient_info.civil_status AS CivilStatus,
+                        additional_info.accession_no AS AccessionNo,
+                        additional_info.or_no AS ORNo,
+                        additional_info.cs_no AS ChargeSlip,
+                        patient_remarks.remarks AS Remarks,
+                        patient_remarks.diagnosis AS Diagnosis,
+                        email_details.email_address AS EmailAddress,
+                        `tmpworklist`.priority AS Priority
+                    FROM `tmpWorklist` 
+                        Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
+                        Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
+                        Left JOIN `additional_info` ON `additional_info`.`sample_id` = `tmpWorklist`.`main_id` And additional_info.section = tmpworklist.testtype And additional_info.sub_section = tmpworklist.sub_section
+                        Left JOIN `patient_remarks` ON `patient_remarks`.`sample_id` = `tmpWorklist`.`main_id` And patient_remarks.section = tmpworklist.testtype And patient_remarks.sub_section = tmpworklist.sub_section
+                        Left JOIN `email_details` ON `email_details`.`sample_id` = `tmpWorklist`.`main_id` And email_details.section = tmpworklist.testtype And email_details.sub_section = tmpworklist.sub_section
+                        LEFT JOIN `medtech` T1 ON `T1`.`id` = `tmpWorklist`.`medtech`
+                        LEFT JOIN `medtech_verificator` T2 ON `T2`.`id` = `tmpWorklist`.`verified_by`
+                    WHERE(`tmpWorklist`.`status` = 'Result Received' OR `tmpWorklist`.`status` = 'Validated' OR `tmpWorklist`.`status` = 'Processing') 
+                        And (`tmpWorklist`.`testtype` = `specimen_tracking`.`section`)
+                        And (`tmpWorklist`.`sub_section` = `specimen_tracking`.`sub_section`)
+                        And (`tmpWorklist`.`testtype` = 'Chemistry')
+                        And (`tmpWorklist`.`location` = @Location)
+                        ORDER BY `tmpWorklist`.`main_id` DESC"
+            Else
+                SQL = "SELECT
+                        `tmpWorklist`.`id` AS SequenceNo,
+                        `tmpWorklist`.`status` AS Status,
+                        `tmpWorklist`.`sample_id` AS SampleID,
+                        `tmpWorklist`.`patient_id` AS PatientID,
+                        `tmpWorklist`.`patient_name` AS PatientName, 
+                        `tmpWorklist`.`test` AS Request,
+                        DATE_FORMAT(`tmpWorklist`.`date`, '%m/%d/%Y') AS DateReceived,
+                        `tmpWorklist`.`time` AS TimeReceived,
+                        DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
+                        CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
+                        CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
+                        `tmpWorklist`.`physician` AS Physician,
+                        `tmpWorklist`.`bdate` AS DateOfBirth,
+                        `tmpWorklist`.`sex` AS Sex,
+                        `tmpWorklist`.`age` AS Age,
+                        `tmpWorklist`.`dept` AS RoomWard,
+                        `tmpWorklist`.`testtype` AS Section,
+                        `tmpWorklist`.`sub_section` AS SubSection,
+                        `tmpWorklist`.`main_id` AS RefID,
+                        `tmpWorklist`.`patient_type` AS PatientType,
+                        patient_info.address AS Address,
+                        patient_info.contact_no AS ContactNo,
+                        patient_info.civil_status AS CivilStatus,
+                        additional_info.accession_no AS AccessionNo,
+                        additional_info.or_no AS ORNo,
+                        additional_info.cs_no AS ChargeSlip,
+                        patient_remarks.remarks AS Remarks,
+                        patient_remarks.diagnosis AS Diagnosis,
+                        email_details.email_address AS EmailAddress,
+                        `tmpworklist`.priority AS Priority
+                    FROM `tmpWorklist` 
+                        Left JOIN `specimen_tracking` ON `specimen_tracking`.`sample_id` = `tmpWorklist`.`main_id` And specimen_tracking.section = tmpworklist.testtype And specimen_tracking.sub_section = tmpworklist.sub_section
+                        Left JOIN `patient_info` ON`patient_info`.`patient_id` = `tmpWorklist`.`patient_id`
+                        Left JOIN `additional_info` ON `additional_info`.`sample_id` = `tmpWorklist`.`main_id` And additional_info.section = tmpworklist.testtype And additional_info.sub_section = tmpworklist.sub_section
+                        Left JOIN `patient_remarks` ON `patient_remarks`.`sample_id` = `tmpWorklist`.`main_id` And patient_remarks.section = tmpworklist.testtype And patient_remarks.sub_section = tmpworklist.sub_section
+                        Left JOIN `email_details` ON `email_details`.`sample_id` = `tmpWorklist`.`main_id` And email_details.section = tmpworklist.testtype And email_details.sub_section = tmpworklist.sub_section
+                        LEFT JOIN `medtech` T1 ON `T1`.`id` = `tmpWorklist`.`medtech`
+                        LEFT JOIN `medtech_verificator` T2 ON `T2`.`id` = `tmpWorklist`.`verified_by`
+                    WHERE(`tmpWorklist`.`status` = 'Result Received' OR `tmpWorklist`.`status` = 'Validated' OR `tmpWorklist`.`status` = 'Processing') 
+                        And (`tmpWorklist`.`testtype` = `specimen_tracking`.`section`)
+                        And (`tmpWorklist`.`sub_section` = `specimen_tracking`.`sub_section`)
+                        And (`tmpWorklist`.`testtype` = 'Chemistry')
+                        And (`tmpWorklist`.`location` = @Location)
+                        And (`tmpWorklist`.`patient_type` = @PType)
+                        ORDER BY `tmpWorklist`.`main_id` DESC"
+            End If
 
             'Dim SQL As String = "worklist"
 
@@ -88,6 +137,7 @@ Public Class frmChemWorklist
 
             command.Parameters.Clear()
             command.Parameters.AddWithValue("@Location", cboLocation.Text)
+            command.Parameters.AddWithValue("@PType", cboFilter.Text)
 
             Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(command)
 
@@ -180,54 +230,105 @@ Public Class frmChemWorklist
             GridCompleted.Columns.Clear()
             GridCompleted.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
             GridCompleted.Appearance.HeaderPanel.FontStyleDelta = FontStyle.Bold
-
-            Dim SQL As String = "Select
-							    `order`.`id` AS SequenceNo,
-							    `order`.`status` AS Status,
-							    `order`.`sample_id` AS SampleID,
-							    `order`.`patient_id` AS PatientID,
-							    `order`.`patient_name` AS PatientName, 
-							    `order`.`test` AS Request,
-							    DATE_FORMAT(`order`.`date`, '%m/%d/%Y') AS DateReceived,
-							    `order`.`time` AS TimeReceived,
-                                DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
-                                DATE_FORMAT(STR_TO_DATE( `order`.`dt_released`, '%Y-%m-%d %l:%i:%S %p' ), '%m/%d/%Y %r') AS DateReleased,
-                                CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
-                                CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
-							    `order`.`physician` AS Physician,
-							    `order`.`bdate` AS DateOfBirth,
-							    `order`.`sex` AS Sex,
-							    `order`.`age` AS Age,
-							    `order`.`dept` AS RoomWard,
-							    `order`.`testtype` AS Section,
-							    `order`.`sub_section` AS SubSection,
-							    `order`.`main_id` AS RefID,
-							    `order`.`patient_type` AS PatientType,
-                                patient_info.address As Address,
-                                patient_info.contact_no AS ContactNo,
-                                patient_info.civil_status As CivilStatus,
-                                additional_info.accession_no AS AccessionNo,
-                                additional_info.or_no As ORNo,
-                                additional_info.cs_no AS ChargeSlip,
-                                patient_remarks.remarks As Remarks,
-                                patient_remarks.diagnosis AS Diagnosis,
-                                email_details.email_address AS EmailAddress,
-                                `order`.priority AS Priority
-                            FROM `order` 
-							    Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = order.testtype And specimen_tracking.sub_section = order.sub_section
-                                Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
-                                Left Join `additional_info` ON `additional_info`.`sample_id` = `order`.`main_id` And additional_info.section = order.testtype And additional_info.sub_section = order.sub_section
-                                Left Join `patient_remarks` ON `patient_remarks`.`sample_id` = `order`.`main_id` And patient_remarks.section = order.testtype And patient_remarks.sub_section = order.sub_section
-                                Left Join `email_details` ON `email_details`.`sample_id` = `order`.`main_id` And email_details.section = order.testtype And email_details.sub_section = order.sub_section
-                                Left Join `medtech` T1 ON `T1`.`id` = `order`.`medtech`
-                                Left Join `medtech_verificator` T2 ON `T2`.`id` = `order`.`verified_by`
-                            WHERE(`order`.`status` = 'Printed' OR `order`.`status` = 'Validated' OR `order`.`status` = 'Released') 
-						        And (`order`.`testtype` = `specimen_tracking`.`section`)
-						        And (`order`.`sub_section` = `specimen_tracking`.`sub_section`)
-						        And (`order`.`testtype` = 'Chemistry')
-						        And (`order`.`location` = @Location)
-						        And (DATE(DATE_FORMAT(`order`.`dt_released`, '%Y-%m-%d')) BETWEEN @DateFrom AND @DateTo)
-						    ORDER BY `order`.`main_id` DESC"
+            Dim SQL As String
+            If cboFilter1.Text = "All" Then
+                SQL = "Select
+					    `order`.`id` AS SequenceNo,
+					    `order`.`status` AS Status,
+					    `order`.`sample_id` AS SampleID,
+					    `order`.`patient_id` AS PatientID,
+					    `order`.`patient_name` AS PatientName, 
+					    `order`.`test` AS Request,
+					    DATE_FORMAT(`order`.`date`, '%m/%d/%Y') AS DateReceived,
+					    `order`.`time` AS TimeReceived,
+                        DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
+                        DATE_FORMAT(STR_TO_DATE( `order`.`dt_released`, '%Y-%m-%d %l:%i:%S %p' ), '%m/%d/%Y %r') AS DateReleased,
+                        CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
+                        CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
+					    `order`.`physician` AS Physician,
+					    `order`.`bdate` AS DateOfBirth,
+					    `order`.`sex` AS Sex,
+					    `order`.`age` AS Age,
+					    `order`.`dept` AS RoomWard,
+					    `order`.`testtype` AS Section,
+					    `order`.`sub_section` AS SubSection,
+					    `order`.`main_id` AS RefID,
+					    `order`.`patient_type` AS PatientType,
+                        patient_info.address As Address,
+                        patient_info.contact_no AS ContactNo,
+                        patient_info.civil_status As CivilStatus,
+                        additional_info.accession_no AS AccessionNo,
+                        additional_info.or_no As ORNo,
+                        additional_info.cs_no AS ChargeSlip,
+                        patient_remarks.remarks As Remarks,
+                        patient_remarks.diagnosis AS Diagnosis,
+                        email_details.email_address AS EmailAddress,
+                        `order`.priority AS Priority
+                    FROM `order` 
+					    Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = order.testtype And specimen_tracking.sub_section = order.sub_section
+                        Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
+                        Left Join `additional_info` ON `additional_info`.`sample_id` = `order`.`main_id` And additional_info.section = order.testtype And additional_info.sub_section = order.sub_section
+                        Left Join `patient_remarks` ON `patient_remarks`.`sample_id` = `order`.`main_id` And patient_remarks.section = order.testtype And patient_remarks.sub_section = order.sub_section
+                        Left Join `email_details` ON `email_details`.`sample_id` = `order`.`main_id` And email_details.section = order.testtype And email_details.sub_section = order.sub_section
+                        Left Join `medtech` T1 ON `T1`.`id` = `order`.`medtech`
+                        Left Join `medtech_verificator` T2 ON `T2`.`id` = `order`.`verified_by`
+                    WHERE(`order`.`status` = 'Printed' OR `order`.`status` = 'Validated' OR `order`.`status` = 'Released') 
+					    And (`order`.`testtype` = `specimen_tracking`.`section`)
+					    And (`order`.`sub_section` = `specimen_tracking`.`sub_section`)
+					    And (`order`.`testtype` = 'Chemistry')
+					    And (`order`.`location` = @Location)
+					    And (DATE(DATE_FORMAT(`order`.`dt_released`, '%Y-%m-%d')) BETWEEN @DateFrom AND @DateTo)
+				    ORDER BY `order`.`main_id` DESC"
+            Else
+                SQL = "Select
+					    `order`.`id` AS SequenceNo,
+					    `order`.`status` AS Status,
+					    `order`.`sample_id` AS SampleID,
+					    `order`.`patient_id` AS PatientID,
+					    `order`.`patient_name` AS PatientName, 
+					    `order`.`test` AS Request,
+					    DATE_FORMAT(`order`.`date`, '%m/%d/%Y') AS DateReceived,
+					    `order`.`time` AS TimeReceived,
+                        DATE_FORMAT(`specimen_tracking`.`extracted`, '%m/%d/%Y %l:%i:%S %p') AS DateCheckedIn,
+                        DATE_FORMAT(STR_TO_DATE( `order`.`dt_released`, '%Y-%m-%d %l:%i:%S %p' ), '%m/%d/%Y %r') AS DateReleased,
+                        CONCAT(T1.fname, ' ', T1.mname, ' ', T1.lname, ', ', T1.designation) AS PerformedBy,
+                        CONCAT(T2.fname, ' ', T2.mname, ' ', T2.lname, ', ', T2.designation) AS ReleasedBy,
+					    `order`.`physician` AS Physician,
+					    `order`.`bdate` AS DateOfBirth,
+					    `order`.`sex` AS Sex,
+					    `order`.`age` AS Age,
+					    `order`.`dept` AS RoomWard,
+					    `order`.`testtype` AS Section,
+					    `order`.`sub_section` AS SubSection,
+					    `order`.`main_id` AS RefID,
+					    `order`.`patient_type` AS PatientType,
+                        patient_info.address As Address,
+                        patient_info.contact_no AS ContactNo,
+                        patient_info.civil_status As CivilStatus,
+                        additional_info.accession_no AS AccessionNo,
+                        additional_info.or_no As ORNo,
+                        additional_info.cs_no AS ChargeSlip,
+                        patient_remarks.remarks As Remarks,
+                        patient_remarks.diagnosis AS Diagnosis,
+                        email_details.email_address AS EmailAddress,
+                        `order`.priority AS Priority
+                    FROM `order` 
+					    Left Join `specimen_tracking` ON `specimen_tracking`.`sample_id` = `order`.`main_id` And specimen_tracking.section = order.testtype And specimen_tracking.sub_section = order.sub_section
+                        Left Join `patient_info` ON`patient_info`.`patient_id` = `order`.`patient_id`
+                        Left Join `additional_info` ON `additional_info`.`sample_id` = `order`.`main_id` And additional_info.section = order.testtype And additional_info.sub_section = order.sub_section
+                        Left Join `patient_remarks` ON `patient_remarks`.`sample_id` = `order`.`main_id` And patient_remarks.section = order.testtype And patient_remarks.sub_section = order.sub_section
+                        Left Join `email_details` ON `email_details`.`sample_id` = `order`.`main_id` And email_details.section = order.testtype And email_details.sub_section = order.sub_section
+                        Left Join `medtech` T1 ON `T1`.`id` = `order`.`medtech`
+                        Left Join `medtech_verificator` T2 ON `T2`.`id` = `order`.`verified_by`
+                    WHERE(`order`.`status` = 'Printed' OR `order`.`status` = 'Validated' OR `order`.`status` = 'Released') 
+					    And (`order`.`testtype` = `specimen_tracking`.`section`)
+					    And (`order`.`sub_section` = `specimen_tracking`.`sub_section`)
+					    And (`order`.`testtype` = 'Chemistry')
+					    And (`order`.`location` = @Location)
+                        And (`order`.`patient_type` = @PType)
+					    And (DATE(DATE_FORMAT(`order`.`dt_released`, '%Y-%m-%d')) BETWEEN @DateFrom AND @DateTo)
+				    ORDER BY `order`.`main_id` DESC"
+            End If
 
             Dim command As New MySql.Data.MySqlClient.MySqlCommand(SQL, conn)
 
@@ -235,6 +336,7 @@ Public Class frmChemWorklist
             command.Parameters.Add("@DateFrom", MySql.Data.MySqlClient.MySqlDbType.DateTime).Value = Format(dtFrom1.Value, "yyyy-MM-dd")
             command.Parameters.Add("@DateTo", MySql.Data.MySqlClient.MySqlDbType.DateTime).Value = Format(dtTo1.Value, "yyyy-MM-dd")
             command.Parameters.AddWithValue("@Location", cboLocation1.Text)
+            command.Parameters.AddWithValue("@PType", cboFilter1.Text)
 
             Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(command)
             command.CommandType = CommandType.Text
@@ -1066,7 +1168,7 @@ Public Class frmChemWorklist
         Me.Close()
     End Sub
 
-    Private Sub cboLimit_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLocation.SelectedIndexChanged
+    Private Sub cboLimit_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLocation.SelectedIndexChanged, cboFilter.SelectedIndexChanged
         Try
             LoadRecords()
         Catch ex As Exception
@@ -1074,7 +1176,7 @@ Public Class frmChemWorklist
         End Try
     End Sub
 
-    Private Sub cboLimit1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLocation1.SelectedIndexChanged
+    Private Sub cboLimit1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboLocation1.SelectedIndexChanged, cboFilter1.SelectedIndexChanged
         Try
             LoadRecordsCompleted()
         Catch ex As Exception

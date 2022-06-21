@@ -54,7 +54,7 @@ Public Class frmAntigenNew
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` = '" & Me.cboMedTech.Text & "'"
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech`) AS T1 WHERE T1.`name` = '" & Me.cboMedTech.Text & "'"
         reader = rs.ExecuteReader
         reader.Read()
         If reader.HasRows Then
@@ -80,7 +80,7 @@ Public Class frmAntigenNew
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` = '" & Me.cboVerify.Text & "'"
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech_verificator`) AS T1 WHERE T1.`name` = '" & Me.cboVerify.Text & "'"
         reader = rs.ExecuteReader
         reader.Read()
         If reader.HasRows Then
@@ -299,6 +299,9 @@ Public Class frmAntigenNew
     End Sub
 
     Private Sub frmAntigenNew_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        txtMethodUsed.Text = "Colloidal Gold Immunochromatography"
+        txtReagent.Text = "2019 nCoV Antigen Test Dilution Buffer"
+
         LoadTest()
         ReloadAssay()
     End Sub
@@ -356,6 +359,18 @@ Public Class frmAntigenNew
         reader = rs.ExecuteReader
         While reader.Read
             cboVerify.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+
+        '###########################---Load Med Tech---##################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` ORDER BY `fname`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            cboMedTech.Properties.Items.Add(reader(0))
         End While
         Disconnect()
         '######################################----END-----###############################################################
@@ -653,7 +668,7 @@ Public Class frmAntigenNew
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
                     & "`medtech` = @medtechid," _
-                    & "`verified_by` = @verifyid," _
+                    & "`verified_by` = @medtechid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
@@ -977,7 +992,7 @@ Public Class frmAntigenNew
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
                     & "`medtech` = @medtechid," _
-                    & "`verified_by` = @verifyid," _
+                    & "`verified_by` = @medtechid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
@@ -1277,7 +1292,7 @@ Public Class frmAntigenNew
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
                     & "`medtech` = @medtechid," _
-                    & "`verified_by` = @verifyid," _
+                    & "`verified_by` = @medtechid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _

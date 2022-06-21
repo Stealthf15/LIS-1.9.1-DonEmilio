@@ -16,7 +16,7 @@ Public Class frmPhlebotomy
 
             Dim SQL As String = "SELECT 
                         `id` AS ID, `status` AS `Status`, `sample_id` AS SampleID, `patient_id` AS PatientID, `patient_name`AS PatientName, 
-                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, 
+                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, `priority` AS `Priority`,
                         `testtype` AS Section, `sub_section` AS SubSection, `main_id` AS RefID 
                         FROM `tmpWorklist` WHERE (`status` = 'Ordered' OR `status` = 'Rejected' OR `status` = 'Cancelled' OR `status` = 'Warding') 
                         AND (`date` BETWEEN @DateFrom and @DateTo) ORDER BY `id` DESC"
@@ -70,6 +70,11 @@ Public Class frmPhlebotomy
                 e.Appearance.ForeColor = Color.White
             End If
         End If
+
+        If view.GetRowCellValue(e.RowHandle, "Priority").ToString = "STAT" Then
+            e.Appearance.ForeColor = Color.DarkRed
+        End If
+
     End Sub
 
     Public Sub LoadRecordsFilterWard()
@@ -80,7 +85,7 @@ Public Class frmPhlebotomy
 
             Dim SQL As String = "SELECT 
                         `id` AS ID, `status` AS `Status`, `sample_id` AS SampleID, `patient_id` AS PatientID, `patient_name`AS PatientName, 
-                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, 
+                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, `priority` AS `Priority`,
                         `testtype` AS Section, `sub_section` AS SubSection, `main_id` AS RefID 
                         FROM `tmpWorklist` WHERE (`status` = 'Ordered' OR `status` = 'Rejected' OR `status` = 'Cancelled' OR `status` = 'Warding') 
                         AND (`date` BETWEEN @DateFrom AND @DateTo) AND `dept` = @Search ORDER BY `id` DESC"
@@ -131,8 +136,7 @@ Public Class frmPhlebotomy
         Disconnect()
     End Sub
 
-
-    Private Sub btnAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAdd.ItemClick
+    Private Sub btnAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCheckin.ItemClick
         Dim selectedRows() As Integer = GridView.GetSelectedRows()
         For Each rowHandle As Integer In selectedRows
             If rowHandle >= 0 Then
@@ -149,8 +153,7 @@ Public Class frmPhlebotomy
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies, "ROUTINE")
 
                         GoTo A
                     Catch ex As Exception
@@ -172,6 +175,7 @@ A:
                 rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
                 rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
                 rs.Parameters.AddWithValue("@time_checked_in", Now)
+                rs.Parameters.AddWithValue("@Comment", txtComment.Text)
 
                 UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`status` = @status," _
@@ -209,6 +213,26 @@ A:
                         )
                 End If
                 Disconnect()
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`diagnosis` = @Comment" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`sample_id`, `diagnosis`, `section`, `sub_section` ) VALUES (@SampleID, @Comment, @Section, @SubSection)")
+                End If
+                Disconnect()
+
                 'Log activity
                 SpecimenActivity("z_logs_specimen", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")), CurrUser, "Checked-In Specimen", "", GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")), GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")), GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
             End If
@@ -234,8 +258,7 @@ A:
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies, "STAT")
 
                         GoTo A
                     Catch ex As Exception
@@ -257,6 +280,7 @@ A:
                 rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
                 rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
                 rs.Parameters.AddWithValue("@time_checked_in", Now)
+                rs.Parameters.AddWithValue("@Comment", txtComment.Text)
 
                 UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`status` = @status," _
@@ -294,6 +318,26 @@ A:
                         )
                 End If
                 Disconnect()
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`diagnosis` = @Comment" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`sample_id`, `diagnosis`, `section`, `sub_section` ) VALUES (@SampleID, @Comment, @Section, @SubSection)")
+                End If
+                Disconnect()
+
                 'Log activity
                 SpecimenActivity("z_logs_specimen", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")), CurrUser, "Checked-In Specimen", "", GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")), GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")), GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
             End If
@@ -310,7 +354,7 @@ A:
         Me.Dispose()
     End Sub
 
-    Private Sub btnWarding_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnAddOrder.ItemClick
+    Private Sub btnWarding_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnWarding.ItemClick
         Dim selectedRows() As Integer = GridView.GetSelectedRows()
         For Each rowHandle As Integer In selectedRows
             If rowHandle >= 0 Then
@@ -327,8 +371,7 @@ A:
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies,
-                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies, "ROUTINE")
 
                     Catch ex As Exception
                         MessageBox.Show("Error in connection on printer. " + ex.Message, "Barcode Printing Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -349,11 +392,11 @@ A:
                 rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
                 rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
                 rs.Parameters.AddWithValue("@time_warding", Now)
+                rs.Parameters.AddWithValue("@Comment", txtComment.Text)
 
                 UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
-                    & "`sample_id` = @SampleID," _
-                    & "`main_id` = @mainID," _
-                    & "`status` = @status" _
+                    & "`status` = @status," _
+                    & "`priority` = 'ROUTINE'" _
                     & " WHERE main_id = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
                     )
 
@@ -403,6 +446,145 @@ A:
                         )
                 End If
                 Disconnect()
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`diagnosis` = @Comment" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`sample_id`, `diagnosis`, `section`, `sub_section` ) VALUES (@SampleID, @Comment, @Section, @SubSection)")
+                End If
+                Disconnect()
+
+                'Log activity
+                SpecimenActivity("z_logs_specimen", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")), CurrUser, "Ward Specimen", "", GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")), GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")), GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
+            End If
+        Next rowHandle
+        LoadRecords()
+    End Sub
+
+    Private Sub btnWardingStat_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnWardingStat.ItemClick
+        Dim selectedRows() As Integer = GridView.GetSelectedRows()
+        For Each rowHandle As Integer In selectedRows
+            If rowHandle >= 0 Then
+                Dim Result As DialogResult = MessageBox.Show("You're about to Check-In Patient " & GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")) & "." & vbCrLf & vbCrLf & "Do you want to continue to print Barcode Sticker " & GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")) & "?", "System Message", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+                If (Result = DialogResult.Yes) Then
+                    Try
+                        frmNoCopiesBC.ShowDialog()
+
+                        PrintBarcode(GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("DateOfBirth")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Sex")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")).ToString,
+                                     GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")).ToString, NoCopies, "STAT")
+
+                    Catch ex As Exception
+                        MessageBox.Show("Error in connection on printer. " + ex.Message, "Barcode Printing Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                    GoTo A
+                ElseIf (Result = DialogResult.No) Then
+                    GoTo A
+                ElseIf (Result = DialogResult.Cancel) Then
+                    Exit Sub
+                End If
+
+A:
+
+                rs.Parameters.Clear()
+                rs.Parameters.AddWithValue("@mainID", GridView.GetRowCellValue(rowHandle, GridView.Columns("RefID")))
+                rs.Parameters.AddWithValue("@SampleID", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")))
+                rs.Parameters.AddWithValue("@status", "Warding")
+                rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
+                rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
+                rs.Parameters.AddWithValue("@time_warding", Now)
+                rs.Parameters.AddWithValue("@Comment", txtComment.Text)
+
+                UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
+                    & "`status` = @status," _
+                    & "`priority` = 'STAT'" _
+                    & " WHERE main_id = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
+                    )
+
+                UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
+                    & "`sample_id` = @SampleID," _
+                    & "`accession_no` = @mainID" _
+                    & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                    )
+
+                'UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
+                '    & "`sample_id` = @SampleID" _
+                '    & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @SubSection"
+                '    )
+
+                'UpdateRecordwthoutMSG("UPDATE `patient_order` SET " _
+                '    & "`sample_id` = @SampleID" _
+                '    & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @SubSection"
+                '    )
+
+                'UpdateRecordwthoutMSG("UPDATE `lis_order` SET " _
+                '    & "`sample_id` = @SampleID" _
+                '    & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @SubSection"
+                '    )
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `specimen_tracking` WHERE `sample_id` = @SampleID"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`warding` = @time_warding" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `specimen_tracking` (`sample_id`, `warding`, `section`, `sub_section`) VALUES " _
+                        & "(" _
+                        & "@SampleID," _
+                        & "@time_warding," _
+                        & "@Section," _
+                        & "@SubSection" _
+                        & ")"
+                        )
+                End If
+                Disconnect()
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`diagnosis` = @Comment" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`sample_id`, `diagnosis`, `section`, `sub_section` ) VALUES (@SampleID, @Comment, @Section, @SubSection)")
+                End If
+                Disconnect()
+
                 'Log activity
                 SpecimenActivity("z_logs_specimen", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientID")), GridView.GetRowCellValue(rowHandle, GridView.Columns("PatientName")), CurrUser, "Ward Specimen", "", GridView.GetRowCellValue(rowHandle, GridView.Columns("Request")), GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")), GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
             End If
@@ -490,7 +672,7 @@ A:
             If rgSelect.SelectedIndex = 0 Then
                 Dim SQL As String = "SELECT 
                         `id` AS ID, `status` AS `Status`, `sample_id` AS SampleID, `patient_id` AS PatientID, `patient_name`AS PatientName, 
-                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, 
+                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, `priority` AS `Priority`,
                         `testtype` AS Section, `sub_section` AS SubSection, `main_id` AS RefID 
                         FROM `tmpWorklist` WHERE (`sample_id` LIKE '" & txtSearch.Text & "%') AND (`status` = 'Ordered' OR `status` = 'Rejected' OR `status` = 'Cancelled' OR `status` = 'Warding') 
                         AND (`date` BETWEEN @DateFrom and @DateTo) ORDER BY `id` DESC"
@@ -524,7 +706,7 @@ A:
             ElseIf rgSelect.SelectedIndex = 1 Then
                 Dim SQL As String = "SELECT 
                         `id` AS ID, `status` AS `Status`, `sample_id` AS SampleID, `patient_id` AS PatientID, `patient_name`AS PatientName, 
-                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, 
+                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, `priority` AS `Priority`,
                         `testtype` AS Section, `sub_section` AS SubSection, `main_id` AS RefID 
                         FROM `tmpWorklist` WHERE (`patient_id` LIKE '" & txtSearch.Text & "%') AND (`status` = 'Ordered' OR `status` = 'Rejected' OR `status` = 'Cancelled' OR `status` = 'Warding') 
                         AND (`date` BETWEEN @DateFrom and @DateTo) ORDER BY `id` DESC"
@@ -558,7 +740,7 @@ A:
             ElseIf rgSelect.SelectedIndex = 2 Then
                 Dim SQL As String = "SELECT 
                         `id` AS ID, `status` AS `Status`, `sample_id` AS SampleID, `patient_id` AS PatientID, `patient_name`AS PatientName, 
-                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, 
+                        `test` AS Request, `bdate` AS DateOfBirth, `sex` AS Sex, DATE_FORMAT(`date`, '%m/%d/%Y') AS DateReceived, `time` AS TimeReceived, `priority` AS `Priority`,
                         `testtype` AS Section, `sub_section` AS SubSection, `main_id` AS RefID 
                         FROM `tmpWorklist` WHERE (`patient_name` LIKE '" & txtSearch.Text & "%') AND (`status` = 'Ordered' OR `status` = 'Rejected' OR `status` = 'Cancelled' OR `status` = 'Warding') 
                         AND (`date` BETWEEN @DateFrom and @DateTo) ORDER BY `id` DESC"
@@ -596,7 +778,23 @@ A:
     End Sub
 
     Private Sub GridView_RowClick(sender As Object, e As RowClickEventArgs) Handles GridView.RowClick
-        'LoadRecordsOnLVSQL(lvTest, "SELECT * FROM `patient_order` WHERE `sample_id` = '" & GridView.GetFocusedRowCellValue(GridView.Columns("RefID")) & "' AND testtype = '" & GridView.GetFocusedRowCellValue(GridView.Columns("Section")) & "' AND sub_section = '" & GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")) & "'", 3)
+        rs.Parameters.Clear()
+        rs.Parameters.AddWithValue("@RefID", GridView.GetFocusedRowCellValue(GridView.Columns("RefID")))
+        rs.Parameters.AddWithValue("@Section", GridView.GetFocusedRowCellValue(GridView.Columns("Section")))
+        rs.Parameters.AddWithValue("@SubSection", GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")))
+
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT `diagnosis` FROM `patient_remarks` WHERE `sample_id` = @RefID AND `section` = @Section AND `sub_section` = @SubSection"
+        reader = rs.ExecuteReader
+        reader.Read()
+        If reader.HasRows Then
+            Me.txtComment.Text = reader(0).ToString
+        Else
+            Me.txtComment.Text = ""
+        End If
+        Disconnect()
 
         Dim SQL As String = "SELECT `sample_id` AS `RefID`, `test_name` AS `TestName`, `testtype` AS `Section`, `sub_section` AS `SubSection` FROM `patient_order` WHERE `sample_id` = '" & GridView.GetFocusedRowCellValue(GridView.Columns("RefID")) & "' AND testtype = '" & GridView.GetFocusedRowCellValue(GridView.Columns("Section")) & "' AND sub_section = '" & GridView.GetFocusedRowCellValue(GridView.Columns("SubSection")) & "'"
 
@@ -620,16 +818,6 @@ A:
         ' Draw a dotted focus rectangle around the entire row. 
         GridViewList.FocusRectStyle = DrawFocusRectStyle.RowFullFocus
 
-        Connect()
-        rs.Connection = conn
-        rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT `comment` FROM `lab_comment` WHERE `sample_id` = '" & GridView.GetFocusedRowCellValue(GridView.Columns("RefID")) & "'"
-        reader = rs.ExecuteReader
-        reader.Read()
-        If reader.HasRows Then
-            Me.txtComment.Text = reader(0).ToString
-        End If
-        Disconnect()
     End Sub
 
     Private Sub btnPrintList_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnPrintList.ItemClick
@@ -651,6 +839,42 @@ A:
                                      GridView.GetRowCellValue(rowHandle, GridView.Columns("Priority")).ToString)
             End If
         Next
+    End Sub
+
+    Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
+        Dim selectedRows() As Integer = GridView.GetSelectedRows()
+        For Each rowHandle As Integer In selectedRows
+            If rowHandle >= 0 Then
+                rs.Parameters.Clear()
+                rs.Parameters.AddWithValue("@mainID", GridView.GetRowCellValue(rowHandle, GridView.Columns("RefID")))
+                rs.Parameters.AddWithValue("@SampleID", GridView.GetRowCellValue(rowHandle, GridView.Columns("SampleID")))
+                rs.Parameters.AddWithValue("@Section", GridView.GetRowCellValue(rowHandle, GridView.Columns("Section")))
+                rs.Parameters.AddWithValue("@SubSection", GridView.GetRowCellValue(rowHandle, GridView.Columns("SubSection")))
+                rs.Parameters.AddWithValue("@Comment", txtComment.Text)
+
+                Connect()
+                rs.Connection = conn
+                rs.CommandType = CommandType.Text
+                rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                reader = rs.ExecuteReader
+                reader.Read()
+                If reader.HasRows Then
+                    Disconnect()
+                    UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET " _
+                        & "`sample_id` = @SampleID," _
+                        & "`diagnosis` = @Comment" _
+                        & " WHERE sample_id = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+                        )
+                Else
+                    Disconnect()
+                    SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`sample_id`, `diagnosis`, `section`, `sub_section` ) VALUES (@SampleID, @Comment, @Section, @SubSection)")
+                End If
+                Disconnect()
+            End If
+        Next
+
+        MessageBox.Show("Comment has been saved.", "Save Comment", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
     End Sub
 
 

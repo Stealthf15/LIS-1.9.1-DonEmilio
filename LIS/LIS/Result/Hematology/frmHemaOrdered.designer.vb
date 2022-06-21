@@ -373,15 +373,15 @@ Partial Class frmHemaOrdered
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
-        Me.barDockControlTop.Size = New System.Drawing.Size(1292, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1294, 36)
         '
         'barDockControlBottom
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 710)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 712)
         Me.barDockControlBottom.Manager = Me.BarManager
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1292, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1294, 0)
         '
         'barDockControlLeft
         '
@@ -389,15 +389,15 @@ Partial Class frmHemaOrdered
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 36)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 674)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 676)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1292, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1294, 36)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 674)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 676)
         '
         'BarLargeButtonItem3
         '
@@ -1251,7 +1251,7 @@ Partial Class frmHemaOrdered
         Me.Appearance.Options.UseForeColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1292, 710)
+        Me.ClientSize = New System.Drawing.Size(1294, 712)
         Me.ControlBox = False
         Me.Controls.Add(Me.GroupControl1)
         Me.Controls.Add(Me.gcSignature)

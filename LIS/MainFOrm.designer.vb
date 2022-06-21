@@ -524,9 +524,9 @@ Partial Class MainFOrm
         Me.LabelControl4.Appearance.Options.UseForeColor = True
         Me.LabelControl4.Location = New System.Drawing.Point(11, 19)
         Me.LabelControl4.Name = "LabelControl4"
-        Me.LabelControl4.Size = New System.Drawing.Size(106, 23)
+        Me.LabelControl4.Size = New System.Drawing.Size(108, 23)
         Me.LabelControl4.TabIndex = 15
-        Me.LabelControl4.Text = "Version 1.9.1.0"
+        Me.LabelControl4.Text = "Version 1.9.2.0"
         '
         'LabelControl3
         '

@@ -102,10 +102,10 @@ Partial Class frmAntigenOrdered
         Me.ImageList = New System.Windows.Forms.ImageList(Me.components)
         Me.BarAndDockingController = New DevExpress.XtraBars.BarAndDockingController(Me.components)
         Me.GroupControl7 = New DevExpress.XtraEditors.GroupControl()
+        Me.txtReagent = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.txtMethodUsed = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.txtLotNumber = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.txtExpiry = New System.Windows.Forms.DateTimePicker()
-        Me.txtReagent = New System.Windows.Forms.TextBox()
-        Me.txtMethodUsed = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -155,6 +155,8 @@ Partial Class frmAntigenOrdered
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl7.SuspendLayout()
+        CType(Me.txtReagent.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtMethodUsed.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtLotNumber.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -1207,10 +1209,10 @@ Partial Class frmAntigenOrdered
         Me.GroupControl7.CaptionImageOptions.AllowGlyphSkinning = True
         Me.GroupControl7.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl7.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl7.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
-        Me.GroupControl7.Controls.Add(Me.txtLotNumber)
-        Me.GroupControl7.Controls.Add(Me.txtExpiry)
         Me.GroupControl7.Controls.Add(Me.txtReagent)
         Me.GroupControl7.Controls.Add(Me.txtMethodUsed)
+        Me.GroupControl7.Controls.Add(Me.txtLotNumber)
+        Me.GroupControl7.Controls.Add(Me.txtExpiry)
         Me.GroupControl7.Controls.Add(Me.Label5)
         Me.GroupControl7.Controls.Add(Me.Label4)
         Me.GroupControl7.Controls.Add(Me.Label3)
@@ -1222,6 +1224,26 @@ Partial Class frmAntigenOrdered
         Me.GroupControl7.Size = New System.Drawing.Size(948, 96)
         Me.GroupControl7.TabIndex = 199
         Me.GroupControl7.Text = "Assay Information"
+        '
+        'txtReagent
+        '
+        Me.txtReagent.Enabled = False
+        Me.txtReagent.Location = New System.Drawing.Point(103, 66)
+        Me.txtReagent.MenuManager = Me.BarManager
+        Me.txtReagent.Name = "txtReagent"
+        Me.txtReagent.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.txtReagent.Size = New System.Drawing.Size(322, 20)
+        Me.txtReagent.TabIndex = 74
+        '
+        'txtMethodUsed
+        '
+        Me.txtMethodUsed.Enabled = False
+        Me.txtMethodUsed.Location = New System.Drawing.Point(103, 38)
+        Me.txtMethodUsed.MenuManager = Me.BarManager
+        Me.txtMethodUsed.Name = "txtMethodUsed"
+        Me.txtMethodUsed.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.txtMethodUsed.Size = New System.Drawing.Size(322, 20)
+        Me.txtMethodUsed.TabIndex = 73
         '
         'txtLotNumber
         '
@@ -1240,22 +1262,6 @@ Partial Class frmAntigenOrdered
         Me.txtExpiry.Name = "txtExpiry"
         Me.txtExpiry.Size = New System.Drawing.Size(352, 22)
         Me.txtExpiry.TabIndex = 71
-        '
-        'txtReagent
-        '
-        Me.txtReagent.Enabled = False
-        Me.txtReagent.Location = New System.Drawing.Point(104, 62)
-        Me.txtReagent.Name = "txtReagent"
-        Me.txtReagent.Size = New System.Drawing.Size(321, 22)
-        Me.txtReagent.TabIndex = 69
-        '
-        'txtMethodUsed
-        '
-        Me.txtMethodUsed.Enabled = False
-        Me.txtMethodUsed.Location = New System.Drawing.Point(104, 32)
-        Me.txtMethodUsed.Name = "txtMethodUsed"
-        Me.txtMethodUsed.Size = New System.Drawing.Size(321, 22)
-        Me.txtMethodUsed.TabIndex = 68
         '
         'Label5
         '
@@ -1365,6 +1371,8 @@ Partial Class frmAntigenOrdered
         CType(Me.GroupControl7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl7.ResumeLayout(False)
         Me.GroupControl7.PerformLayout()
+        CType(Me.txtReagent.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtMethodUsed.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtLotNumber.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1449,11 +1457,11 @@ Partial Class frmAntigenOrdered
     Friend WithEvents GroupControl7 As DevExpress.XtraEditors.GroupControl
     Friend WithEvents txtLotNumber As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents txtExpiry As DateTimePicker
-    Friend WithEvents txtReagent As TextBox
-    Friend WithEvents txtMethodUsed As TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents LabelControl3 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents txtReagent As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents txtMethodUsed As DevExpress.XtraEditors.ComboBoxEdit
 End Class

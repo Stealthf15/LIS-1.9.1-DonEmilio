@@ -59,11 +59,24 @@ Public Class frmMicroNew
         End If
     End Sub
 
+    Private Sub cboVerify_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboVerify.SelectedIndexChanged
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech_verificator`) AS T1 WHERE T1.`name` = '" & Me.cboVerify.Text & "'"
+        reader = rs.ExecuteReader
+        reader.Read()
+        If reader.HasRows Then
+            VerifyID = reader(0).ToString
+        End If
+        Disconnect()
+    End Sub
+
     Private Sub cboMedTech_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMedTech.SelectedIndexChanged
         Connect()
         rs.Connection = conn
         rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboMedTech.Text & "'"
+        rs.CommandText = "SELECT ID, NAME FROM (SELECT `id` AS ID, CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech`) AS T1 WHERE T1.`name` = '" & Me.cboMedTech.Text & "'"
         reader = rs.ExecuteReader
         reader.Read()
         If reader.HasRows Then
@@ -89,20 +102,10 @@ Public Class frmMicroNew
         frmMicroPrevious.patientID = txtPatientID.Text
         frmMicroPrevious.section = Section
         frmMicroPrevious.SubSection = SubSection
+        'frmMicroPrevious.Age = txtAge.Text
+        'frmMicroPrevious.Sex = cboSex.Text
+        'frmMicroPrevious.Classification = txtClass.Text
         frmMicroPrevious.ShowDialog()
-    End Sub
-
-    Private Sub cboVerify_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboVerify.SelectedIndexChanged
-        Connect()
-        rs.Connection = conn
-        rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboVerify.Text & "'"
-        reader = rs.ExecuteReader
-        reader.Read()
-        If reader.HasRows Then
-            VerifyID = reader(0).ToString
-        End If
-        Disconnect()
     End Sub
 
     Public Sub LoadTest()
@@ -117,18 +120,41 @@ Public Class frmMicroNew
             'GridView.Appearance.EvenRow.BackColor = Color.White
             'GridView.OptionsView.EnableAppearanceEvenRow = True
 
-            Dim SQL As String = "SELECT `universal_id` AS TestName, `flag` AS Flag, `measurement` AS SI, `units` as Unit,
-                `reference_range` as ReferenceRange, `value_conv` AS Conventional, `unit_conv` AS ConvUnit, 
-                `ref_conv` AS ConvRefRange,  `instrument` AS Instrument, `test_code` AS TestCode, `id` AS ID, 
-                `test_group` AS TestGroup, `his_code` AS HISTestCode, `his_mainid` AS HISMainID, `print_status` AS PrintStatus FROM `tmpresult` 
-                WHERE `sample_id` = @MainID AND `section` = @Section AND `sub_section` = @SubSection ORDER BY `order_no`"
+            Dim SQL As String = "SELECT tmpresult.`universal_id` AS TestName, 
+                                    tmpresult.flag AS Flag,
+                                    tmpresult.`measurement` AS Result, 
+                                    reference_range.`si_range` as ReferenceRange, 
+                                    tmpresult.`units` as Unit,
+                                    tmpresult.`value_conv` AS Conventional, 
+                                    tmpresult.`unit_conv` AS Units, 
+                                    reference_range.`conv_range` AS RefRange,  
+                                    tmpresult.`instrument` AS Instrument, 
+                                    tmpresult.`test_code` AS TestCode, 
+                                    tmpresult.`id` AS ID, 
+                                    tmpresult.`test_group` AS TestGroup, 
+                                    tmpresult.`his_code` AS HISTestCode, 
+                                    tmpresult.`his_mainid` AS HISMainID, 
+                                    tmpresult.`print_status` AS PrintStatus,
+            				        reference_range.`low_value` AS LowValue,
+            				        reference_range.`high_value` AS HighValue,
+            				        specimen.`convertion_factor` AS ConversionFactor,
+            				        specimen.`convertion_multiplier` AS ConversionMultiplier,
+            				        specimen.`order_no` AS DisplayNo
+                                FROM tmpresult
+                                LEFT JOIN reference_range ON tmpresult.test_code = reference_range.test_code AND reference_range.machine = tmpresult.instrument AND (reference_range.classification = @Classification AND reference_range.gender = @Gender AND (@Age BETWEEN reference_range.age_begin and reference_range.age_end))
+                                LEFT JOIN specimen ON tmpresult.test_code = specimen.test_code AND tmpresult.instrument = specimen.instrument
+                                WHERE tmpresult.`sample_id` = @MainID AND tmpresult.section = @Section AND tmpresult.sub_section = @SubSection GROUP BY tmpresult.test_code ORDER BY specimen.order_no ASC"
 
             Dim command As New MySql.Data.MySqlClient.MySqlCommand(SQL, conn)
 
             command.Parameters.Clear()
             command.Parameters.AddWithValue("@MainID", mainID)
+            command.Parameters.AddWithValue("@PID", PatientID)
             command.Parameters.AddWithValue("@Section", Section)
             command.Parameters.AddWithValue("@SubSection", SubSection)
+            command.Parameters.AddWithValue("@Age", txtAge.Text)
+            command.Parameters.AddWithValue("@Gender", cboSex.Text)
+            command.Parameters.AddWithValue("@Classification", txtClass.Text)
 
             Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(command)
 
@@ -137,13 +163,21 @@ Public Class frmMicroNew
 
             dtResult.DataSource = myTable
 
-
             GridView.Columns("TestCode").Visible = False
             GridView.Columns("ID").Visible = False
             GridView.Columns("HISTestCode").Visible = False
             GridView.Columns("HISMainID").Visible = False
             GridView.Columns("TestGroup").Visible = False
             GridView.Columns("PrintStatus").Visible = False
+            GridView.Columns("LowValue").Visible = False
+            GridView.Columns("HighValue").Visible = False
+            GridView.Columns("ConversionFactor").Visible = False
+            GridView.Columns("ConversionMultiplier").Visible = False
+            GridView.Columns("DisplayNo").Visible = False
+            GridView.Columns("Unit").Visible = False
+            GridView.Columns("ReferenceRange").Visible = False
+            GridView.Columns("Flag").Visible = False
+            GridView.Columns("Instrument").Visible = False
 
             'Version 1.6.0.0-beta
             'Not allow edit on Grid View Columns to prevent it to display on Results Form or cause of error
@@ -151,15 +185,15 @@ Public Class frmMicroNew
             GridView.Columns("Flag").OptionsColumn.AllowEdit = False
             GridView.Columns("Unit").OptionsColumn.AllowEdit = False
             GridView.Columns("ReferenceRange").OptionsColumn.AllowEdit = False
-            GridView.Columns("Conventional").OptionsColumn.AllowEdit = False
-            GridView.Columns("ConvUnit").OptionsColumn.AllowEdit = False
-            GridView.Columns("ConvRefRange").OptionsColumn.AllowEdit = False
+            GridView.Columns("Result").OptionsColumn.AllowEdit = True
+            GridView.Columns("Units").OptionsColumn.AllowEdit = False
+            GridView.Columns("RefRange").OptionsColumn.AllowEdit = False
             GridView.Columns("Instrument").OptionsColumn.AllowEdit = False
 
             'Hide conventional columns
             GridView.Columns("Conventional").Visible = False
-            GridView.Columns("ConvUnit").Visible = False
-            GridView.Columns("ConvRefRange").Visible = False
+            GridView.Columns("Units").Visible = False
+            GridView.Columns("RefRange").Visible = False
 
             ' Make the grid read-only. 
             'GridView.OptionsBehavior.Editable = False
@@ -179,10 +213,6 @@ Public Class frmMicroNew
             'GridView.Columns("TestGroup").Group()
             'GridView.Columns("TestGroup").Caption = " "
 
-            editorForDisplay = New RepositoryItemComboBox()
-            GridView.GridControl.RepositoryItems.AddRange(New RepositoryItem() {editorForDisplay})
-            GridView.Columns("SI").ColumnEdit = editorForDisplay
-
             CreateDropdown()
             FillDropdown()
         Finally
@@ -195,10 +225,9 @@ Public Class frmMicroNew
 
     Private test As New Hashtable()
     Private Sub FillDropdown()
-        Dim sList() As String = {"R", "S", "I", "N/A"}
+        On Error Resume Next
 
-        Dim AMC As List(Of String) = New List(Of String)(sList)
-
+        Dim AMC() As String = {"R", "S", "I", "N/A"}
         test.Add("AMC_M", AMC)
         test.Add("KF_CF_M", AMC)
         test.Add("CXM_M", AMC)
@@ -224,7 +253,7 @@ Public Class frmMicroNew
         test.Add("MEM_M", AMC)
         test.Add("LEV_LVX_M", AMC)
         test.Add("K_M", AMC)
-        test.Add("PIP_PRL", AMC)
+        test.Add("PIP_PRL_M", AMC)
         test.Add("TZP_M", AMC)
         test.Add("OX_M", AMC)
         test.Add("OFX_QIN_M", AMC)
@@ -242,27 +271,30 @@ Public Class frmMicroNew
         test.Add("SAM_M", AMC)
         test.Add("AP_AM_I_M", AMC)
 
-        Dim EC As String() = {"Not Applicable", ">10/LPF", "<10/LPF"}
-        test.Add("EC", EC)
+        Dim EC() As String = {">10/LPF", "<10/LPF", "N/A"}
+        test.Add("EC_M", EC)
 
-        Dim WBC_M As String() = {"None Seen", "Rare", "Few", "Moderate", "Abundant", "Not Applicable", ">25/LPF"}
+        Dim WBC_M() As String = {"None Seen", "Rare", "Few", "Moderate", "Abundant", "Not Applicable", ">25/LPF", "<25/LPF"}
         test.Add("WBC_M", WBC_M)
 
-        Dim India_Ink As String() = {"No Encapsulated Bacteria Found", "Positive of Encapsulated Bacteria F", "Not Applicable"}
-        test.Add("India_Ink_M", India_Ink)
-        test.Add("india_ink", India_Ink)
+        Dim GSD_M() As String = {"Presence of Extracellular Gram Negative Diplococci", "Positive for Extracellular and Intracellular Gram Negative Diplococci", "No Gram-Negative Diplococci Found"}
+        test.Add("GSD_M", GSD_M)
 
-        Dim KOH_Mount As String() = {"No Fungal Elements Found", "Presence of Fungal Elements", "Not Applicable"}
+        Dim KOH_Mount() As String = {"No Fungal Elements Found", "Presence of Fungal Elements", "Not Applicable"}
         test.Add("KOH_Mount_M", KOH_Mount)
-        test.Add("KOH_mount", KOH_Mount)
 
-        Dim Remarks_AFB As String() = {"No Acid-Fast Bacilli Found", "Positive for Acid-Fast Bacilli"}
-        test.Add("Remarks_AFB", Remarks_AFB)
+        Dim India_Ink() As String = {"No Encapsulated Bacteria Found", "Positive of Encapsulated Bacteria F", "Not Applicable"}
+        test.Add("India_Ink_M", India_Ink)
+
+        Dim Remarks_AFB() As String = {"No Acid-Fast Bacilli Found", "Positive for Acid-Fast Bacilli"}
+        test.Add("AFB_M", Remarks_AFB)
+
     End Sub
 
     Private Sub GridView_ShownEditor(ByVal sender As Object, ByVal e As System.EventArgs) Handles GridView.ShownEditor
+        On Error Resume Next
         Dim view As GridView = TryCast(sender, GridView)
-        If view.FocusedColumn.FieldName = "SI" Then
+        If view.FocusedColumn.FieldName = "Result" Then
             Dim edit As ComboBoxEdit = CType(view.ActiveEditor, ComboBoxEdit)
             edit.Properties.Items.Clear()
 
@@ -277,88 +309,20 @@ Public Class frmMicroNew
         dtResult.RepositoryItems.Clear()
         Dim _riEditor As New RepositoryItemComboBox()
         dtResult.RepositoryItems.Add(_riEditor)
-        GridView.Columns("SI").ColumnEdit = _riEditor
-    End Sub
-
-
-    Private Sub LoadMedTechPatho()
-        '###########################---Load Pathologist---################################################################
-        Connect()
-        rs.Connection = conn
-        rs.CommandType = CommandType.Text
-        rs.CommandText = "Select CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `pathologist` ORDER BY `name`"
-        reader = rs.ExecuteReader
-        While reader.Read
-            cboPathologist.Properties.Items.Add(reader(0))
-        End While
-        Disconnect()
-        cboPathologist.SelectedIndex = 0
-        '######################################----END-----###############################################################
-
-        '###########################---Load Med Tech for Verification---##################################################
-        Connect()
-        rs.Connection = conn
-        rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` ORDER BY `name`"
-        reader = rs.ExecuteReader
-        While reader.Read
-            cboVerify.Properties.Items.Add(reader(0))
-        End While
-        Disconnect()
-        '######################################----END-----###############################################################
-
-        '###########################---Load Medical Technologist---#######################################################
-        If My.Settings.MedTech = 0 Then
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` ORDER BY `name`"
-            reader = rs.ExecuteReader
-            While reader.Read
-                cboMedTech.Properties.Items.Add(reader(0))
-            End While
-            Disconnect()
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboMedTech.Text & "'"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                MedTechID = reader(0).ToString
-            End If
-            Disconnect()
-        ElseIf My.Settings.MedTech = 1 Then
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` WHERE `id` = '" & CurrEmail & "' ORDER BY `name`"
-            reader = rs.ExecuteReader
-            While reader.Read
-                cboMedTech.Properties.Items.Add(reader(0))
-            End While
-            Disconnect()
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `viewMedTEch` WHERE `name` LIKE '" & Me.cboMedTech.Text & "'"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                MedTechID = reader(0).ToString
-            End If
-            Disconnect()
-            cboMedTech.SelectedIndex = 0
-        End If
-        '######################################----END-----###############################################################
+        GridView.Columns("Result").ColumnEdit = _riEditor
     End Sub
 
     Private Sub frmResultsNew_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadMedTechPatho()
-        'Load Combobox Data
+        Me.cboPathologist.Text = Pathologist
+    End Sub
+
+    Private Sub frmMicroNew_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         AutoLoadDoctor()
         AutoLoadRoom()
+        AutoLoadVerificator()
+    End Sub
 
+    Private Sub frmMicroNew_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
         LoadTest()
     End Sub
 
@@ -367,7 +331,7 @@ Public Class frmMicroNew
         frmMicroAddTest.patientID = txtPatientID.Text
         frmMicroAddTest.TypeResult = "New"
         frmMicroAddTest.SubSection = SubSection
-        frmMicroAddTest.Section = Section
+        frmMicroAddTest.Section = "ImmunoSero"
         frmMicroAddTest.ShowDialog()
     End Sub
 
@@ -422,60 +386,72 @@ Public Class frmMicroNew
         Disconnect()
     End Sub
 
-    Private Sub dtBDate_EditValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dtBDate.EditValueChanged
-        GetBDate()
+    Public Sub AutoLoadVerificator()
+        '###########################---Load Med Tech for Verification---##################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech_verificator` ORDER BY `fname`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            cboVerify.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
+
+        '###########################---Load Med Tech---##################################################
+        Connect()
+        rs.Connection = conn
+        rs.CommandType = CommandType.Text
+        rs.CommandText = "SELECT CONCAT(fname, ' ', mname, ' ', lname, ', ', designation) AS `name` FROM `medtech` ORDER BY `fname`"
+        reader = rs.ExecuteReader
+        While reader.Read
+            cboMedTech.Properties.Items.Add(reader(0))
+        End While
+        Disconnect()
+        '######################################----END-----###############################################################
     End Sub
 
-    Public Sub GetBDate()
-        Try
-            If dtBDate.DateTime = Nothing Then
-                Exit Sub
-            End If
-
-            Dim Birthday As Date = dtBDate.DateTime
-            Dim endDate As Date = Date.Now
-
-            Dim timeSpan As TimeSpan = endDate.Subtract(Birthday)
-            Dim totalDays As Integer = timeSpan.TotalDays
-            Dim totalYears As Integer = Math.Truncate(totalDays / 365)
-            Dim totalMonths As Integer = Math.Truncate((totalDays Mod 365) / 30)
-            Dim remainingDays As Integer = Math.Truncate((totalDays Mod 365) Mod 30)
-
-            If totalDays <= 61 Then
-                txtClass.Text = "Day(s)"
-                txtAge.Text = totalDays
-
-            ElseIf totalDays >= 62 And totalDays <= 364 Then
-                txtClass.Text = "Month(s)"
-                txtAge.Text = totalMonths
-
-            ElseIf totalDays >= 365 Then
-                txtClass.Text = "Year(s)"
-                txtAge.Text = totalYears
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End Try
+    Private Sub dtBDate_EditValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dtBDate.EditValueChanged
+        'GetBDate()
     End Sub
 
     Private Sub btnValidate_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnValidate.ItemClick
-        frmAuth.Section = "Microbiology"
-        frmAuth.Method = "Verify"
-        frmAuth.ShowDialog()
+        With My.Settings
+            If .AuthenticateRelease = True Then
+                frmAuth.Section = "Microbiology"
+                frmAuth.Method = "Verify"
+                frmAuth.ShowDialog()
+            Else
+                VerifyResult()
+            End If
+        End With
     End Sub
 
     Private Sub btnPrint_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnPrint.ItemClick
-        frmAuth.Section = "Microbiology"
-        frmAuth.Method = "PrintRelease"
-        frmAuth.ShowDialog()
+        With My.Settings
+            If .AuthenticateRelease = True Then
+                frmAuth.Section = "Microbiology"
+                frmAuth.Method = "PrintRelease"
+                frmAuth.ShowDialog()
+            Else
+                PrintReleaseResult()
+            End If
+        End With
     End Sub
 
     'Added 02192021
     'Update Button release no bypass printing
     Private Sub btnRelease_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnRelease.ItemClick
-        frmAuth.Section = "Microbiology"
-        frmAuth.Method = "Release"
-        frmAuth.ShowDialog()
+        With My.Settings
+            If .AuthenticateRelease = True Then
+                frmAuth.Section = "Microbiology"
+                frmAuth.Method = "Release"
+                frmAuth.ShowDialog()
+            Else
+                ReleaseResultNoPrint()
+            End If
+        End With
     End Sub
 
     Private Sub btnRetrive_Click(sender As Object, e As EventArgs) Handles btnRetrive.Click
@@ -483,6 +459,13 @@ Public Class frmMicroNew
         frmMicroRerun.Section = Section
         frmMicroRerun.SubSection = SubSection
         frmMicroRerun.ShowDialog()
+    End Sub
+
+    Private Sub btnViewPrint_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnViewPrint.ItemClick
+        'For Each rows As DataGridViewRow In GridView.rows
+        RPTresults.sample_id = mainID
+        PrintPreview(mainID, "tmpworklist", "tmpresult", 1, Section, SubSection, RPTresults, RPTresults.ReportViewer1)
+        'Next
     End Sub
 
     Private Sub btnPrintNow_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnPrintNow.ItemClick
@@ -514,10 +497,22 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@status", "Printed")
             rs.Parameters.AddWithValue("@specimen_tracking_date_time", Now) 'version 1.6.0.0-beta
 
+            rs.Parameters.AddWithValue("@PDFLocation", My.Settings.PDFLocation)
+
             UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`status` = @status" _
                     & " WHERE main_id = @mainID AND testtype = @Section AND sub_section = @SubSection"
                     )
+
+            'version 1.6.0.0-beta
+            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
+            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
+                & "`sample_id` = @mainID," _
+                & "`processing` = @specimen_tracking_date_time," _
+                & "`validated` = @specimen_tracking_date_time," _
+                & "`printed` = @specimen_tracking_date_time" _
+                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection"
+                )
 
             Using myRDLCPrinter As New RDLCPrinterPrintNew(mainID, Section, SubSection, "", My.Settings.DefaultPrinter)
                 If My.Settings.SaveAsPDF Then
@@ -529,6 +524,22 @@ Public Class frmMicroNew
                     Dim newFile As New FileStream(My.Settings.PDFLocation & txtSampleID.Text & "_" & txtName.Text & ".pdf", FileMode.Create)
                     newFile.Write(byteViewer, 0, byteViewer.Length)
                     newFile.Close()
+
+                    '------------------Save PDF Location Details------------------------------
+                    Connect()
+                    rs.Connection = conn
+                    rs.CommandType = CommandType.Text
+                    rs.CommandText = ("INSERT INTO `pdf_location` (`sample_id`, `pdf_location`, `section`, `sub_section`) VALUES " _
+                            & "(" _
+                            & "@mainID," _
+                            & "@PDFLocation," _
+                            & "@Section," _
+                            & "@SubSection" _
+                            & ")"
+                            )
+                    rs.ExecuteNonQuery()
+                    Disconnect()
+                    '------------------Save PDF Location Details------------------------------
 
                     myRDLCPrinter.Print(1)
                 Else
@@ -567,18 +578,6 @@ Public Class frmMicroNew
             rs.ExecuteNonQuery()
             Disconnect()
 
-            'UpdateWorkSheet()
-
-            'version 1.6.0.0-beta
-            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
-            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
-                & "`sample_id` = @mainID," _
-                & "`processing` = @specimen_tracking_date_time," _
-                & "`validated` = @specimen_tracking_date_time," _
-                & "`printed` = @specimen_tracking_date_time" _
-                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection"
-                )
-
             With My.Settings
                 If .HL7Write = True Then
                     CreateHL7File()
@@ -596,13 +595,6 @@ Public Class frmMicroNew
         End Try
     End Sub
 
-    Private Sub btnViewPrint_ItemClick(ByVal sender As Object, ByVal e As DevExpress.XtraBars.ItemClickEventArgs) Handles btnViewPrint.ItemClick
-        'For Each rows As DataGridViewRow In GridView.rows
-        RPTresults.sample_id = mainID
-        PrintPreview(mainID, "tmpworklist", "tmpresult", "", Section, SubSection, RPTresults, RPTresults.ReportViewer1)
-        'Next
-    End Sub
-
     Private Sub GridView_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridView.RowCellStyle
         If e.Column.FieldName = "TestName" Then
             e.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Default
@@ -611,49 +603,8 @@ Public Class frmMicroNew
         End If
     End Sub
 
-    '######################################### Shift Function #########################################
-    Private Function getShift(ByVal shift As TimeSpan)
-        Dim readerVar As String
-
-        'Variable that Determine the Shift Next Day
-        Dim thrdshft As New TimeSpan(22, 0, 0) '22:00:00
-        Dim thrdshft2 As New TimeSpan(7, 0, 0) '07:00:00
-
-        Connect()
-        rs.Connection = conn
-        rs.CommandType = CommandType.Text
-        rs.CommandText = "SELECT * FROM `shift`"
-        reader = rs.ExecuteReader
-        While reader.Read
-            'If Data in database (reader) is greater than equal or less than equal to variable above
-            If reader(2) >= thrdshft And reader(3) <= thrdshft2 Then
-                If shift > reader(2) Or shift < reader(3) Then
-                    readerVar = reader(1).ToString
-                    Disconnect()
-                    Return readerVar
-                    Exit Function
-                ElseIf shift < reader(3) Then
-                    readerVar = reader(1).ToString
-                    Disconnect()
-                    Return readerVar
-                    Exit Function
-
-                End If
-            ElseIf shift > reader(2) Then
-                If shift < reader(3) Then
-                    readerVar = reader(1).ToString
-                    Disconnect()
-                    Return readerVar
-                    Exit Function
-                End If
-            End If
-        End While
-        Disconnect()
-        Return shift
-    End Function
-    '######################################### End of Shift Function #########################################
-
 #Region "Procedure for Release"
+
     Public Sub ReleaseResultNoPrint()
         Try
             If Me.txtName.Text = "" Or cboMedTech.Text = "" Or txtAge.Text = "" Or cboSex.Text = "" Then
@@ -675,8 +626,13 @@ Public Class frmMicroNew
                 End If
             End If
 
-            MainSampleID = mainID
-            ' MainSampleID = ID_Randomizer()
+            With My.Settings
+                If .LISType = "Lite" Then
+                    MainSampleID = ID_Randomizer()
+                Else
+                    MainSampleID = mainID
+                End If
+            End With
 
             rs.Parameters.Clear()
             rs.Parameters.AddWithValue("@mainID", mainID)
@@ -686,8 +642,8 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@medtechid", MedTechID)
 
             If My.Settings.AuthenticateRelease = True Then
-                rs.Parameters.AddWithValue("@verifyid", UserIDRelease)
-                rs.Parameters.AddWithValue("@verify", UserRelease)
+                rs.Parameters.AddWithValue("@verifyid", VerifyID)
+                rs.Parameters.AddWithValue("@verify", cboVerify.Text)
             Else
                 rs.Parameters.AddWithValue("@verifyid", VerifyID)
                 rs.Parameters.AddWithValue("@verify", cboVerify.Text)
@@ -713,58 +669,32 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@contact", txtContact.Text)
             rs.Parameters.AddWithValue("@test", cboRequest.Text)
             rs.Parameters.AddWithValue("@patient_type", cboPatientType.Text)
-            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
-            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
             rs.Parameters.AddWithValue("@accession_no", txtAccession.Text)
             rs.Parameters.AddWithValue("@OR_No", txtORNo.Text)
             rs.Parameters.AddWithValue("@CS_No", txtChargeSlip.Text)
 
             rs.Parameters.AddWithValue("@Section", Section)
             rs.Parameters.AddWithValue("@SubSection", SubSection)
-            rs.Parameters.AddWithValue("@specimen_tracking_date_time", Now) 'version 1.6.0.0-beta
 
             rs.Parameters.Add("@date", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Format(dtReceived.Value, "yyyy-MM-dd")
+            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
+            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
+            rs.Parameters.AddWithValue("@specimen_tracking_date_time", Now)
+            rs.Parameters.AddWithValue("@specimen_tracking_received", Format(dtReceived.Value, "yyyy-MM-dd") & " " & tmTimeReceived.Value.ToLongTimeString)
 
             rs.Parameters.AddWithValue("@PDFLocation", CreateFolder(Section))
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM patient_info WHERE `patient_id` LIKE @PATIENT_ID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                SaveRecordwthoutMSG("UPDATE `patient_info` SET " _
-                        & "`patient_id` = @patient_id," _
-                        & "`name` = @name," _
-                        & "`sex` = @sex," _
-                        & "`date_of_birth` = @bdate," _
-                        & "`age` = @age," _
-                        & "`civil_status` = @CS," _
-                        & "`address` = @address," _
-                        & "`contact_no` = @contact," _
-                        & "`sample_id` = @MainSampleID" _
-                        & " WHERE `patient_id` = @patient_id"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO patient_info (patient_id, name, sex, date_of_birth, age, civil_status, address, contact_no, `date`, `sample_id`) VALUES " _
-                        & "(" _
-                        & "@patient_id," _
-                        & "@name," _
-                        & "@sex," _
-                        & "@bdate," _
-                        & "@age," _
-                        & "@CS," _
-                        & "@address," _
-                        & "@contact," _
-                        & "@date," _
-                        & "@MainSampleID" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
+            UpdateRecordwthoutMSG("UPDATE `patient_info` SET " _
+                    & "`patient_id` = @patient_id," _
+                    & "`name` = @name," _
+                    & "`sex` = @sex," _
+                    & "`date_of_birth` = @bdate," _
+                    & "`age` = @age," _
+                    & "`civil_status` = @CS," _
+                    & "`address` = @address," _
+                    & "`contact_no` = @contact" _
+                    & " WHERE `patient_id` = @patient_id ORDER BY `patient_id` LIMIT 1"
+                    )
 
             UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`sample_id` = @sample_id," _
@@ -776,149 +706,50 @@ Public Class frmMicroNew
                     & "`type` = @type," _
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
-                    & "`medtech` = @medtech," _
-                    & "`verified_by` = @verify," _
+                    & "`medtech` = @medtechid," _
+                    & "`verified_by` = @verifyid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
-                    & "`dt_released` = @date_release," _
-                    & "`main_id` = @MainSampleID" _
-                    & " WHERE `main_id` = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
+                    & "`date` = @date," _
+                    & "`time` = @time," _
+                    & "`dt_released` = @date_release" _
+                    & " WHERE `main_id` = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection ORDER BY `main_id` LIMIT 1"
                     )
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `order_pathologist` WHERE `sample_id` = @mainID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `order_pathologist` SET " _
-                        & "`pathologist_id` = @pathologist" _
-                        & " WHERE `sample_id` = @mainID"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `order_pathologist` (`sample_id`, `pathologist_id`) VALUES " _
-                        & "(" _
-                        & "@MainSampleID," _
-                        & "@pathologist" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
-
-            If Not cboMedTech.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_medtech` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_medtech` SET " _
-                            & "`medtech_id` = @medtechid" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_medtech` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@medtechid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not cboVerify.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_Verified` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_Verified` SET " _
-                            & "`medtech_id` = @verifyid" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_Verified` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@verifyid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not txtAccession.Text = "" Or txtORNo.Text = "" Or txtChargeSlip.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `additional_info` WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
-                                & "`accession_no` = @accession_no," _
-                                & "`or_no` = @OR_No," _
-                                & "`cs_no` = @CS_No," _
-                                & "`sample_id` = @MainSampleID" _
-                                & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                                )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `additional_info` (`accession_no`, `or_no`, `cs_no`, section, sub_section, `sample_id`) VALUES " _
-                                & "(" _
-                                & "@accession_no," _
-                                & "@OR_No," _
-                                & "@CS_No," _
-                                & "@Section," _
-                                & "@SubSection," _
-                                & "@MainSampleID" _
-                                & ")"
-                                )
-                End If
-                Disconnect()
-            End If
+            UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
+                    & "`accession_no` = @accession_no," _
+                    & "`or_no` = @OR_No," _
+                    & "`cs_no` = @CS_No" _
+                    & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id` LIMIT 1"
+                    )
 
             For x As Integer = 0 To GridView.RowCount - 1 Step 1
                 If (GridView.IsRowSelected(x)) Then
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '1'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 Else
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '0'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 End If
             Next
@@ -926,16 +757,56 @@ Public Class frmMicroNew
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection ORDER BY `sample_id` LIMIT 1"
             reader = rs.ExecuteReader
             reader.Read()
             If reader.HasRows Then
                 Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection")
+                UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection ORDER BY `sample_id` LIMIT 1")
             Else
                 Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection)")
+                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection) ORDER BY `sample_id` LIMIT 1")
             End If
+            Disconnect()
+
+            'version 1.6.0.0-beta
+            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
+            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
+                & "`received` = @specimen_tracking_received," _
+                & "`processing` = @specimen_tracking_date_time," _
+                & "`validated` = @specimen_tracking_date_time," _
+                & "`printed` = @specimen_tracking_date_time" _
+                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection ORDER BY `sample_id` LIMIT 1"
+                )
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`)" _
+                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "INSERT INTO `result` (`universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, `sample_id`, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status`)" _
+                & "SELECT `universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, @MainSampleID, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status` FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "DELETE FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "DELETE FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id`"
+            rs.ExecuteNonQuery()
             Disconnect()
 
             Using myRDLCPrinter As New RDLCPrinterPrintNew(MainSampleID, Section, SubSection, "", My.Settings.DefaultPrinter)
@@ -969,47 +840,6 @@ Public Class frmMicroNew
                 End If
             End Using
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
-                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `result` (`universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, `sample_id`, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status`) " _
-                & "SELECT `universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, @MainSampleID, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status` FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "DELETE FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "DELETE FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            'UpdateWorkSheet()
-            'version 1.6.0.0-beta
-            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
-            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
-                & "`sample_id` = @MainSampleID," _
-                & "`processing` = @specimen_tracking_date_time," _
-                & "`validated` = @specimen_tracking_date_time," _
-                & "`printed` = @specimen_tracking_date_time" _
-                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection"
-                )
-
             With My.Settings
                 If .HL7Write = True Then
                     CreateHL7File()
@@ -1040,7 +870,6 @@ Public Class frmMicroNew
             End With
 
             frmMicroWorklist.LoadRecords()
-            frmMicroWorklist.LoadRecordsCompleted()
 
             Me.Close()
             Me.Dispose()
@@ -1072,8 +901,13 @@ Public Class frmMicroNew
                 End If
             End If
 
-            MainSampleID = mainID
-            ' MainSampleID = ID_Randomizer()
+            With My.Settings
+                If .LISType = "Lite" Then
+                    MainSampleID = ID_Randomizer()
+                Else
+                    MainSampleID = mainID
+                End If
+            End With
 
             rs.Parameters.Clear()
             rs.Parameters.AddWithValue("@mainID", mainID)
@@ -1083,8 +917,8 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@medtechid", MedTechID)
 
             If My.Settings.AuthenticateRelease = True Then
-                rs.Parameters.AddWithValue("@verifyid", UserIDRelease)
-                rs.Parameters.AddWithValue("@verify", UserRelease)
+                rs.Parameters.AddWithValue("@verifyid", VerifyID)
+                rs.Parameters.AddWithValue("@verify", cboVerify.Text)
             Else
                 rs.Parameters.AddWithValue("@verifyid", VerifyID)
                 rs.Parameters.AddWithValue("@verify", cboVerify.Text)
@@ -1110,58 +944,32 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@contact", txtContact.Text)
             rs.Parameters.AddWithValue("@test", cboRequest.Text)
             rs.Parameters.AddWithValue("@patient_type", cboPatientType.Text)
-            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
-            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
             rs.Parameters.AddWithValue("@accession_no", txtAccession.Text)
             rs.Parameters.AddWithValue("@OR_No", txtORNo.Text)
             rs.Parameters.AddWithValue("@CS_No", txtChargeSlip.Text)
 
             rs.Parameters.AddWithValue("@Section", Section)
             rs.Parameters.AddWithValue("@SubSection", SubSection)
-            rs.Parameters.AddWithValue("@specimen_tracking_date_time", Now) 'version 1.6.0.0-beta
 
             rs.Parameters.Add("@date", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Format(dtReceived.Value, "yyyy-MM-dd")
+            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
+            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
+            rs.Parameters.AddWithValue("@specimen_tracking_date_time", Now) 'version 1.6.0.0-beta
+            rs.Parameters.AddWithValue("@specimen_tracking_received", Format(dtReceived.Value, "yyyy-MM-dd") & " " & tmTimeReceived.Value.ToLongTimeString)
 
             rs.Parameters.AddWithValue("@PDFLocation", CreateFolder(Section))
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM patient_info WHERE `patient_id` LIKE @PATIENT_ID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                SaveRecordwthoutMSG("UPDATE `patient_info` SET " _
-                        & "`patient_id` = @patient_id," _
-                        & "`name` = @name," _
-                        & "`sex` = @sex," _
-                        & "`date_of_birth` = @bdate," _
-                        & "`age` = @age," _
-                        & "`civil_status` = @CS," _
-                        & "`address` = @address," _
-                        & "`contact_no` = @contact," _
-                        & "`sample_id` = @MainSampleID" _
-                        & " WHERE `patient_id` = @patient_id"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO patient_info (patient_id, name, sex, date_of_birth, age, civil_status, address, contact_no, `date`, `sample_id`) VALUES " _
-                        & "(" _
-                        & "@patient_id," _
-                        & "@name," _
-                        & "@sex," _
-                        & "@bdate," _
-                        & "@age," _
-                        & "@CS," _
-                        & "@address," _
-                        & "@contact," _
-                        & "@date," _
-                        & "@MainSampleID" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
+            UpdateRecordwthoutMSG("UPDATE `patient_info` SET " _
+                    & "`patient_id` = @patient_id," _
+                    & "`name` = @name," _
+                    & "`sex` = @sex," _
+                    & "`date_of_birth` = @bdate," _
+                    & "`age` = @age," _
+                    & "`civil_status` = @CS," _
+                    & "`address` = @address," _
+                    & "`contact_no` = @contact" _
+                    & " WHERE `patient_id` = @patient_id ORDER BY `patient_id`"
+                    )
 
             UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`sample_id` = @sample_id," _
@@ -1173,149 +981,50 @@ Public Class frmMicroNew
                     & "`type` = @type," _
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
-                    & "`medtech` = @medtech," _
-                    & "`verified_by` = @verify," _
+                    & "`medtech` = @medtechid," _
+                    & "`verified_by` = @verifyid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
-                    & "`dt_released` = @date_release," _
-                    & "`main_id` = @MainSampleID" _
-                    & " WHERE `main_id` = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection"
+                    & "`date` = @date," _
+                    & "`time` = @time," _
+                    & "`dt_released` = @date_release" _
+                    & " WHERE `main_id` = @mainID AND `testtype` = @Section AND `sub_section` = @SubSection ORDER BY `main_id` LIMIT 1"
                     )
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `order_pathologist` WHERE `sample_id` = @mainID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `order_pathologist` SET " _
-                        & "`pathologist_id` = @pathologist" _
-                        & " WHERE `sample_id` = @mainID"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `order_pathologist` (`sample_id`, `pathologist_id`) VALUES " _
-                        & "(" _
-                        & "@MainSampleID," _
-                        & "@pathologist" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
-
-            If Not cboMedTech.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_medtech` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_medtech` SET " _
-                            & "`medtech_id` = @medtechid" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_medtech` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@medtechid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not cboVerify.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_Verified` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_Verified` SET " _
-                            & "`medtech_id` = @verifyid" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_Verified` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@verifyid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not txtAccession.Text = "" Or txtORNo.Text = "" Or txtChargeSlip.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `additional_info` WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
-                                & "`accession_no` = @accession_no," _
-                                & "`or_no` = @OR_No," _
-                                & "`cs_no` = @CS_No," _
-                                & "`sample_id` = @MainSampleID" _
-                                & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                                )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `additional_info` (`accession_no`, `or_no`, `cs_no`, section, sub_section, `sample_id`) VALUES " _
-                                & "(" _
-                                & "@accession_no," _
-                                & "@OR_No," _
-                                & "@CS_No," _
-                                & "@Section," _
-                                & "@SubSection," _
-                                & "@MainSampleID" _
-                                & ")"
-                                )
-                End If
-                Disconnect()
-            End If
+            UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
+                    & "`accession_no` = @accession_no," _
+                    & "`or_no` = @OR_No," _
+                    & "`cs_no` = @CS_No" _
+                    & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id` LIMIT 1"
+                    )
 
             For x As Integer = 0 To GridView.RowCount - 1 Step 1
                 If (GridView.IsRowSelected(x)) Then
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '1'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 Else
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '0'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 End If
             Next
@@ -1323,16 +1032,56 @@ Public Class frmMicroNew
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection ORDER BY `sample_id` LIMIT 1"
             reader = rs.ExecuteReader
             reader.Read()
             If reader.HasRows Then
                 Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection")
+                UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection ORDER BY `sample_id` LIMIT 1")
             Else
                 Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection)")
+                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection) ORDER BY `sample_id` LIMIT 1")
             End If
+            Disconnect()
+
+            'version 1.6.0.0-beta
+            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
+            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
+                & "`received` = @specimen_tracking_received," _
+                & "`processing` = @specimen_tracking_date_time," _
+                & "`validated` = @specimen_tracking_date_time," _
+                & "`printed` = @specimen_tracking_date_time" _
+                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection ORDER BY `sample_id` LIMIT 1"
+                )
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
+                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "INSERT INTO `result` (`universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, `sample_id`, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status`) " _
+                & "SELECT `universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, @MainSampleID, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status` FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "DELETE FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id`"
+            rs.ExecuteNonQuery()
+            Disconnect()
+
+            Connect()
+            rs.Connection = conn
+            rs.CommandType = CommandType.Text
+            rs.CommandText = "DELETE FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection ORDER BY `sample_id`"
+            rs.ExecuteNonQuery()
             Disconnect()
 
             Using myRDLCPrinter As New RDLCPrinterPrintNew(MainSampleID, Section, SubSection, "", My.Settings.DefaultPrinter)
@@ -1368,47 +1117,6 @@ Public Class frmMicroNew
                 End If
             End Using
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `order` (`status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, `main_id`, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section`) " _
-                & "SELECT `status`, `sample_id`, `patient_id`, `patient_name`, `age`, `sex`, `bdate`, `physician`, `dept`, `medtech`, `verified_by`, `date`, `time`, @MainSampleID, `dt_released`, `patient_type`, `test`, `testtype`, `barcode`, `instrument`, `type`, `location`, `sub_section` FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "INSERT INTO `result` (`universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, `sample_id`, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status`) " _
-                & "SELECT `universal_id`, `flag`, `measurement`, `units`, `reference_range`, `value_conv`, `unit_conv`, `ref_conv`, `test_code`, `order_no`, @MainSampleID, `test_group`, `date`, `patient_id`, `instrument`, `his_code`, `his_mainid`, `section`, `sub_section`, `print_status` FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "DELETE FROM `tmpWorklist` WHERE `main_id` = @MainSampleID AND testtype = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "DELETE FROM `tmpResult` WHERE `sample_id` = @MainSampleID AND section = @Section AND sub_section = @SubSection"
-            rs.ExecuteNonQuery()
-            Disconnect()
-
-            'UpdateWorkSheet()
-            'version 1.6.0.0-beta
-            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
-            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` SET " _
-                & "`sample_id` = @MainSampleID," _
-                & "`processing` = @specimen_tracking_date_time," _
-                & "`validated` = @specimen_tracking_date_time," _
-                & "`printed` = @specimen_tracking_date_time" _
-                & " WHERE sample_id = @mainID AND section = @Section AND sub_section = @Subsection"
-                )
-
             With My.Settings
                 If .HL7Write = True Then
                     CreateHL7File()
@@ -1439,7 +1147,6 @@ Public Class frmMicroNew
             End With
 
             frmMicroWorklist.LoadRecords()
-            frmMicroWorklist.LoadRecordsCompleted()
 
             Me.Close()
             Me.Dispose()
@@ -1457,8 +1164,13 @@ Public Class frmMicroNew
                 Exit Sub
             End If
 
-            MainSampleID = mainID
-            'MainSampleID = ID_Randomizer()
+            With My.Settings
+                If .LISType = "Lite" Then
+                    MainSampleID = ID_Randomizer()
+                Else
+                    MainSampleID = mainID
+                End If
+            End With
 
             rs.Parameters.Clear()
             rs.Parameters.AddWithValue("@mainID", mainID)
@@ -1468,8 +1180,8 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@medtechid", MedTechID)
 
             If My.Settings.AuthenticateRelease = True Then
-                rs.Parameters.AddWithValue("@verifyid", UserIDRelease)
-                rs.Parameters.AddWithValue("@verify", UserRelease)
+                rs.Parameters.AddWithValue("@verifyid", VerifyID)
+                rs.Parameters.AddWithValue("@verify", cboVerify.Text)
             Else
                 rs.Parameters.AddWithValue("@verifyid", VerifyID)
                 rs.Parameters.AddWithValue("@verify", cboVerify.Text)
@@ -1497,53 +1209,30 @@ Public Class frmMicroNew
             rs.Parameters.AddWithValue("@contact", txtContact.Text)
             rs.Parameters.AddWithValue("@test", cboRequest.Text)
             rs.Parameters.AddWithValue("@patient_type", cboPatientType.Text)
-            rs.Parameters.Add("@date", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Format(dtReceived.Value, "yyyy-MM-dd")
-            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
-            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
             rs.Parameters.AddWithValue("@accession_no", txtAccession.Text)
             rs.Parameters.AddWithValue("@OR_No", txtORNo.Text)
             rs.Parameters.AddWithValue("@CS_No", txtChargeSlip.Text)
 
             rs.Parameters.AddWithValue("@Section", Section)
             rs.Parameters.AddWithValue("@SubSection", SubSection)
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM patient_info WHERE `patient_id` = @PATIENT_ID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                SaveRecordwthoutMSG("UPDATE `patient_info` SET " _
-                        & "`patient_id` = @patient_id," _
-                        & "`name` = @name," _
-                        & "`sex` = @sex," _
-                        & "`date_of_birth` = @bdate," _
-                        & "`age` = @age," _
-                        & "`civil_status` = @CS," _
-                        & "`address` = @address," _
-                        & "`contact_no` = @contact," _
-                        & "`sample_id` = @MainSampleID" _
-                        & " WHERE `patient_id` = @patient_id"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO patient_info (patient_id, name, sex, date_of_birth, age, civil_status, address, contact_no, `date`, `sample_id`) VALUES " _
-                        & "(" _
-                        & "@patient_id," _
-                        & "@name," _
-                        & "@sex," _
-                        & "@bdate," _
-                        & "@age," _
-                        & "@CS," _
-                        & "@address," _
-                        & "@contact," _
-                        & "@date," _
-                        & "@MainSampleID" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
+
+            rs.Parameters.Add("@date", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Format(dtReceived.Value, "yyyy-MM-dd")
+            rs.Parameters.AddWithValue("@time", tmTimeReceived.Value.ToLongTimeString)
+            rs.Parameters.AddWithValue("@date_release", Format(Now, "yyyy-MM-dd") & " " & Now.ToLongTimeString)
+            rs.Parameters.AddWithValue("@specimen_tracking_received", Format(dtReceived.Value, "yyyy-MM-dd") & " " & tmTimeReceived.Value.ToLongTimeString)
+
+            UpdateRecordwthoutMSG("UPDATE `patient_info` SET " _
+                    & "`patient_id` = @patient_id," _
+                    & "`name` = @name," _
+                    & "`sex` = @sex," _
+                    & "`date_of_birth` = @bdate," _
+                    & "`age` = @age," _
+                    & "`civil_status` = @CS," _
+                    & "`address` = @address," _
+                    & "`contact_no` = @contact," _
+                    & "`sample_id` = @MainSampleID" _
+                    & " WHERE `patient_id` = @patient_id ORDER BY `patient_id` LIMIT 1"
+                    )
 
             UpdateRecordwthoutMSG("UPDATE `tmpWorklist` SET " _
                     & "`sample_id` = @sample_id," _
@@ -1555,152 +1244,50 @@ Public Class frmMicroNew
                     & "`type` = @type," _
                     & "`physician` = @physician," _
                     & "`dept` = @room," _
-                    & "`medtech` = @medtech," _
-                    & "`verified_by` = @verify," _
+                    & "`medtech` = @medtechid," _
+                    & "`verified_by` = @verifyid," _
                     & "`test` = @test," _
                     & "`patient_type` = @patient_type," _
                     & "`status` = @status," _
-                    & "`dt_released` = @date_release," _
-                    & "`main_id` = @MainSampleID" _
-                    & " WHERE main_id = @mainID AND testtype = @Section AND sub_section = @SubSection"
+                    & "`date` = @date," _
+                    & "`time` = @time," _
+                    & "`dt_released` = @date_release" _
+                    & " WHERE main_id = @mainID AND testtype = @Section AND sub_section = @SubSection ORDER BY `main_id` LIMIT 1"
                     )
 
-            Connect()
-            rs.Connection = conn
-            rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT * FROM `order_pathologist` WHERE `sample_id` = @mainID"
-            reader = rs.ExecuteReader
-            reader.Read()
-            If reader.HasRows Then
-                Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `order_pathologist` SET " _
-                        & "`pathologist_id` = @pathologist," _
-                        & "`sample_id` = @MainSampleID" _
-                        & " WHERE `sample_id` = @mainID"
-                        )
-            Else
-                Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `order_pathologist` (`sample_id`, `pathologist_id`) VALUES " _
-                        & "(" _
-                        & "@MainSampleID," _
-                        & "@pathologist" _
-                        & ")"
-                        )
-            End If
-            Disconnect()
-
-            If Not cboMedTech.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_medtech` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_medtech` SET " _
-                            & "`medtech_id` = @medtechid," _
-                            & "`sample_id` = @MainSampleID" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_medtech` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@medtechid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not cboVerify.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `order_Verified` WHERE `sample_id` = @mainID"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `order_Verified` SET " _
-                            & "`medtech_id` = @verifyid," _
-                            & "`sample_id` = @MainSampleID" _
-                            & " WHERE `sample_id` = @mainID"
-                            )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `order_Verified` (`sample_id`, `medtech_id`) VALUES " _
-                            & "(" _
-                            & "@MainSampleID," _
-                            & "@verifyid" _
-                            & ")"
-                            )
-                End If
-                Disconnect()
-            End If
-
-            If Not txtAccession.Text = "" Or txtORNo.Text = "" Or txtChargeSlip.Text = "" Then
-                Connect()
-                rs.Connection = conn
-                rs.CommandType = CommandType.Text
-                rs.CommandText = "SELECT * FROM `additional_info` WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                reader = rs.ExecuteReader
-                reader.Read()
-                If reader.HasRows Then
-                    Disconnect()
-                    UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
-                                & "`accession_no` = @accession_no," _
-                                & "`or_no` = @OR_No," _
-                                & "`cs_no` = @CS_No," _
-                                & "`sample_id` = @MainSampleID" _
-                                & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection"
-                                )
-                Else
-                    Disconnect()
-                    SaveRecordwthoutMSG("INSERT INTO `additional_info` (`accession_no`, `or_no`, `cs_no`, section, sub_section, `sample_id`) VALUES " _
-                                & "(" _
-                                & "@accession_no," _
-                                & "@OR_No," _
-                                & "@CS_No," _
-                                & "@Section," _
-                                & "@SubSection," _
-                                & "@MainSampleID" _
-                                & ")"
-                                )
-                End If
-                Disconnect()
-            End If
+            UpdateRecordwthoutMSG("UPDATE `additional_info` SET " _
+                    & "`accession_no` = @accession_no," _
+                    & "`or_no` = @OR_No," _
+                    & "`cs_no` = @CS_No" _
+                    & " WHERE `sample_id` = @mainID AND section = @Section AND sub_section = @SubSection  ORDER BY `sample_id` LIMIT 1"
+                    )
 
             For x As Integer = 0 To GridView.RowCount - 1 Step 1
                 If (GridView.IsRowSelected(x)) Then
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '1'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 Else
                     UpdateRecordwthoutMSG("UPDATE `tmpresult` SET " _
                           & "`flag` = '" & GridView.GetRowCellValue(x, "Flag") & "'," _
-                          & "`measurement` = '" & GridView.GetRowCellValue(x, "SI") & "'," _
+                          & "`measurement` = '" & GridView.GetRowCellValue(x, "Result") & "'," _
                           & "`reference_range` = '" & GridView.GetRowCellValue(x, "ReferenceRange") & "'," _
                           & "`value_conv` = '" & GridView.GetRowCellValue(x, "Conventional") & "'," _
-                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "ConvRefRange") & "'," _
+                          & "`ref_conv` = '" & GridView.GetRowCellValue(x, "RefRange") & "'," _
                           & "`patient_id` = @patient_id," _
                           & "`instrument` = '" & GridView.GetRowCellValue(x, "Instrument") & "'," _
                           & "`print_status` = '0'," _
-                          & "`date` = @date_release," _
-                          & "`sample_id` = @MainSampleID" _
-                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "'"
+                          & "`date` = @date_release" _
+                          & " WHERE `sample_id` = @mainID AND `test_code` = '" & GridView.GetRowCellValue(x, "TestCode") & "' ORDER BY `sample_id` LIMIT 1"
                           )
                 End If
             Next
@@ -1708,24 +1295,31 @@ Public Class frmMicroNew
             Connect()
             rs.Connection = conn
             rs.CommandType = CommandType.Text
-            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection"
+            rs.CommandText = "SELECT `sample_id` FROM `patient_remarks` WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection  ORDER BY `sample_id` LIMIT 1"
             reader = rs.ExecuteReader
             reader.Read()
             If reader.HasRows Then
                 Disconnect()
-                UpdateRecordwthoutMSG("UPDATE `patient_remarks` SET `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID AND `section` = @Section AND `sub_section` = @SubSection")
+                UpdateRecordwthoutMSG("UPDATE `patient_remarks` Set `remarks` = @remarks, `diagnosis` = @lab_comment WHERE `sample_id` = @mainID And `section` = @Section And `sub_section` = @SubSection ORDER BY `sample_id` LIMIT 1")
             Else
                 Disconnect()
-                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection)")
+                SaveRecordwthoutMSG("INSERT INTO `patient_remarks` (`remarks`, `diagnosis`, `sample_id`, `section`, `sub_section`) VALUES (@remarks, @lab_comment, @MainSampleID, @Section, @SubSection) ORDER BY `sample_id` LIMIT 1")
             End If
             Disconnect()
 
-            'UpdateWorkSheet()
+            'version 1.6.0.0-beta
+            'Save the Processed, Validated and Printed Time on 'specimen_tracking' table
+            UpdateRecordwthoutMSG("UPDATE `specimen_tracking` Set " _
+                & "`received` = @specimen_tracking_received" _
+                & " WHERE sample_id = @mainID And section = @Section And sub_section = @Subsection  ORDER BY `sample_id` LIMIT 1"
+                )
 
-            btnPrint.Enabled = False
-            btnPrintNow.Enabled = True
+            'btnPrint.Enabled = False
+            'btnPrintNow.Enabled = True
 
             mainID = MainSampleID
+
+            MessageBox.Show("Transaction No. " & mainID & " has been verified.", "System Message", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             frmMicroWorklist.LoadRecords()
 
@@ -1826,6 +1420,7 @@ Public Class frmMicroNew
         HL7Writer.Close()
         HL7Log.Close()
     End Sub
+
     ' End Of HL7
 
     'Function for update result for iHOMIS

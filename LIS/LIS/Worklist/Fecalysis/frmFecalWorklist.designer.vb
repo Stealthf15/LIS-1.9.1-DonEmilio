@@ -56,6 +56,7 @@ Partial Class frmFecalWorklist
         Me.BarButtonItem6 = New DevExpress.XtraBars.BarButtonItem()
         Me.btnNewOrder = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
@@ -72,6 +73,7 @@ Partial Class frmFecalWorklist
         Me.dtCompleted = New DevExpress.XtraGrid.GridControl()
         Me.GridCompleted = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter1 = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         Me.rgSelect1 = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
@@ -104,6 +106,7 @@ Partial Class frmFecalWorklist
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -115,6 +118,7 @@ Partial Class frmFecalWorklist
         CType(Me.GridCompleted, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSearch1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -454,6 +458,7 @@ Partial Class frmFecalWorklist
         '
         Me.PanelControl2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl2.Controls.Add(Me.cboFilter)
         Me.PanelControl2.Controls.Add(Me.LabelControl7)
         Me.PanelControl2.Controls.Add(Me.rgSelect)
         Me.PanelControl2.Controls.Add(Me.LabelControl4)
@@ -464,6 +469,22 @@ Partial Class frmFecalWorklist
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(1240, 32)
         Me.PanelControl2.TabIndex = 144
+        '
+        'cboFilter
+        '
+        Me.cboFilter.EditValue = "All"
+        Me.cboFilter.Location = New System.Drawing.Point(192, 6)
+        Me.cboFilter.Name = "cboFilter"
+        Me.cboFilter.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter.Size = New System.Drawing.Size(114, 20)
+        Me.cboFilter.TabIndex = 158
         '
         'LabelControl7
         '
@@ -536,7 +557,7 @@ Partial Class frmFecalWorklist
         Me.cboLocation.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation.Size = New System.Drawing.Size(206, 20)
+        Me.cboLocation.Size = New System.Drawing.Size(120, 20)
         Me.cboLocation.TabIndex = 70
         '
         'bcCode
@@ -659,6 +680,7 @@ Partial Class frmFecalWorklist
         '
         Me.PanelControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl1.Controls.Add(Me.cboFilter1)
         Me.PanelControl1.Controls.Add(Me.LabelControl8)
         Me.PanelControl1.Controls.Add(Me.rgSelect1)
         Me.PanelControl1.Controls.Add(Me.LabelControl5)
@@ -669,6 +691,22 @@ Partial Class frmFecalWorklist
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(1236, 30)
         Me.PanelControl1.TabIndex = 15
+        '
+        'cboFilter1
+        '
+        Me.cboFilter1.EditValue = "All"
+        Me.cboFilter1.Location = New System.Drawing.Point(237, 5)
+        Me.cboFilter1.Name = "cboFilter1"
+        Me.cboFilter1.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter1.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter1.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter1.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter1.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter1.Size = New System.Drawing.Size(147, 20)
+        Me.cboFilter1.TabIndex = 160
         '
         'LabelControl8
         '
@@ -741,7 +779,7 @@ Partial Class frmFecalWorklist
         Me.cboLocation1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation1.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation1.Size = New System.Drawing.Size(310, 20)
+        Me.cboLocation1.Size = New System.Drawing.Size(157, 20)
         Me.cboLocation1.TabIndex = 72
         '
         'pnlHeader
@@ -855,6 +893,7 @@ Partial Class frmFecalWorklist
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -867,6 +906,7 @@ Partial Class frmFecalWorklist
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
         Me.PanelControl1.PerformLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSearch1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -939,4 +979,6 @@ Partial Class frmFecalWorklist
     Friend WithEvents rgSelect As DevExpress.XtraEditors.RadioGroup
     Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents rgSelect1 As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents cboFilter As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents cboFilter1 As DevExpress.XtraEditors.ComboBoxEdit
 End Class

@@ -33,8 +33,13 @@ Partial Class frmPhlebotomy
         Me.Bar = New DevExpress.XtraBars.Bar()
         Me.btnPrintBC = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnAdd = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.pmCheckin = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.btnCheckin = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnStat = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnAddOrder = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.pmWardingStat = New DevExpress.XtraBars.PopupMenu(Me.components)
+        Me.btnWarding = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.btnWardingStat = New DevExpress.XtraBars.BarButtonItem()
         Me.btnPrintList = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnCancel = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.btnDelete = New DevExpress.XtraBars.BarLargeButtonItem()
@@ -51,7 +56,7 @@ Partial Class frmPhlebotomy
         Me.BarButtonItem4 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem5 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem6 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem7 = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarLargeButtonItem2 = New DevExpress.XtraBars.BarLargeButtonItem()
         Me.gList = New DevExpress.XtraEditors.GroupControl()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
@@ -78,6 +83,7 @@ Partial Class frmPhlebotomy
         Me.PrintPreviewDialog = New System.Windows.Forms.PrintPreviewDialog()
         Me.PrintDocument = New System.Drawing.Printing.PrintDocument()
         Me.ToastNotificationsManager = New DevExpress.XtraBars.ToastNotifications.ToastNotificationsManager(Me.components)
+        Me.btnSaveComment = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.pnlBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlBackground.SuspendLayout()
         CType(Me.XTabPatient, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,6 +93,8 @@ Partial Class frmPhlebotomy
         Me.GroupControl2.SuspendLayout()
         CType(Me.txtComment.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pmCheckin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pmWardingStat, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gList.SuspendLayout()
@@ -120,7 +128,7 @@ Partial Class frmPhlebotomy
         Me.pnlBackground.Location = New System.Drawing.Point(0, 0)
         Me.pnlBackground.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.pnlBackground.Name = "pnlBackground"
-        Me.pnlBackground.Size = New System.Drawing.Size(2004, 1070)
+        Me.pnlBackground.Size = New System.Drawing.Size(2100, 1070)
         Me.pnlBackground.TabIndex = 6
         '
         'XTabPatient
@@ -149,7 +157,7 @@ Partial Class frmPhlebotomy
         Me.XTabPatient.Location = New System.Drawing.Point(11, 42)
         Me.XTabPatient.Name = "XTabPatient"
         Me.XTabPatient.SelectedTabPage = Me.XtraTabPage1
-        Me.XTabPatient.Size = New System.Drawing.Size(1981, 1017)
+        Me.XTabPatient.Size = New System.Drawing.Size(2077, 1017)
         Me.XTabPatient.TabIndex = 36
         Me.XTabPatient.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XtraTabPage1})
         '
@@ -163,7 +171,7 @@ Partial Class frmPhlebotomy
         Me.XtraTabPage1.ImageOptions.SvgImage = CType(resources.GetObject("XtraTabPage1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.XtraTabPage1.ImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.XtraTabPage1.Name = "XtraTabPage1"
-        Me.XtraTabPage1.Size = New System.Drawing.Size(1979, 985)
+        Me.XtraTabPage1.Size = New System.Drawing.Size(2075, 985)
         Me.XtraTabPage1.Text = "Patient Orders"
         '
         'GroupControl2
@@ -180,9 +188,10 @@ Partial Class frmPhlebotomy
         Me.GroupControl2.CaptionImageOptions.SvgImage = CType(resources.GetObject("GroupControl2.CaptionImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.GroupControl2.CaptionImageOptions.SvgImageSize = New System.Drawing.Size(16, 16)
         Me.GroupControl2.Controls.Add(Me.txtComment)
-        Me.GroupControl2.Location = New System.Drawing.Point(1685, 858)
+        Me.GroupControl2.Controls.Add(Me.btnSaveComment)
+        Me.GroupControl2.Location = New System.Drawing.Point(1781, 790)
         Me.GroupControl2.Name = "GroupControl2"
-        Me.GroupControl2.Size = New System.Drawing.Size(290, 122)
+        Me.GroupControl2.Size = New System.Drawing.Size(290, 190)
         Me.GroupControl2.TabIndex = 148
         Me.GroupControl2.Text = "Comments"
         '
@@ -192,7 +201,7 @@ Partial Class frmPhlebotomy
         Me.txtComment.Location = New System.Drawing.Point(2, 27)
         Me.txtComment.MenuManager = Me.BarManager
         Me.txtComment.Name = "txtComment"
-        Me.txtComment.Size = New System.Drawing.Size(286, 93)
+        Me.txtComment.Size = New System.Drawing.Size(286, 129)
         Me.txtComment.TabIndex = 0
         '
         'BarManager
@@ -209,9 +218,9 @@ Partial Class frmPhlebotomy
         Me.BarManager.DockControls.Add(Me.barDockControlRight)
         Me.BarManager.DockWindowTabFont = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BarManager.Form = Me.pnlBackground
-        Me.BarManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1, Me.BarButtonItem2, Me.BarButtonItem3, Me.BarButtonItem4, Me.BarButtonItem5, Me.BarButtonItem6, Me.btnAdd, Me.btnDelete, Me.btnRefresh, Me.btnCancel, Me.BarButtonItem7, Me.btnClose, Me.btnAddOrder, Me.btnPrintList, Me.btnPrintBC, Me.btnStat})
+        Me.BarManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.BarButtonItem1, Me.BarButtonItem2, Me.BarButtonItem3, Me.BarButtonItem4, Me.BarButtonItem5, Me.BarButtonItem6, Me.btnAdd, Me.btnDelete, Me.btnRefresh, Me.btnCancel, Me.btnWardingStat, Me.btnClose, Me.btnAddOrder, Me.btnPrintList, Me.btnPrintBC, Me.btnStat, Me.btnWarding, Me.BarLargeButtonItem2, Me.btnCheckin})
         Me.BarManager.MainMenu = Me.Bar
-        Me.BarManager.MaxItemId = 29
+        Me.BarManager.MaxItemId = 32
         '
         'Bar
         '
@@ -220,7 +229,7 @@ Partial Class frmPhlebotomy
         Me.Bar.DockRow = 0
         Me.Bar.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
         Me.Bar.FloatLocation = New System.Drawing.Point(74, 177)
-        Me.Bar.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintBC, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnAdd, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnStat, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnAddOrder, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintList, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnCancel, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnDelete, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRefresh, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnClose)})
+        Me.Bar.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintBC, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnAdd, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnAddOrder, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintList, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnCancel, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnDelete, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRefresh, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnClose)})
         Me.Bar.OptionsBar.AllowQuickCustomization = False
         Me.Bar.OptionsBar.MultiLine = True
         Me.Bar.OptionsBar.UseWholeRow = True
@@ -237,13 +246,29 @@ Partial Class frmPhlebotomy
         '
         'btnAdd
         '
-        Me.btnAdd.Caption = "&Check-in Routine"
+        Me.btnAdd.ActAsDropDown = True
+        Me.btnAdd.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown
+        Me.btnAdd.Caption = "&Check-in"
         Me.btnAdd.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
+        Me.btnAdd.DropDownControl = Me.pmCheckin
         Me.btnAdd.Id = 6
         Me.btnAdd.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.btnAdd.ImageOptions.SvgImage = CType(resources.GetObject("btnAdd.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnAdd.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnAdd.Name = "btnAdd"
+        '
+        'pmCheckin
+        '
+        Me.pmCheckin.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnCheckin, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnStat, True)})
+        Me.pmCheckin.Manager = Me.BarManager
+        Me.pmCheckin.Name = "pmCheckin"
+        '
+        'btnCheckin
+        '
+        Me.btnCheckin.Caption = "Check-In Routine"
+        Me.btnCheckin.Id = 31
+        Me.btnCheckin.ImageOptions.SvgImage = CType(resources.GetObject("btnCheckin.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnCheckin.Name = "btnCheckin"
         '
         'btnStat
         '
@@ -256,13 +281,36 @@ Partial Class frmPhlebotomy
         '
         'btnAddOrder
         '
+        Me.btnAddOrder.ActAsDropDown = True
+        Me.btnAddOrder.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown
         Me.btnAddOrder.Caption = "Warding"
         Me.btnAddOrder.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
+        Me.btnAddOrder.DropDownControl = Me.pmWardingStat
         Me.btnAddOrder.Id = 24
         Me.btnAddOrder.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.btnAddOrder.ImageOptions.SvgImage = CType(resources.GetObject("btnAddOrder.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.btnAddOrder.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnAddOrder.Name = "btnAddOrder"
+        '
+        'pmWardingStat
+        '
+        Me.pmWardingStat.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnWarding), New DevExpress.XtraBars.LinkPersistInfo(Me.btnWardingStat)})
+        Me.pmWardingStat.Manager = Me.BarManager
+        Me.pmWardingStat.Name = "pmWardingStat"
+        '
+        'btnWarding
+        '
+        Me.btnWarding.Caption = "Warding Routine"
+        Me.btnWarding.Id = 29
+        Me.btnWarding.ImageOptions.SvgImage = CType(resources.GetObject("btnWarding.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnWarding.Name = "btnWarding"
+        '
+        'btnWardingStat
+        '
+        Me.btnWardingStat.Caption = "Warding STAT"
+        Me.btnWardingStat.Id = 21
+        Me.btnWardingStat.ImageOptions.SvgImage = CType(resources.GetObject("btnWardingStat.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnWardingStat.Name = "btnWardingStat"
         '
         'btnPrintList
         '
@@ -327,7 +375,7 @@ Partial Class frmPhlebotomy
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
         Me.barDockControlTop.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.barDockControlTop.Size = New System.Drawing.Size(2004, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(2100, 36)
         '
         'barDockControlBottom
         '
@@ -336,7 +384,7 @@ Partial Class frmPhlebotomy
         Me.barDockControlBottom.Location = New System.Drawing.Point(0, 1070)
         Me.barDockControlBottom.Manager = Me.BarManager
         Me.barDockControlBottom.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.barDockControlBottom.Size = New System.Drawing.Size(2004, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(2100, 0)
         '
         'barDockControlLeft
         '
@@ -351,7 +399,7 @@ Partial Class frmPhlebotomy
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(2004, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(2100, 36)
         Me.barDockControlRight.Manager = Me.BarManager
         Me.barDockControlRight.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 1034)
@@ -398,11 +446,12 @@ Partial Class frmPhlebotomy
         Me.BarButtonItem6.ImageOptions.LargeImage = CType(resources.GetObject("BarButtonItem6.ImageOptions.LargeImage"), System.Drawing.Image)
         Me.BarButtonItem6.Name = "BarButtonItem6"
         '
-        'BarButtonItem7
+        'BarLargeButtonItem2
         '
-        Me.BarButtonItem7.Caption = "BarButtonItem7"
-        Me.BarButtonItem7.Id = 21
-        Me.BarButtonItem7.Name = "BarButtonItem7"
+        Me.BarLargeButtonItem2.Caption = "Warding STAT"
+        Me.BarLargeButtonItem2.Id = 30
+        Me.BarLargeButtonItem2.ImageOptions.SvgImage = CType(resources.GetObject("BarLargeButtonItem2.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.BarLargeButtonItem2.Name = "BarLargeButtonItem2"
         '
         'gList
         '
@@ -427,7 +476,7 @@ Partial Class frmPhlebotomy
         Me.gList.Controls.Add(Me.txtTest)
         Me.gList.Location = New System.Drawing.Point(4, 39)
         Me.gList.Name = "gList"
-        Me.gList.Size = New System.Drawing.Size(1675, 943)
+        Me.gList.Size = New System.Drawing.Size(1771, 943)
         Me.gList.TabIndex = 145
         Me.gList.Text = "List"
         '
@@ -436,7 +485,7 @@ Partial Class frmPhlebotomy
         Me.LabelControl7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelControl7.Appearance.ForeColor = System.Drawing.Color.White
         Me.LabelControl7.Appearance.Options.UseForeColor = True
-        Me.LabelControl7.Location = New System.Drawing.Point(1028, 7)
+        Me.LabelControl7.Location = New System.Drawing.Point(1124, 7)
         Me.LabelControl7.Name = "LabelControl7"
         Me.LabelControl7.Size = New System.Drawing.Size(75, 13)
         Me.LabelControl7.TabIndex = 160
@@ -445,7 +494,7 @@ Partial Class frmPhlebotomy
         'rgSelect
         '
         Me.rgSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rgSelect.Location = New System.Drawing.Point(1107, 1)
+        Me.rgSelect.Location = New System.Drawing.Point(1203, 1)
         Me.rgSelect.MenuManager = Me.BarManager
         Me.rgSelect.Name = "rgSelect"
         Me.rgSelect.Properties.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(190, Byte), Integer))
@@ -464,7 +513,7 @@ Partial Class frmPhlebotomy
         Me.dtList.MainView = Me.GridView
         Me.dtList.MenuManager = Me.BarManager
         Me.dtList.Name = "dtList"
-        Me.dtList.Size = New System.Drawing.Size(1671, 914)
+        Me.dtList.Size = New System.Drawing.Size(1767, 914)
         Me.dtList.TabIndex = 144
         Me.dtList.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
         '
@@ -484,7 +533,7 @@ Partial Class frmPhlebotomy
         Me.LabelControl4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelControl4.Appearance.ForeColor = System.Drawing.Color.White
         Me.LabelControl4.Appearance.Options.UseForeColor = True
-        Me.LabelControl4.Location = New System.Drawing.Point(1403, 7)
+        Me.LabelControl4.Location = New System.Drawing.Point(1499, 7)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(63, 13)
         Me.LabelControl4.TabIndex = 146
@@ -493,7 +542,7 @@ Partial Class frmPhlebotomy
         'txtSearch
         '
         Me.txtSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSearch.Location = New System.Drawing.Point(1472, 3)
+        Me.txtSearch.Location = New System.Drawing.Point(1568, 3)
         Me.txtSearch.Name = "txtSearch"
         Me.txtSearch.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.txtSearch.Properties.Appearance.Options.UseForeColor = True
@@ -508,7 +557,7 @@ Partial Class frmPhlebotomy
         '
         Me.txtTest.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTest.Enabled = False
-        Me.txtTest.Location = New System.Drawing.Point(1191, 142)
+        Me.txtTest.Location = New System.Drawing.Point(1287, 142)
         Me.txtTest.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.txtTest.Name = "txtTest"
         Me.txtTest.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 9.75!)
@@ -534,13 +583,13 @@ Partial Class frmPhlebotomy
         Me.Panel.Controls.Add(Me.cboTestType)
         Me.Panel.Location = New System.Drawing.Point(4, 0)
         Me.Panel.Name = "Panel"
-        Me.Panel.Size = New System.Drawing.Size(1971, 33)
+        Me.Panel.Size = New System.Drawing.Size(2067, 33)
         Me.Panel.TabIndex = 144
         '
         'cboWard
         '
         Me.cboWard.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cboWard.Location = New System.Drawing.Point(1768, 6)
+        Me.cboWard.Location = New System.Drawing.Point(1864, 6)
         Me.cboWard.MenuManager = Me.BarManager
         Me.cboWard.Name = "cboWard"
         Me.cboWard.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
@@ -552,7 +601,7 @@ Partial Class frmPhlebotomy
         Me.LabelControl1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelControl1.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
         Me.LabelControl1.Appearance.Options.UseForeColor = True
-        Me.LabelControl1.Location = New System.Drawing.Point(1689, 9)
+        Me.LabelControl1.Location = New System.Drawing.Point(1785, 9)
         Me.LabelControl1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(74, 13)
@@ -640,9 +689,9 @@ Partial Class frmPhlebotomy
         Me.GroupControl1.Controls.Add(Me.dtOrderList)
         Me.GroupControl1.Controls.Add(Me.btnAddTest)
         Me.GroupControl1.Controls.Add(Me.btnDeleteTest)
-        Me.GroupControl1.Location = New System.Drawing.Point(1685, 40)
+        Me.GroupControl1.Location = New System.Drawing.Point(1781, 40)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(290, 812)
+        Me.GroupControl1.Size = New System.Drawing.Size(290, 744)
         Me.GroupControl1.TabIndex = 147
         Me.GroupControl1.Text = "Order List"
         '
@@ -653,7 +702,7 @@ Partial Class frmPhlebotomy
         Me.dtOrderList.MainView = Me.GridViewList
         Me.dtOrderList.MenuManager = Me.BarManager
         Me.dtOrderList.Name = "dtOrderList"
-        Me.dtOrderList.Size = New System.Drawing.Size(286, 719)
+        Me.dtOrderList.Size = New System.Drawing.Size(286, 651)
         Me.dtOrderList.TabIndex = 146
         Me.dtOrderList.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewList})
         '
@@ -673,7 +722,7 @@ Partial Class frmPhlebotomy
         Me.btnAddTest.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.btnAddTest.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.btnAddTest.ImageOptions.SvgImage = CType(resources.GetObject("btnAddTest.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnAddTest.Location = New System.Drawing.Point(2, 746)
+        Me.btnAddTest.Location = New System.Drawing.Point(2, 678)
         Me.btnAddTest.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddTest.Name = "btnAddTest"
         Me.btnAddTest.Size = New System.Drawing.Size(286, 32)
@@ -686,7 +735,7 @@ Partial Class frmPhlebotomy
         Me.btnDeleteTest.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.btnDeleteTest.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.btnDeleteTest.ImageOptions.SvgImage = CType(resources.GetObject("btnDeleteTest.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
-        Me.btnDeleteTest.Location = New System.Drawing.Point(2, 778)
+        Me.btnDeleteTest.Location = New System.Drawing.Point(2, 710)
         Me.btnDeleteTest.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDeleteTest.Name = "btnDeleteTest"
         Me.btnDeleteTest.Size = New System.Drawing.Size(286, 32)
@@ -715,6 +764,18 @@ Partial Class frmPhlebotomy
         Me.ToastNotificationsManager.ApplicationId = "328bac00-b99b-4119-b021-c7720c4cd88e"
         Me.ToastNotificationsManager.ApplicationName = "SBSI LIS"
         '
+        'btnSaveComment
+        '
+        Me.btnSaveComment.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.btnSaveComment.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
+        Me.btnSaveComment.ImageOptions.SvgImage = CType(resources.GetObject("SimpleButton1.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
+        Me.btnSaveComment.Location = New System.Drawing.Point(2, 156)
+        Me.btnSaveComment.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnSaveComment.Name = "btnSaveComment"
+        Me.btnSaveComment.Size = New System.Drawing.Size(286, 32)
+        Me.btnSaveComment.TabIndex = 149
+        Me.btnSaveComment.Text = "Save Comment"
+        '
         'frmPhlebotomy
         '
         Me.AcceptButton = Me.btnSearch
@@ -722,7 +783,7 @@ Partial Class frmPhlebotomy
         Me.Appearance.Options.UseBackColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.ClientSize = New System.Drawing.Size(2004, 1070)
+        Me.ClientSize = New System.Drawing.Size(2100, 1070)
         Me.ControlBox = False
         Me.Controls.Add(Me.pnlBackground)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -741,6 +802,8 @@ Partial Class frmPhlebotomy
         Me.GroupControl2.ResumeLayout(False)
         CType(Me.txtComment.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pmCheckin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pmWardingStat, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gList.ResumeLayout(False)
@@ -784,7 +847,7 @@ Partial Class frmPhlebotomy
     Friend WithEvents btnCancel As DevExpress.XtraBars.BarLargeButtonItem
     Friend WithEvents cboTestType As DevExpress.XtraEditors.ComboBoxEdit
     Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents BarButtonItem7 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents btnWardingStat As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents XTabPatient As DevExpress.XtraTab.XtraTabControl
     Friend WithEvents XtraTabPage1 As DevExpress.XtraTab.XtraTabPage
     Friend WithEvents btnClose As DevExpress.XtraBars.BarLargeButtonItem
@@ -817,4 +880,10 @@ Partial Class frmPhlebotomy
     Friend WithEvents txtComment As DevExpress.XtraEditors.MemoEdit
     Friend WithEvents btnPrintBC As DevExpress.XtraBars.BarLargeButtonItem
     Friend WithEvents btnStat As DevExpress.XtraBars.BarLargeButtonItem
+    Friend WithEvents pmWardingStat As DevExpress.XtraBars.PopupMenu
+    Friend WithEvents btnWarding As DevExpress.XtraBars.BarLargeButtonItem
+    Friend WithEvents BarLargeButtonItem2 As DevExpress.XtraBars.BarLargeButtonItem
+    Friend WithEvents pmCheckin As DevExpress.XtraBars.PopupMenu
+    Friend WithEvents btnCheckin As DevExpress.XtraBars.BarLargeButtonItem
+    Friend WithEvents btnSaveComment As DevExpress.XtraEditors.SimpleButton
 End Class

@@ -448,36 +448,6 @@
     <Compile Include="LIS\Result\Immunology\frmImmunoRerun.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroAddTest.designer.vb">
-      <DependentUpon>frmMicroAddTest.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroAddTest.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroNew.designer.vb">
-      <DependentUpon>frmMicroNew.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroNew.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroOrdered.designer.vb">
-      <DependentUpon>frmMicroOrdered.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroOrdered.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroPrevious.designer.vb">
-      <DependentUpon>frmMicroPrevious.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroPrevious.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroRerun.designer.vb">
-      <DependentUpon>frmMicroRerun.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Result\Microbiology\frmMicroRerun.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="LIS\Result\Hematology\frmHemaNew.designer.vb">
       <DependentUpon>frmHemaNew.vb</DependentUpon>
     </Compile>
@@ -506,6 +476,36 @@
       <DependentUpon>frmHemaRerun.vb</DependentUpon>
     </Compile>
     <Compile Include="LIS\Result\Hematology\frmHemaRerun.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroAddTest.designer.vb">
+      <DependentUpon>frmMicroAddTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroAddTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroNew.designer.vb">
+      <DependentUpon>frmMicroNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroOrdered.designer.vb">
+      <DependentUpon>frmMicroOrdered.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroOrdered.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroPrevious.designer.vb">
+      <DependentUpon>frmMicroPrevious.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroPrevious.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroRerun.designer.vb">
+      <DependentUpon>frmMicroRerun.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Result\Microbiology\frmMicroRerun.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LIS\Result\Molecular\frmMolAddTest.designer.vb">
@@ -718,6 +718,18 @@
     <Compile Include="LIS\Worklist\Immunology\frmImmunoWorklist.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LIS\Worklist\Microbiology\frmMicroPatientList.designer.vb">
+      <DependentUpon>frmMicroPatientList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Worklist\Microbiology\frmMicroPatientList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIS\Worklist\Microbiology\frmMicroWorklist.designer.vb">
+      <DependentUpon>frmMicroWorklist.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LIS\Worklist\Microbiology\frmMicroWorklist.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="LIS\Worklist\Molecular\frmMolPatientList.designer.vb">
       <DependentUpon>frmMolPatientList.vb</DependentUpon>
     </Compile>
@@ -730,10 +742,10 @@
     <Compile Include="LIS\Worklist\Molecular\frmMolWorklist.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LIS\Worklist\Microbiology\frmMicroWorklist.designer.vb">
-      <DependentUpon>frmMicroWorklist.vb</DependentUpon>
+    <Compile Include="LIS\Worklist\Serology\frmSeroPatientList.designer.vb">
+      <DependentUpon>frmSeroPatientList.vb</DependentUpon>
     </Compile>
-    <Compile Include="LIS\Worklist\Microbiology\frmMicroWorklist.vb">
+    <Compile Include="LIS\Worklist\Serology\frmSeroPatientList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LIS\Worklist\Serology\frmSeroWorklist.designer.vb">
@@ -752,18 +764,6 @@
       <DependentUpon>frmUrinPatientList.vb</DependentUpon>
     </Compile>
     <Compile Include="LIS\Worklist\Urinalysis\frmUrinPatientList.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Worklist\Serology\frmSeroPatientList.designer.vb">
-      <DependentUpon>frmSeroPatientList.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Worklist\Serology\frmSeroPatientList.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LIS\Worklist\Microbiology\frmMicroPatientList.designer.vb">
-      <DependentUpon>frmMicroPatientList.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LIS\Worklist\Microbiology\frmMicroPatientList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LIS\Worklist\Fecalysis\frmFecalPatientList.designer.vb">
@@ -1282,21 +1282,6 @@
     <EmbeddedResource Include="LIS\Result\Immunology\frmImmunoRerun.resx">
       <DependentUpon>frmImmunoRerun.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroAddTest.resx">
-      <DependentUpon>frmMicroAddTest.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroNew.resx">
-      <DependentUpon>frmMicroNew.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroOrdered.resx">
-      <DependentUpon>frmMicroOrdered.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroPrevious.resx">
-      <DependentUpon>frmMicroPrevious.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroRerun.resx">
-      <DependentUpon>frmMicroRerun.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LIS\Result\Hematology\frmHemaNew.resx">
       <DependentUpon>frmHemaNew.vb</DependentUpon>
     </EmbeddedResource>
@@ -1311,6 +1296,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Result\Hematology\frmHemaRerun.resx">
       <DependentUpon>frmHemaRerun.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroAddTest.resx">
+      <DependentUpon>frmMicroAddTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroNew.resx">
+      <DependentUpon>frmMicroNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroOrdered.resx">
+      <DependentUpon>frmMicroOrdered.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroPrevious.resx">
+      <DependentUpon>frmMicroPrevious.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Result\Microbiology\frmMicroRerun.resx">
+      <DependentUpon>frmMicroRerun.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Result\Molecular\frmMolAddTest.resx">
       <DependentUpon>frmMolAddTest.vb</DependentUpon>
@@ -1417,14 +1417,20 @@
     <EmbeddedResource Include="LIS\Worklist\Immunology\frmImmunoWorklist.resx">
       <DependentUpon>frmImmunoWorklist.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Worklist\Microbiology\frmMicroPatientList.resx">
+      <DependentUpon>frmMicroPatientList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIS\Worklist\Microbiology\frmMicroWorklist.resx">
+      <DependentUpon>frmMicroWorklist.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LIS\Worklist\Molecular\frmMolPatientList.resx">
       <DependentUpon>frmMolPatientList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Worklist\Molecular\frmMolWorklist.resx">
       <DependentUpon>frmMolWorklist.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Worklist\Microbiology\frmMicroWorklist.resx">
-      <DependentUpon>frmMicroWorklist.vb</DependentUpon>
+    <EmbeddedResource Include="LIS\Worklist\Serology\frmSeroPatientList.resx">
+      <DependentUpon>frmSeroPatientList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Worklist\Serology\frmSeroWorklist.resx">
       <DependentUpon>frmSeroWorklist.vb</DependentUpon>
@@ -1434,12 +1440,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Worklist\Urinalysis\frmUrinPatientList.resx">
       <DependentUpon>frmUrinPatientList.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Worklist\Serology\frmSeroPatientList.resx">
-      <DependentUpon>frmSeroPatientList.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LIS\Worklist\Microbiology\frmMicroPatientList.resx">
-      <DependentUpon>frmMicroPatientList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LIS\Worklist\Fecalysis\frmFecalPatientList.resx">
       <DependentUpon>frmFecalPatientList.vb</DependentUpon>

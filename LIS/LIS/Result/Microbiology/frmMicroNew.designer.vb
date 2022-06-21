@@ -85,6 +85,7 @@ Partial Class frmMicroNew
         Me.LabelControl38 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl41 = New DevExpress.XtraEditors.LabelControl()
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
+        Me.txtEmail = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl42 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl43 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl44 = New DevExpress.XtraEditors.LabelControl()
@@ -98,7 +99,6 @@ Partial Class frmMicroNew
         Me.GroupControl4 = New DevExpress.XtraEditors.GroupControl()
         Me.GroupControl5 = New DevExpress.XtraEditors.GroupControl()
         Me.GroupControl6 = New DevExpress.XtraEditors.GroupControl()
-        Me.txtEmail = New DevExpress.XtraEditors.TextEdit()
         CType(Me.cboVerify.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboPathologist.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboMedTech.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,6 +131,7 @@ Partial Class frmMicroNew
         CType(Me.txtChargeSlip.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl1.SuspendLayout()
+        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtAddress.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl4.SuspendLayout()
@@ -138,7 +139,6 @@ Partial Class frmMicroNew
         Me.GroupControl5.SuspendLayout()
         CType(Me.GroupControl6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl6.SuspendLayout()
-        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cboVerify
@@ -288,7 +288,7 @@ Partial Class frmMicroNew
         Me.Bar2.DockRow = 0
         Me.Bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
         Me.Bar2.FloatLocation = New System.Drawing.Point(213, 125)
-        Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnViewPrint, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrint, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnValidate, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintNow, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnClose, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRelease, True)})
+        Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnViewPrint, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnValidate, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrint, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnPrintNow, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnClose, True), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRelease, True)})
         Me.Bar2.OptionsBar.MultiLine = True
         Me.Bar2.OptionsBar.UseWholeRow = True
         Me.Bar2.Text = "Main menu"
@@ -325,7 +325,6 @@ Partial Class frmMicroNew
         Me.btnValidate.ImageOptions.SvgImageSize = New System.Drawing.Size(24, 24)
         Me.btnValidate.ItemShortcut = New DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F8)
         Me.btnValidate.Name = "btnValidate"
-        Me.btnValidate.Visibility = DevExpress.XtraBars.BarItemVisibility.Never
         '
         'btnPrintNow
         '
@@ -353,7 +352,7 @@ Partial Class frmMicroNew
         '
         'btnRelease
         '
-        Me.btnRelease.Caption = "Release"
+        Me.btnRelease.Caption = "Validate && Release"
         Me.btnRelease.CaptionAlignment = DevExpress.XtraBars.BarItemCaptionAlignment.Right
         Me.btnRelease.Id = 14
         Me.btnRelease.ImageOptions.SvgImage = CType(resources.GetObject("btnRelease.ImageOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
@@ -372,15 +371,15 @@ Partial Class frmMicroNew
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Manager = Me.BarManager
-        Me.barDockControlTop.Size = New System.Drawing.Size(1300, 36)
+        Me.barDockControlTop.Size = New System.Drawing.Size(1306, 36)
         '
         'barDockControlBottom
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 695)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 701)
         Me.barDockControlBottom.Manager = Me.BarManager
-        Me.barDockControlBottom.Size = New System.Drawing.Size(1300, 0)
+        Me.barDockControlBottom.Size = New System.Drawing.Size(1306, 0)
         '
         'barDockControlLeft
         '
@@ -388,15 +387,15 @@ Partial Class frmMicroNew
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 36)
         Me.barDockControlLeft.Manager = Me.BarManager
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 659)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 665)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
-        Me.barDockControlRight.Location = New System.Drawing.Point(1300, 36)
+        Me.barDockControlRight.Location = New System.Drawing.Point(1306, 36)
         Me.barDockControlRight.Manager = Me.BarManager
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 659)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 665)
         '
         'BarLargeButtonItem3
         '
@@ -947,6 +946,22 @@ Partial Class frmMicroNew
         Me.GroupControl1.TabIndex = 173
         Me.GroupControl1.Text = "Patient Details"
         '
+        'txtEmail
+        '
+        Me.txtEmail.Location = New System.Drawing.Point(90, 244)
+        Me.txtEmail.Name = "txtEmail"
+        Me.txtEmail.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.txtEmail.Properties.Appearance.Options.UseForeColor = True
+        Me.txtEmail.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.White
+        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBackColor = True
+        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBorderColor = True
+        Me.txtEmail.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.txtEmail.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.txtEmail.Size = New System.Drawing.Size(213, 20)
+        Me.txtEmail.TabIndex = 170
+        '
         'LabelControl42
         '
         Me.LabelControl42.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
@@ -1141,22 +1156,6 @@ Partial Class frmMicroNew
         Me.GroupControl6.TabIndex = 187
         Me.GroupControl6.Text = "Comment"
         '
-        'txtEmail
-        '
-        Me.txtEmail.Location = New System.Drawing.Point(90, 244)
-        Me.txtEmail.Name = "txtEmail"
-        Me.txtEmail.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
-        Me.txtEmail.Properties.Appearance.Options.UseForeColor = True
-        Me.txtEmail.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
-        Me.txtEmail.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
-        Me.txtEmail.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.White
-        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBackColor = True
-        Me.txtEmail.Properties.AppearanceReadOnly.Options.UseBorderColor = True
-        Me.txtEmail.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.txtEmail.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.txtEmail.Size = New System.Drawing.Size(213, 20)
-        Me.txtEmail.TabIndex = 170
-        '
         'frmMicroNew
         '
         Me.Appearance.BackColor = System.Drawing.SystemColors.Control
@@ -1165,7 +1164,7 @@ Partial Class frmMicroNew
         Me.Appearance.Options.UseForeColor = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1300, 695)
+        Me.ClientSize = New System.Drawing.Size(1306, 701)
         Me.ControlBox = False
         Me.Controls.Add(Me.GroupControl6)
         Me.Controls.Add(Me.GroupControl5)
@@ -1218,6 +1217,7 @@ Partial Class frmMicroNew
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl1.ResumeLayout(False)
         Me.GroupControl1.PerformLayout()
+        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtAddress.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GroupControl4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl4.ResumeLayout(False)
@@ -1226,7 +1226,6 @@ Partial Class frmMicroNew
         Me.GroupControl5.PerformLayout()
         CType(Me.GroupControl6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl6.ResumeLayout(False)
-        CType(Me.txtEmail.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

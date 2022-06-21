@@ -24,7 +24,7 @@ Partial Class frmChemWorklist
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmChemWorklist))
-        Dim Code128Generator2 As DevExpress.XtraPrinting.BarCode.Code128Generator = New DevExpress.XtraPrinting.BarCode.Code128Generator()
+        Dim Code128Generator1 As DevExpress.XtraPrinting.BarCode.Code128Generator = New DevExpress.XtraPrinting.BarCode.Code128Generator()
         Me.pnlBackground = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
         Me.lblCountQueue = New DevExpress.XtraEditors.LabelControl()
@@ -32,8 +32,8 @@ Partial Class frmChemWorklist
         Me.XTab = New DevExpress.XtraTab.XtraTabControl()
         Me.XTPage1 = New DevExpress.XtraTab.XtraTabPage()
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
-        Me.dtList = New DevExpress.XtraGrid.GridControl()
-        Me.GridView = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.LabelControl9 = New DevExpress.XtraEditors.LabelControl()
+        Me.rgFilter = New DevExpress.XtraEditors.RadioGroup()
         Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar = New DevExpress.XtraBars.Bar()
         Me.btnBarcode = New DevExpress.XtraBars.BarLargeButtonItem()
@@ -55,7 +55,10 @@ Partial Class frmChemWorklist
         Me.BarButtonItem5 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem6 = New DevExpress.XtraBars.BarButtonItem()
         Me.btnNewOrder = New DevExpress.XtraBars.BarLargeButtonItem()
+        Me.dtList = New DevExpress.XtraGrid.GridControl()
+        Me.GridView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.rgSelect = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
@@ -72,6 +75,7 @@ Partial Class frmChemWorklist
         Me.dtCompleted = New DevExpress.XtraGrid.GridControl()
         Me.GridCompleted = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.cboFilter1 = New DevExpress.XtraEditors.ComboBoxEdit()
         Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         Me.rgSelect1 = New DevExpress.XtraEditors.RadioGroup()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
@@ -98,12 +102,14 @@ Partial Class frmChemWorklist
         Me.XTPage1.SuspendLayout()
         CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl2.SuspendLayout()
-        CType(Me.dtList, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.rgFilter.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dtList, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -115,6 +121,7 @@ Partial Class frmChemWorklist
         CType(Me.GridCompleted, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSearch1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -223,6 +230,8 @@ Partial Class frmChemWorklist
         Me.GroupControl2.AppearanceCaption.Options.UseBackColor = True
         Me.GroupControl2.AppearanceCaption.Options.UseBorderColor = True
         Me.GroupControl2.AppearanceCaption.Options.UseFont = True
+        Me.GroupControl2.Controls.Add(Me.LabelControl9)
+        Me.GroupControl2.Controls.Add(Me.rgFilter)
         Me.GroupControl2.Controls.Add(Me.dtList)
         Me.GroupControl2.Location = New System.Drawing.Point(6, 44)
         Me.GroupControl2.Name = "GroupControl2"
@@ -230,30 +239,33 @@ Partial Class frmChemWorklist
         Me.GroupControl2.TabIndex = 176
         Me.GroupControl2.Text = "Processing List"
         '
-        'dtList
+        'LabelControl9
         '
-        Me.dtList.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtList.Location = New System.Drawing.Point(2, 27)
-        Me.dtList.MainView = Me.GridView
-        Me.dtList.MenuManager = Me.BarManager
-        Me.dtList.Name = "dtList"
-        Me.dtList.Size = New System.Drawing.Size(1236, 424)
-        Me.dtList.TabIndex = 146
-        Me.dtList.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
+        Me.LabelControl9.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelControl9.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl9.Appearance.ForeColor = System.Drawing.Color.White
+        Me.LabelControl9.Appearance.Options.UseFont = True
+        Me.LabelControl9.Appearance.Options.UseForeColor = True
+        Me.LabelControl9.Location = New System.Drawing.Point(933, 6)
+        Me.LabelControl9.Name = "LabelControl9"
+        Me.LabelControl9.Size = New System.Drawing.Size(45, 13)
+        Me.LabelControl9.TabIndex = 158
+        Me.LabelControl9.Text = "Filter By:"
         '
-        'GridView
+        'rgFilter
         '
-        Me.GridView.Appearance.FocusedRow.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.GridView.Appearance.FocusedRow.Options.UseFont = True
-        Me.GridView.GridControl = Me.dtList
-        Me.GridView.Name = "GridView"
-        Me.GridView.OptionsBehavior.AutoExpandAllGroups = True
-        Me.GridView.OptionsCustomization.AllowGroup = False
-        Me.GridView.OptionsCustomization.AllowQuickHideColumns = False
-        Me.GridView.OptionsSelection.CheckBoxSelectorColumnWidth = 30
-        Me.GridView.OptionsView.ColumnAutoWidth = False
-        Me.GridView.OptionsView.ShowGroupPanel = False
-        Me.GridView.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.[False]
+        Me.rgFilter.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rgFilter.Location = New System.Drawing.Point(980, 2)
+        Me.rgFilter.MenuManager = Me.BarManager
+        Me.rgFilter.Name = "rgFilter"
+        Me.rgFilter.Properties.Appearance.BackColor = System.Drawing.Color.Transparent
+        Me.rgFilter.Properties.Appearance.ForeColor = System.Drawing.Color.White
+        Me.rgFilter.Properties.Appearance.Options.UseBackColor = True
+        Me.rgFilter.Properties.Appearance.Options.UseForeColor = True
+        Me.rgFilter.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.rgFilter.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Out Patient"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "ER Patient"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "In Patient")})
+        Me.rgFilter.Size = New System.Drawing.Size(258, 22)
+        Me.rgFilter.TabIndex = 157
         '
         'BarManager
         '
@@ -450,10 +462,36 @@ Partial Class frmChemWorklist
         Me.btnNewOrder.ImageOptions.LargeImage = CType(resources.GetObject("btnNewOrder.ImageOptions.LargeImage"), System.Drawing.Image)
         Me.btnNewOrder.Name = "btnNewOrder"
         '
+        'dtList
+        '
+        Me.dtList.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtList.Location = New System.Drawing.Point(2, 27)
+        Me.dtList.MainView = Me.GridView
+        Me.dtList.MenuManager = Me.BarManager
+        Me.dtList.Name = "dtList"
+        Me.dtList.Size = New System.Drawing.Size(1236, 424)
+        Me.dtList.TabIndex = 146
+        Me.dtList.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView})
+        '
+        'GridView
+        '
+        Me.GridView.Appearance.FocusedRow.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.GridView.Appearance.FocusedRow.Options.UseFont = True
+        Me.GridView.GridControl = Me.dtList
+        Me.GridView.Name = "GridView"
+        Me.GridView.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GridView.OptionsCustomization.AllowGroup = False
+        Me.GridView.OptionsCustomization.AllowQuickHideColumns = False
+        Me.GridView.OptionsSelection.CheckBoxSelectorColumnWidth = 30
+        Me.GridView.OptionsView.ColumnAutoWidth = False
+        Me.GridView.OptionsView.ShowGroupPanel = False
+        Me.GridView.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.[False]
+        '
         'PanelControl2
         '
         Me.PanelControl2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl2.Controls.Add(Me.cboFilter)
         Me.PanelControl2.Controls.Add(Me.LabelControl7)
         Me.PanelControl2.Controls.Add(Me.rgSelect)
         Me.PanelControl2.Controls.Add(Me.LabelControl4)
@@ -464,6 +502,22 @@ Partial Class frmChemWorklist
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(1240, 32)
         Me.PanelControl2.TabIndex = 144
+        '
+        'cboFilter
+        '
+        Me.cboFilter.EditValue = "All"
+        Me.cboFilter.Location = New System.Drawing.Point(187, 6)
+        Me.cboFilter.Name = "cboFilter"
+        Me.cboFilter.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter.Size = New System.Drawing.Size(114, 20)
+        Me.cboFilter.TabIndex = 157
         '
         'LabelControl7
         '
@@ -536,7 +590,7 @@ Partial Class frmChemWorklist
         Me.cboLocation.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation.Size = New System.Drawing.Size(206, 20)
+        Me.cboLocation.Size = New System.Drawing.Size(115, 20)
         Me.cboLocation.TabIndex = 70
         '
         'bcCode
@@ -553,7 +607,7 @@ Partial Class frmChemWorklist
         Me.bcCode.Padding = New System.Windows.Forms.Padding(8, 2, 8, 0)
         Me.bcCode.ShowText = False
         Me.bcCode.Size = New System.Drawing.Size(343, 92)
-        Me.bcCode.Symbology = Code128Generator2
+        Me.bcCode.Symbology = Code128Generator1
         Me.bcCode.TabIndex = 143
         '
         'picCode
@@ -659,6 +713,7 @@ Partial Class frmChemWorklist
         '
         Me.PanelControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelControl1.Controls.Add(Me.cboFilter1)
         Me.PanelControl1.Controls.Add(Me.LabelControl8)
         Me.PanelControl1.Controls.Add(Me.rgSelect1)
         Me.PanelControl1.Controls.Add(Me.LabelControl5)
@@ -669,6 +724,22 @@ Partial Class frmChemWorklist
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(1236, 30)
         Me.PanelControl1.TabIndex = 15
+        '
+        'cboFilter1
+        '
+        Me.cboFilter1.EditValue = "All"
+        Me.cboFilter1.Location = New System.Drawing.Point(238, 5)
+        Me.cboFilter1.Name = "cboFilter1"
+        Me.cboFilter1.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(62, Byte), Integer))
+        Me.cboFilter1.Properties.Appearance.Options.UseForeColor = True
+        Me.cboFilter1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboFilter1.Properties.Items.AddRange(New Object() {"All", "Out Patient", "ER Patient", "In Patient"})
+        Me.cboFilter1.Properties.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.cboFilter1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.cboFilter1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        Me.cboFilter1.Properties.UseReadOnlyAppearance = False
+        Me.cboFilter1.Size = New System.Drawing.Size(147, 20)
+        Me.cboFilter1.TabIndex = 159
         '
         'LabelControl8
         '
@@ -741,7 +812,7 @@ Partial Class frmChemWorklist
         Me.cboLocation1.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.cboLocation1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.cboLocation1.Properties.UseReadOnlyAppearance = False
-        Me.cboLocation1.Size = New System.Drawing.Size(310, 20)
+        Me.cboLocation1.Size = New System.Drawing.Size(157, 20)
         Me.cboLocation1.TabIndex = 72
         '
         'pnlHeader
@@ -848,13 +919,16 @@ Partial Class frmChemWorklist
         Me.XTPage1.PerformLayout()
         CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl2.ResumeLayout(False)
-        CType(Me.dtList, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupControl2.PerformLayout()
+        CType(Me.rgFilter.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarAndDockingController, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dtList, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
+        CType(Me.cboFilter.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.rgSelect.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -867,6 +941,7 @@ Partial Class frmChemWorklist
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
         Me.PanelControl1.PerformLayout()
+        CType(Me.cboFilter1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.rgSelect1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSearch1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cboLocation1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -939,4 +1014,8 @@ Partial Class frmChemWorklist
     Friend WithEvents rgSelect As DevExpress.XtraEditors.RadioGroup
     Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents rgSelect1 As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents LabelControl9 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents rgFilter As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents cboFilter As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents cboFilter1 As DevExpress.XtraEditors.ComboBoxEdit
 End Class
